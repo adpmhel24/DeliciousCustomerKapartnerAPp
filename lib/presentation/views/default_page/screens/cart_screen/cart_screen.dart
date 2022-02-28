@@ -25,7 +25,9 @@ class CartScreen extends StatelessWidget {
               IconButton(
                 onPressed: (_cartItemRepo.cartItems.isNotEmpty) ? () {} : null,
                 icon: Badge(
-                  badgeContent: Text(_cartItemRepo.cartItems.length.toString()),
+                  badgeContent: Text(
+                    _cartItemRepo.cartItems.length.toString(),
+                  ),
                   child: const Icon(
                     Icons.delete,
                     color: Colors.black54,
