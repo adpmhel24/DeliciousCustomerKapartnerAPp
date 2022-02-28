@@ -22,6 +22,37 @@ class CustomDialog {
     );
   }
 
+  static warning(
+    context, {
+    required String message,
+    void Function()? onPositiveClick,
+    void Function()? onNegativeClick,
+  }) {
+    return showAnimatedDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Icon(Icons.warning),
+          content: Text(message),
+          actions: [
+            TextButton(
+              style: ButtonStyle(
+                foregroundColor: MaterialStateProperty.all(Colors.red[300]),
+              ),
+              onPressed: (onNegativeClick == null)
+                  ? Navigator.of(context).pop
+                  : onNegativeClick,
+              child: const Text('Cancel'),
+            ),
+            TextButton(onPressed: onPositiveClick, child: const Text('Okay')),
+          ],
+        );
+      },
+      animationType: DialogTransitionType.size,
+      curve: Curves.fastOutSlowIn,
+    );
+  }
+
   // Error Dialog Modal
   static error(BuildContext context,
       {required String message,

@@ -13,6 +13,7 @@ class CustomTextField extends StatelessWidget {
     int? minLines,
     int? maxLines,
     String? Function(String?)? validator,
+    String? initialValue,
     bool? showCursor,
     bool? readOnly,
     Function()? onTap,
@@ -30,6 +31,7 @@ class CustomTextField extends StatelessWidget {
         _minLines = minLines,
         _maxLines = maxLines,
         _validator = validator,
+        _initialValue = initialValue,
         _onTap = onTap,
         _showCursor = showCursor,
         _readOnly = readOnly,
@@ -57,6 +59,7 @@ class CustomTextField extends StatelessWidget {
   final AutovalidateMode? _autovalidateMode;
   final TextStyle? _labelStyle;
   final bool? _enabled;
+  final String? _initialValue;
 
   @override
   Widget build(BuildContext context) {
@@ -64,6 +67,7 @@ class CustomTextField extends StatelessWidget {
       autovalidateMode: _autovalidateMode,
       textInputAction: _textInputAction,
       keyboardType: _keyboardType,
+      initialValue: _initialValue,
       enabled: _enabled,
       controller: _controller,
       minLines: _minLines,

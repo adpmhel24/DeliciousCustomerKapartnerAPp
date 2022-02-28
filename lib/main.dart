@@ -61,7 +61,7 @@ class _MyAppState extends State<MyApp> {
                 theme: ThemeData(
                   visualDensity: VisualDensity.adaptivePlatformDensity,
                   appBarTheme: const AppBarTheme().copyWith(
-                    backgroundColor: Colors.amber,
+                    backgroundColor: const Color(0xFFFDEFF4),
                     titleTextStyle: TextStyle(
                       fontSize: 15.sp,
                       fontWeight: FontWeight.bold,

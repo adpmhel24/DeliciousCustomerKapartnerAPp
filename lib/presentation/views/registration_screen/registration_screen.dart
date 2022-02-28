@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:kapartner_app/presentation/views/registration_screen/customer_registration/customer_reg_screen.dart';
-import 'package:kapartner_app/presentation/views/registration_screen/ka_partner_registration/ka_partner_reg.dart';
+import './customer_registration/customer_reg_screen.dart';
+import './ka_partner_registration/ka_partner_reg.dart';
 
 class RegistrationScreen extends StatefulWidget {
   const RegistrationScreen({Key? key}) : super(key: key);
@@ -18,7 +18,7 @@ class _RegistrationScreenState extends State<RegistrationScreen>
   @override
   void initState() {
     super.initState();
-    tabController = TabController(length: 3, vsync: this);
+    tabController = TabController(length: 2, vsync: this);
   }
 
   @override
@@ -30,30 +30,30 @@ class _RegistrationScreenState extends State<RegistrationScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: const TabBarView(
-        children: [
-          CustomerRegistrationScreen(),
-          KaPartnerRegistrationScreen(),
-        ],
-      ),
-      bottomNavigationBar: Material(
-        color: Colors.purple,
-        child: TabBar(
+      appBar: AppBar(
+        bottom: TabBar(
           // onTap: (indedx) {},
           indicatorColor: Colors.blue,
           unselectedLabelColor: Colors.grey,
           tabs: const [
             Tab(
-              icon: Icon(Icons.favorite_border),
-              text: "ONE",
+              icon: Icon(Icons.person),
+              text: "Customer",
             ),
             Tab(
-              icon: Icon(Icons.favorite),
-              text: "TWO",
+              icon: Icon(Icons.group_add),
+              text: "Ka-Partner",
             ),
           ],
           controller: tabController,
         ),
+      ),
+      body: TabBarView(
+        controller: tabController,
+        children: const [
+          CustomerRegistrationScreen(),
+          KaPartnerRegistrationScreen(),
+        ],
       ),
     );
   }

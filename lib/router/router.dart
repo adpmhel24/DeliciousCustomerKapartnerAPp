@@ -1,7 +1,11 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:kapartner_app/presentation/views/order_screen/orders_screen.dart';
+import 'package:kapartner_app/presentation/views/default_page/default_screen.dart';
 import 'package:kapartner_app/presentation/views/registration_screen/customer_registration/customer_reg_screen.dart';
 
+import '../presentation/views/default_page/screens/cart_screen/cart_screen.dart';
+import '../presentation/views/default_page/screens/products_screen/components/prod_details.dart';
+import '../presentation/views/default_page/screens/products_screen/products_screen.dart';
+import '../presentation/views/default_page/screens/profile_screen/profile_screen.dart';
 import '../presentation/views/login_screen/login_screen.dart';
 import '../presentation/views/registration_screen/ka_partner_registration/ka_partner_reg.dart';
 import '../presentation/views/registration_screen/registration_screen.dart';
@@ -11,8 +15,21 @@ import 'router_guard.dart';
   routes: <AutoRoute>[
     AutoRoute(page: LoginFormScreen, name: 'LoginRoute', path: '/login'),
     AutoRoute(
-      page: OrderScreen,
       path: '/',
+      page: HomeScreen,
+      guards: [RouteGuard],
+      children: [
+        AutoRoute(path: 'products', page: ProductsScreen, initial: true),
+        AutoRoute(
+          path: 'cart',
+          page: CartScreen,
+        ),
+        AutoRoute(path: 'profile', page: ProfileScreen),
+      ],
+    ),
+    AutoRoute(
+      page: ProductDetails,
+      path: '/productDetails',
       guards: [RouteGuard],
     ),
     AutoRoute(

@@ -1,8 +1,11 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:formz/formz.dart';
 
 import '../../../../router/router.gr.dart';
+import '../bloc/bloc.dart';
 import 'form.dart';
 
 class LoginBody extends StatelessWidget {
@@ -45,21 +48,17 @@ class LoginBody extends StatelessWidget {
               SizedBox(
                 width: double.infinity,
                 height: 50.h,
-                child: const ElevatedButton(
-                  onPressed:
-                      // (context
-                      //         .watch<LoginBloc>()
-                      //         .state
-                      //         .status
-                      //         .isValidated)
-                      //     ? () {
-                      //         context
-                      //             .read<LoginBloc>()
-                      //             .add(const LoginSubmitted());
-                      //       }
-                      //     :
-                      null,
-                  child: Text(
+                child: ElevatedButton(
+                  onPressed: (context
+                          .watch<LoginFormBloc>()
+                          .state
+                          .status
+                          .isValidated)
+                      ? () {
+                          context.read<LoginFormBloc>().add(LoginSubmitted());
+                        }
+                      : null,
+                  child: const Text(
                     'Login',
                     style: TextStyle(
                       letterSpacing: 1,
@@ -75,7 +74,7 @@ class LoginBody extends StatelessWidget {
                   TextButton(
                     onPressed: () {
                       AutoRouter.of(context)
-                          .push(const RegistrationTypeScreenRoute());
+                          .push(const RegistrationScreenRoute());
                     },
                     child: const Text(
                       'Sign In',

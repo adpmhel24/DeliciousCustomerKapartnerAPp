@@ -2,8 +2,8 @@ import './repositories.dart';
 
 class AppRepo {
   static final authRepository = AuthRepository();
-  // static final productsRepository = ProductsRepo();
-  // static final cartRepository = CartRepo();
+  static final productsRepository = ProductsRepo();
+  static final customerInfoRepo = CustomerInfoRepo();
   // static final customerRepository = CustomerRepo();
   // static final salesTypeRepository = SalesTypeRepo();
   // static final discTypeRepository = DiscountTypeRepo();
@@ -13,7 +13,8 @@ class AppRepo {
   // static final phLocationRepository = PhLocationRepo();
 
   Future<void> init() async {
-    // await productsRepository.fetchProducts();
+    await productsRepository.fetchProducts();
+    await customerInfoRepo.getCustomerInfo();
     // await customerRepository.fetchCustomerFromAPI();
     // await salesTypeRepository.fetchFromAPI();
     // await discTypeRepository.fetchDiscType();

@@ -1,6 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../data/repositories/app_repo.dart';
 import '/data/repositories/repositories.dart';
 import 'bloc.dart';
 
