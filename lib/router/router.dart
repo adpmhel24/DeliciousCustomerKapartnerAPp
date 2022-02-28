@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:kapartner_app/presentation/views/default_page/default_screen.dart';
 import 'package:kapartner_app/presentation/views/registration_screen/customer_registration/customer_reg_screen.dart';
 
+import '../presentation/views/checkout_screen/checkout_screen.dart';
 import '../presentation/views/default_page/screens/cart_screen/cart_screen.dart';
 import '../presentation/views/default_page/screens/products_screen/components/prod_details.dart';
 import '../presentation/views/default_page/screens/products_screen/products_screen.dart';
@@ -30,6 +31,11 @@ import 'router_guard.dart';
     AutoRoute(
       page: ProductDetails,
       path: '/productDetails',
+      guards: [RouteGuard],
+    ),
+    AutoRoute(
+      page: CheckOutScreen,
+      path: '/checkout',
       guards: [RouteGuard],
     ),
     AutoRoute(

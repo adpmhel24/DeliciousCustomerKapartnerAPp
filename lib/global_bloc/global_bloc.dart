@@ -1,11 +1,12 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kapartner_app/global_bloc/cart_bloc/cart_bloc.dart';
 
-import '../auth_bloc/auth_bloc.dart';
+import 'auth_bloc/auth_bloc.dart';
 
 class GlobalBloc {
   static final authBloc = AuthBloc();
+  static final cartBloc = CartBloc();
   // static final productsBloc = ProductsBloc();
-  // static final cartBloc = CartBloc();
   // static final customerBloc = CustomerBloc();
   // static final salesTypeBloc = SalesTypeBloc();
   // static final discTypeBloc = DiscTypeBloc();
@@ -16,8 +17,8 @@ class GlobalBloc {
 
   static final List<BlocProvider> blocProviders = [
     BlocProvider<AuthBloc>(create: (context) => authBloc),
+    BlocProvider<CartBloc>(create: (context) => cartBloc),
     // BlocProvider<ProductsBloc>(create: (context) => productsBloc),
-    // BlocProvider<CartBloc>(create: (context) => cartBloc),
     // BlocProvider<CustomerBloc>(create: (context) => customerBloc),
     // BlocProvider<SalesTypeBloc>(create: (context) => salesTypeBloc),
     // BlocProvider<DiscTypeBloc>(create: (context) => discTypeBloc),

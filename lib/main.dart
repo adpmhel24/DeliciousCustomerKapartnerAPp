@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import 'global_bloc/app_init_bloc/global_bloc.dart';
+import 'global_bloc/global_bloc.dart';
 
 import 'presentation/utils/size_config.dart';
 import 'router/router.gr.dart';

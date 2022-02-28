@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
-import 'package:kapartner_app/presentation/views/default_page/models/cart_item_model/cart_item_model.dart';
+
+import '../../data/models/models.dart';
 
 abstract class CartState extends Equatable {
   const CartState();

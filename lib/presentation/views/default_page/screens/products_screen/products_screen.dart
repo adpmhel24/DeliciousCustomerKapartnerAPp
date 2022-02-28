@@ -8,7 +8,11 @@ class ProductsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Products'),
+        title: Image.asset(
+          "assets/images/logo.png",
+          height: 80,
+          fit: BoxFit.fitHeight,
+        ),
         centerTitle: true,
       ),
       body: const Body(),

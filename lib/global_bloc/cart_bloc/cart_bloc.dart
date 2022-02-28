@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:kapartner_app/presentation/views/default_page/blocs/cart_bloc/bloc.dart';
-import 'package:kapartner_app/presentation/views/default_page/repositories/cart_items_repo.dart';
+import 'package:kapartner_app/data/repositories/cart_items_repo.dart';
+
+import 'bloc.dart';
 
 class CartBloc extends Bloc<CartEvent, CartState> {
   CartBloc() : super(CartBlocInitState()) {

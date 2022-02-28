@@ -14,6 +14,7 @@ CustomerAddressModel _$CustomerAddressModelFromJson(
       cityMunicipality: json['city_municipality'] as String?,
       brgy: json['brgy'] as String?,
       otherDetails: json['other_details'] as String?,
+      isDefault: json['is_default'] as bool?,
     );
 
 Map<String, dynamic> _$CustomerAddressModelToJson(
@@ -31,5 +32,6 @@ Map<String, dynamic> _$CustomerAddressModelToJson(
   val['city_municipality'] = instance.cityMunicipality;
   val['brgy'] = instance.brgy;
   val['other_details'] = instance.otherDetails;
+  val['is_default'] = instance.isDefault;
   return val;
 }

@@ -34,4 +34,10 @@ class CustomerInfoRepo {
       throw HttpException(e.message);
     }
   }
+
+  CustomerAddressModel? defautShippingAddress() {
+    int index =
+        _customer.details.indexWhere((element) => element!.isDefault! == true);
+    return _customer.details[index];
+  }
 }

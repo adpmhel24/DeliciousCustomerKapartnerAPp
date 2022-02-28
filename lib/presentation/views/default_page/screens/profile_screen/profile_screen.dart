@@ -75,7 +75,16 @@ class ProfileScreen extends StatelessWidget {
             children: _customerInfoRepo.customer.details
                 .map(
                   (e) => Badge(
-                    badgeContent: const Icon(Icons.check),
+                    badgeColor: (e!.isDefault == null || e.isDefault != true)
+                        ? Colors.transparent
+                        : Colors.lightGreen,
+                    padding: EdgeInsets.zero,
+                    badgeContent: IconButton(
+                      padding: EdgeInsets.zero,
+                      icon: const Icon(Icons.check),
+                      onPressed: () {},
+                      splashRadius: Material.defaultSplashRadius / 2,
+                    ),
                     child: Card(
                       child: SizedBox(
                         width: 300,
@@ -87,7 +96,7 @@ class ProfileScreen extends StatelessWidget {
                               CustomTextField(
                                 enabled: false,
                                 labelText: "Street Address",
-                                initialValue: e!.streetAddress ?? "",
+                                initialValue: e.streetAddress ?? "",
                                 minLines: 1,
                                 maxLines: 5,
                               ),

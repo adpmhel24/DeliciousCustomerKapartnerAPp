@@ -3,12 +3,11 @@ import 'package:badges/badges.dart';
 import 'package:double_back_to_close_app/double_back_to_close_app.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:kapartner_app/global_bloc/products_bloc/bloc.dart';
-import 'package:kapartner_app/presentation/views/default_page/blocs/cart_bloc/bloc.dart';
-import 'package:kapartner_app/presentation/views/default_page/repositories/cart_items_repo.dart';
+import 'package:kapartner_app/data/repositories/cart_items_repo.dart';
 import 'package:kapartner_app/presentation/widget/custom_dialog.dart';
 import 'package:line_icons/line_icons.dart';
 
+import '../../../global_bloc/blocs.dart';
 import '../../../router/router.gr.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -19,7 +18,6 @@ class HomeScreen extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (_) => ProductsBloc()..add(FetchProductFromAPI())),
-        BlocProvider(create: (_) => CartBloc()),
       ],
       child: BlocListener<CartBloc, CartState>(
         listenWhen: (prev, current) =>

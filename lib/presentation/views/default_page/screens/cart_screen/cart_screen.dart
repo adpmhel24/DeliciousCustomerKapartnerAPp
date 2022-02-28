@@ -1,10 +1,12 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kapartner_app/presentation/utils/currency_formater.dart';
-import 'package:kapartner_app/presentation/views/default_page/blocs/cart_bloc/bloc.dart';
-import 'package:kapartner_app/presentation/views/default_page/repositories/cart_items_repo.dart';
+import 'package:kapartner_app/data/repositories/cart_items_repo.dart';
+import 'package:kapartner_app/router/router.gr.dart';
 
+import '../../../../../global_bloc/blocs.dart';
 import 'components/body.dart';
 
 class CartScreen extends StatelessWidget {
@@ -42,8 +44,12 @@ class CartScreen extends StatelessWidget {
                 Text(
                     "Total: ${formatStringToDecimal(_cartItemRepo.totalCart.toString(), hasCurrency: true)}"),
                 ElevatedButton(
-                  onPressed:
-                      (_cartItemRepo.cartItems.isNotEmpty) ? () {} : null,
+                  onPressed: (_cartItemRepo.cartItems.isNotEmpty)
+                      ? () {
+                          AutoRouter.of(context)
+                              .push(const CheckOutScreenRoute());
+                        }
+                      : null,
                   child: const Text("Checkout"),
                   style: Theme.of(context).elevatedButtonTheme.style!.copyWith(
                         padding:

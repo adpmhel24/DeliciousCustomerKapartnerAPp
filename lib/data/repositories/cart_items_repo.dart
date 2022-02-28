@@ -1,4 +1,4 @@
-import 'package:kapartner_app/presentation/views/default_page/models/cart_item_model/cart_item_model.dart';
+import '../models/models.dart';
 
 class CartItemsRepo {
   final List<CartItemModel> _cartItems = [];
