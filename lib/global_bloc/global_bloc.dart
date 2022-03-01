@@ -1,11 +1,12 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:kapartner_app/global_bloc/cart_bloc/cart_bloc.dart';
+import 'package:kapartner_app/global_bloc/blocs.dart';
 
 import 'auth_bloc/auth_bloc.dart';
 
 class GlobalBloc {
   static final authBloc = AuthBloc();
   static final cartBloc = CartBloc();
+  static final customerInfoBloc = CustomerInfoBloc();
   // static final productsBloc = ProductsBloc();
   // static final customerBloc = CustomerBloc();
   // static final salesTypeBloc = SalesTypeBloc();
@@ -18,6 +19,7 @@ class GlobalBloc {
   static final List<BlocProvider> blocProviders = [
     BlocProvider<AuthBloc>(create: (context) => authBloc),
     BlocProvider<CartBloc>(create: (context) => cartBloc),
+    BlocProvider<CustomerInfoBloc>(create: (context) => customerInfoBloc),
     // BlocProvider<ProductsBloc>(create: (context) => productsBloc),
     // BlocProvider<CustomerBloc>(create: (context) => customerBloc),
     // BlocProvider<SalesTypeBloc>(create: (context) => salesTypeBloc),
@@ -31,6 +33,8 @@ class GlobalBloc {
 
   static void dispose() {
     authBloc.close();
+    cartBloc.close();
+    customerInfoBloc.close();
     // productsBloc.close();
     // cartBloc.close();
     // customerBloc.close();

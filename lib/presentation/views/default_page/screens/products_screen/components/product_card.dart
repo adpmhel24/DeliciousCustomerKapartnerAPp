@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../../../router/router.gr.dart';
 import '../../../../../utils/currency_formater.dart';
@@ -31,7 +32,7 @@ class ProductCard extends StatelessWidget {
               children: [
                 (product.imageUrl == null)
                     ? CircleAvatar(
-                        radius: 50,
+                        radius: 35.r,
                         child: Hero(
                           tag: product.id,
                           child: ClipOval(
@@ -44,7 +45,7 @@ class ProductCard extends StatelessWidget {
                         backgroundColor: const Color(0xFFF7F7F7),
                       )
                     : CircleAvatar(
-                        radius: 50,
+                        radius: 30.r,
                         child: Hero(
                           tag: product.id,
                           child: ClipOval(

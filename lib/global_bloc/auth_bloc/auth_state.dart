@@ -26,3 +26,21 @@ class Authenticated extends AuthState {
 }
 
 class Unauthenticated extends AuthState {}
+
+class PasswordUpdating extends AuthState {}
+
+class PasswordUpdatedSuccessfully extends AuthState {
+  final String message;
+  const PasswordUpdatedSuccessfully(this.message);
+
+  @override
+  List<Object> get props => [message];
+}
+
+class PasswordUpdatingFailure extends AuthState {
+  final String message;
+  const PasswordUpdatingFailure(this.message);
+
+  @override
+  List<Object> get props => [message];
+}

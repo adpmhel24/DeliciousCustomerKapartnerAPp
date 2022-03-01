@@ -5,12 +5,15 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:kapartner_app/data/repositories/app_repo.dart';
 import 'package:kapartner_app/data/repositories/customer_info_repo.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 import '../../../../data/models/models.dart';
 import '../../../../global_bloc/blocs.dart';
 import '../../../utils/currency_formater.dart';
 
+import '../../../widget/constant.dart';
 import '../../../widget/custom_text_field.dart';
+import '../bloc/bloc.dart';
 
 class Body extends StatefulWidget {
   const Body({Key? key}) : super(key: key);
@@ -25,9 +28,11 @@ class _BodyState extends State<Body> {
   final ScrollController _scrollController = ScrollController();
   final DateFormat dateFormat = DateFormat("MM/dd/yyyy");
 
+  late String _deliveryMethodSelected = "";
+  late String _paymentMethodSelected = "";
+
   @override
   void initState() {
-    _deliveryDateController.text = dateFormat.format(DateTime.now());
     super.initState();
   }
 
@@ -38,6 +43,18 @@ class _BodyState extends State<Body> {
     _notesController.dispose();
     super.dispose();
   }
+
+  List<Map<String, dynamic>> deliveryMethods = [
+    {"name": "Delivery", "value": "Delivery"},
+    {"name": "Pickup", "value": "Pickup"},
+  ];
+
+  List<Map<String, dynamic>> paymentMethods = [
+    {"name": "Cash On Delivery", "value": "Cash On Delivery"},
+    {"name": "PayMaya", "value": "PayMaya"},
+    {"name": "GCash", "value": "GCash"},
+    {"name": "BDO", "value": "BDO"},
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -157,7 +174,7 @@ class _BodyState extends State<Body> {
                               ),
                               Text(
                                 "${_custAddress!.streetAddress!} ${_custAddress.brgy!} ${_custAddress.cityMunicipality!}",
-                                overflow: TextOverflow.ellipsis,
+                                // overflow: TextOverflow.ellipsis,
                               )
                             ],
                           ),
@@ -193,131 +210,9 @@ class _BodyState extends State<Body> {
                 ),
               ),
               SizedBox(height: 10.h),
-              SizedBox(
-                width: double.infinity,
-                child: Card(
-                  elevation: 3,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Flexible(
-                          flex: 3,
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "Pickup / Delivery: ",
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .subtitle2!
-                                    .copyWith(fontWeight: FontWeight.bold),
-                              ),
-                              SizedBox(
-                                height: 5.h,
-                              ),
-                              const Text(
-                                "Pickup",
-                                overflow: TextOverflow.ellipsis,
-                              )
-                            ],
-                          ),
-                        ),
-                        Flexible(
-                          child: ElevatedButton(
-                            style: Theme.of(context)
-                                .elevatedButtonTheme
-                                .style!
-                                .copyWith(
-                                  padding: MaterialStateProperty.all(
-                                      const EdgeInsets.all(10)),
-                                  backgroundColor: MaterialStateProperty.all(
-                                      const Color(0xFFCEAB93)),
-                                  shape: MaterialStateProperty.all<
-                                      RoundedRectangleBorder>(
-                                    RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(18.0),
-                                      side: const BorderSide(
-                                        color:
-                                            Color.fromARGB(255, 180, 154, 153),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                            onPressed: () {},
-                            child: const Text("Change"),
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-              ),
+              deliveryMethodField(context),
               SizedBox(height: 10.h),
-              SizedBox(
-                width: double.infinity,
-                child: Card(
-                  elevation: 3,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Flexible(
-                          flex: 3,
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "Payment: ",
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .subtitle2!
-                                    .copyWith(fontWeight: FontWeight.bold),
-                              ),
-                              SizedBox(
-                                height: 5.h,
-                              ),
-                              const Text(
-                                "Cash On Delivery",
-                                overflow: TextOverflow.ellipsis,
-                              )
-                            ],
-                          ),
-                        ),
-                        Flexible(
-                          child: ElevatedButton(
-                            style: Theme.of(context)
-                                .elevatedButtonTheme
-                                .style!
-                                .copyWith(
-                                  padding: MaterialStateProperty.all(
-                                      const EdgeInsets.all(10)),
-                                  backgroundColor: MaterialStateProperty.all(
-                                      const Color(0xFFCEAB93)),
-                                  shape: MaterialStateProperty.all<
-                                      RoundedRectangleBorder>(
-                                    RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(18.0),
-                                      side: const BorderSide(
-                                        color:
-                                            Color.fromARGB(255, 180, 154, 153),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                            onPressed: () {},
-                            child: const Text("Change"),
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-              ),
+              paymentMethodField(context),
               SizedBox(height: 10.h),
               DeliveryDateField(
                 controller: _deliveryDateController,
@@ -398,6 +293,234 @@ class _BodyState extends State<Body> {
       ),
     );
   }
+
+  SizedBox paymentMethodField(BuildContext context) {
+    return SizedBox(
+      width: double.infinity,
+      child: Card(
+        elevation: 3,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Flexible(
+                flex: 3,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Payment: ",
+                      style: Theme.of(context)
+                          .textTheme
+                          .subtitle2!
+                          .copyWith(fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(
+                      height: 5.h,
+                    ),
+                    BlocBuilder<CheckoutFormBloc, CheckoutFormState>(
+                      buildWhen: (prev, curr) =>
+                          prev.paymentMethod != curr.paymentMethod,
+                      builder: (context, state) {
+                        return Text(
+                          state.paymentMethod.value,
+                          overflow: TextOverflow.ellipsis,
+                        );
+                      },
+                    )
+                  ],
+                ),
+              ),
+              Flexible(
+                child: ElevatedButton(
+                  style: Theme.of(context).elevatedButtonTheme.style!.copyWith(
+                        padding:
+                            MaterialStateProperty.all(const EdgeInsets.all(10)),
+                        backgroundColor:
+                            MaterialStateProperty.all(const Color(0xFFCEAB93)),
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(18.0),
+                            side: const BorderSide(
+                              color: Color.fromARGB(255, 180, 154, 153),
+                            ),
+                          ),
+                        ),
+                      ),
+                  onPressed: () {
+                    showMaterialModalBottomSheet(
+                      context: context,
+                      enableDrag: false,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(10.r),
+                          topRight: Radius.circular(10.r),
+                        ),
+                      ),
+                      builder: (_) {
+                        return SafeArea(
+                          child: SizedBox(
+                            // height: (SizeConfig.screenHeight * .75).h,
+                            child: ListView.separated(
+                              shrinkWrap: true,
+                              itemCount: paymentMethods.length,
+                              separatorBuilder: (_, index) {
+                                return const Divider(
+                                  thickness: 1,
+                                  color: Color(0xFFBDBDBD),
+                                );
+                              },
+                              itemBuilder: (_, index) {
+                                return ListTile(
+                                  title: Text(
+                                    paymentMethods[index]["name"],
+                                  ),
+                                  selected: _paymentMethodSelected ==
+                                      paymentMethods[index]["name"],
+                                  selectedColor: Constant.onSelectedColor,
+                                  onTap: () {
+                                    _paymentMethodSelected =
+                                        paymentMethods[index]["name"];
+                                    context.read<CheckoutFormBloc>().add(
+                                          PaymentMethodChange(
+                                              paymentMethods[index]["name"]),
+                                        );
+                                    Navigator.of(context).pop();
+                                  },
+                                );
+                              },
+                            ),
+                          ),
+                        );
+                      },
+                    );
+                  },
+                  child: const Text("Change"),
+                ),
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  SizedBox deliveryMethodField(BuildContext context) {
+    return SizedBox(
+      width: double.infinity,
+      child: Card(
+        elevation: 3,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Flexible(
+                flex: 3,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Pickup / Delivery: ",
+                      style: Theme.of(context)
+                          .textTheme
+                          .subtitle2!
+                          .copyWith(fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(
+                      height: 5.h,
+                    ),
+                    BlocBuilder<CheckoutFormBloc, CheckoutFormState>(
+                      buildWhen: (prev, curr) =>
+                          prev.deliveryMethod != curr.deliveryMethod,
+                      builder: (context, state) {
+                        return Text(
+                          state.deliveryMethod.value,
+                          overflow: TextOverflow.ellipsis,
+                        );
+                      },
+                    )
+                  ],
+                ),
+              ),
+              Flexible(
+                child: ElevatedButton(
+                  style: Theme.of(context).elevatedButtonTheme.style!.copyWith(
+                        padding:
+                            MaterialStateProperty.all(const EdgeInsets.all(10)),
+                        backgroundColor:
+                            MaterialStateProperty.all(const Color(0xFFCEAB93)),
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(18.0),
+                            side: const BorderSide(
+                              color: Color.fromARGB(255, 180, 154, 153),
+                            ),
+                          ),
+                        ),
+                      ),
+                  onPressed: () {
+                    showMaterialModalBottomSheet(
+                      context: context,
+                      enableDrag: false,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(10.r),
+                          topRight: Radius.circular(10.r),
+                        ),
+                      ),
+                      builder: (_) {
+                        return SafeArea(
+                          child: SizedBox(
+                            // height: (SizeConfig.screenHeight * .75).h,
+                            child: ListView.separated(
+                              shrinkWrap: true,
+                              itemCount: deliveryMethods.length,
+                              separatorBuilder: (_, index) {
+                                return const Divider(
+                                  thickness: 1,
+                                  color: Color(0xFFBDBDBD),
+                                );
+                              },
+                              itemBuilder: (_, index) {
+                                return ListTile(
+                                  title: Text(
+                                    deliveryMethods[index]["name"],
+                                  ),
+                                  selected: _deliveryMethodSelected ==
+                                      deliveryMethods[index]["name"],
+                                  selectedColor: Constant.onSelectedColor,
+                                  onTap: () {
+                                    _deliveryMethodSelected =
+                                        deliveryMethods[index]["name"];
+                                    context.read<CheckoutFormBloc>().add(
+                                          DeliveryMethodChanged(
+                                              deliveryMethods[index]["name"]),
+                                        );
+                                    Navigator.of(context).pop();
+                                  },
+                                );
+                              },
+                            ),
+                          ),
+                        );
+                      },
+                    );
+                  },
+                  child: const Text("Change"),
+                ),
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
 }
 
 class DeliveryDateField extends StatelessWidget {
@@ -430,6 +553,9 @@ class DeliveryDateField extends StatelessWidget {
           maxTime: DateTime(2100, 12, 31),
           onConfirm: (date) {
             _controller.text = _dateFormat.format(date);
+            context
+                .read<CheckoutFormBloc>()
+                .add(DeliveryDateChanged(_controller.text));
           },
           currentTime: DateTime.now(),
           locale: LocaleType.en,

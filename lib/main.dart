@@ -10,7 +10,11 @@ import 'presentation/utils/size_config.dart';
 import 'router/router.gr.dart';
 import 'router/router_guard.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await SystemChrome.setPreferredOrientations(
+    [DeviceOrientation.portraitUp],
+  );
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
     statusBarColor: Color.fromARGB(100, 88, 122, 50),
     systemNavigationBarColor: Colors.grey,

@@ -73,6 +73,8 @@ BottomNavigationBar buildBottomNavigationBar(
     onTap: (index) {
       if (index == 1) {
         context.read<CartBloc>().add(GetAllCartItems());
+      } else if (index == 2) {
+        context.read<CustomerInfoBloc>().add(GetCustomerInfo());
       }
       tabsRouter.setActiveIndex(index);
     },

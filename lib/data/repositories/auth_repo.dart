@@ -5,12 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:dio/dio.dart';
 
-import '../api_services/login_api.dart';
+import '../api_services/auth_api.dart';
 import '../models/auth_user/auth_user_model.dart';
 import 'app_repo.dart';
 
 class AuthRepository extends ChangeNotifier {
-  final LoginAPI _loginAPI = LoginAPI();
+  final AuthAPI _authAPI = AuthAPI();
   AuthUserModel? _currentUser;
   bool _authenticated = false;
   bool get authenticated => _authenticated;
@@ -27,7 +27,7 @@ class AuthRepository extends ChangeNotifier {
     Response response;
     try {
       response =
-          await _loginAPI.loggedIn(username: username, password: password);
+          await _authAPI.loggedIn(username: username, password: password);
       if (response.statusCode == 200) {
         _currentUser = AuthUserModel.fromJson(response.data['data']);
         SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -45,6 +45,19 @@ class AuthRepository extends ChangeNotifier {
     } on HttpException catch (e) {
       throw HttpException(e.message);
     }
+  }
+
+  Future<String> changePassword(Map<String, dynamic> data) async {
+    Response response;
+    String message = "";
+    try {
+      response = await _authAPI.changePassword(_currentUser!.token, data: data);
+
+      message = response.data['message'];
+    } on HttpException catch (e) {
+      throw HttpException(e.message);
+    }
+    return message;
   }
 
   bool isLoggedIn() => _currentUser != null;

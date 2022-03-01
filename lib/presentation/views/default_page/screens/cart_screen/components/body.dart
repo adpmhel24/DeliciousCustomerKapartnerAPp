@@ -6,6 +6,7 @@ import 'package:kapartner_app/presentation/widget/custom_dialog.dart';
 
 import '../../../../../../global_bloc/blocs.dart';
 import '../../../../../utils/currency_formater.dart';
+import '../../../../../widget/constant.dart';
 
 class Body extends StatelessWidget {
   const Body({Key? key}) : super(key: key);
@@ -79,7 +80,7 @@ class Body extends StatelessWidget {
                             ),
                           ]),
                       trailing: IconButton(
-                        splashRadius: Material.defaultSplashRadius / 2,
+                        splashRadius: Constant.splashRadius,
                         icon: const Icon(Icons.delete),
                         onPressed: () {
                           CustomDialog.warning(context,

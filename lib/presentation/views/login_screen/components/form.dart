@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:kapartner_app/presentation/widget/constant.dart';
 import '../bloc/bloc.dart';
 
 class LoginForm extends StatefulWidget {
@@ -87,6 +88,7 @@ class _LoginFormState extends State<LoginForm> {
                   fontWeight: FontWeight.w400,
                 ),
                 suffixIcon: IconButton(
+                  splashRadius: Constant.splashRadius,
                   icon: _isPasswordHidden
                       ? const Icon(Icons.visibility_off)
                       : const Icon(Icons.visibility),

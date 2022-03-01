@@ -9,6 +9,7 @@ import 'package:line_icons/line_icons.dart';
 
 import '../../../../../../global_bloc/blocs.dart';
 import '../../../../../utils/currency_formater.dart';
+import '../../../../../widget/constant.dart';
 
 class ProductDetails extends StatefulWidget {
   const ProductDetails({Key? key, required this.loadedProduct})
@@ -101,7 +102,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                           crossAxisAlignment: WrapCrossAlignment.center,
                           children: [
                             IconButton(
-                              splashRadius: Material.defaultSplashRadius / 2,
+                              splashRadius: Constant.splashRadius,
                               icon: const Icon(Icons.remove),
                               onPressed: () {
                                 int quantity =
@@ -139,7 +140,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                               ),
                             ),
                             IconButton(
-                              splashRadius: Material.defaultSplashRadius / 2,
+                              splashRadius: Constant.splashRadius,
                               icon: const Icon(Icons.add),
                               onPressed: () {
                                 int quantity =
