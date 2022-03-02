@@ -49,6 +49,7 @@ class AuthAPI {
         '/api/user/change_pass',
         data: data,
         options: Options(headers: {
+          "Authorization": "Bearer " + token,
           "Access-Control-Allow-Origin": "*",
           "Access-Control-Allow-Credentials": "true",
           "Access-Control-Allow-Headers":

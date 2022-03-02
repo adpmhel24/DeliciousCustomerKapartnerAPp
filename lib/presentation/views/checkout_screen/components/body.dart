@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
@@ -5,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:kapartner_app/data/repositories/app_repo.dart';
 import 'package:kapartner_app/data/repositories/customer_info_repo.dart';
+import 'package:kapartner_app/router/router.gr.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 import '../../../../data/models/models.dart';
@@ -138,7 +140,12 @@ class _BodyState extends State<Body> {
                                     ),
                                   ),
                                 ),
-                            onPressed: () {},
+                            onPressed: () {
+                              AutoRouter.of(context).push(
+                                const HomeScreenRoute(
+                                    children: [ProfileScreenRoute()]),
+                              );
+                            },
                             child: const Text("Change"),
                           ),
                         )
