@@ -12,6 +12,7 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 import '../../../../../global_bloc/blocs.dart';
 import '../../../../widget/custom_horizontal_sliver_list.dart';
+import 'components/address_form.dart';
 import 'components/update_mobile_form.dart';
 import 'components/update_password_form.dart';
 
@@ -215,16 +216,35 @@ class ProfileScreen extends StatelessWidget {
                                       enabled: false,
                                       labelText: "Baranggay",
                                       initialValue: e.brgy ?? "",
-                                      minLines: 1,
-                                      maxLines: 5,
                                     ),
                                     SizedBox(height: 7.h),
                                     CustomTextField(
                                       enabled: false,
                                       labelText: "City / Municipality",
                                       initialValue: e.cityMunicipality ?? "",
-                                      minLines: 1,
-                                      maxLines: 5,
+                                    ),
+                                    SizedBox(height: 7.h),
+                                    TextButton(
+                                      onPressed: () {
+                                        showMaterialModalBottomSheet(
+                                          context: context,
+                                          enableDrag: false,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.only(
+                                              topLeft: Radius.circular(10.r),
+                                              topRight: Radius.circular(10.r),
+                                            ),
+                                          ),
+                                          builder: (_) {
+                                            return AddressForm(
+                                              bloc: context
+                                                  .read<CustomerInfoBloc>(),
+                                              addressModel: e,
+                                            );
+                                          },
+                                        );
+                                      },
+                                      child: const Text("Edit"),
                                     ),
                                   ],
                                 ),

@@ -57,6 +57,29 @@ class CustomerInfoRepo {
     return message;
   }
 
+  Future<String> updateCustomerDetail({
+    required int customerDetailId,
+    required Map<String, dynamic> data,
+  }) async {
+    Response response;
+    String message = 'Updating Customer Detail: Unknown Error!';
+
+    try {
+      response = await _customerAPI.updateCustomerDetails(
+          _authRepository.currentUser.token,
+          customerDetailId: customerDetailId,
+          data: data);
+      if (response.statusCode == 201 || response.statusCode == 200) {
+        //  Update Customer in local
+        _customer = CustomerModel.fromJson(response.data['data']);
+        message = response.data['message'];
+      }
+    } on HttpException catch (e) {
+      throw HttpException(e.message);
+    }
+    return message;
+  }
+
   CustomerAddressModel? defautShippingAddress() {
     int index =
         _customer.details.indexWhere((element) => element!.isDefault! == true);

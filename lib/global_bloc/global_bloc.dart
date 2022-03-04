@@ -13,22 +13,22 @@ class GlobalBloc {
   // static final discTypeBloc = DiscTypeBloc();
   // static final custTypeBloc = CustTypeBloc();
   // static final provinceBloc = ProvinceBloc();
-  // static final cityMunicipalityBloc = CityMunicipalityBloc();
-  // static final brgyBloc = BrgyBloc();
+  static final cityMunicipalityBloc = CityMunicipalityBloc();
+  static final brgyBloc = BrgyBloc();
 
   static final List<BlocProvider> blocProviders = [
     BlocProvider<AuthBloc>(create: (context) => authBloc),
     BlocProvider<CartBloc>(create: (context) => cartBloc),
     BlocProvider<CustomerInfoBloc>(create: (context) => customerInfoBloc),
+    BlocProvider<CityMunicipalityBloc>(
+        create: (context) => cityMunicipalityBloc),
+    BlocProvider<BrgyBloc>(create: (context) => brgyBloc),
     // BlocProvider<ProductsBloc>(create: (context) => productsBloc),
     // BlocProvider<CustomerBloc>(create: (context) => customerBloc),
     // BlocProvider<SalesTypeBloc>(create: (context) => salesTypeBloc),
     // BlocProvider<DiscTypeBloc>(create: (context) => discTypeBloc),
     // BlocProvider<CustTypeBloc>(create: (context) => custTypeBloc),
     // BlocProvider<ProvinceBloc>(create: (context) => provinceBloc),
-    // BlocProvider<CityMunicipalityBloc>(
-    //     create: (context) => cityMunicipalityBloc),
-    // BlocProvider<BrgyBloc>(create: (context) => brgyBloc),
   ];
 
   static void dispose() {

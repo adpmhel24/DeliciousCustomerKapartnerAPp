@@ -12,6 +12,7 @@ class CustomerInfoBloc extends Bloc<CustomerInfoEvent, CustomerInfoState> {
     on<GetCustomerInfo>(_onGetCustomerInfo);
     on<ContactNumberUpdated>(_onContactNumberUpdated);
     on<EmailAddressUpdated>(_onEmailAddressUpdated);
+    on<UpdateCustomerDetail>(_onUpdateCustomerDetail);
   }
 
   void _onGetCustomerInfo(
@@ -42,6 +43,20 @@ class CustomerInfoBloc extends Bloc<CustomerInfoEvent, CustomerInfoState> {
     emit(CustomerInfoLoading());
     try {
       await _customerInfoRepo.updateCustomer(data: {"email": event.email});
+
+      emit(CustomerInfoLoaded(_customerInfoRepo.customer));
+    } on HttpException catch (e) {
+      emit(CustomerInfoError(e.message));
+    }
+  }
+
+  void _onUpdateCustomerDetail(
+      UpdateCustomerDetail event, Emitter<CustomerInfoState> emit) async {
+    emit(CustomerInfoLoading());
+    try {
+      await _customerInfoRepo.updateCustomerDetail(
+          customerDetailId: event.orderDetailId,
+          data: event.addressModel.toJson());
 
       emit(CustomerInfoLoaded(_customerInfoRepo.customer));
     } on HttpException catch (e) {

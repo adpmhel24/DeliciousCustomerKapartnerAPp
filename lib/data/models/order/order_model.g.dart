@@ -6,7 +6,7 @@ part of 'order_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-OrderItemModel _$OrderModelFromJson(Map<String, dynamic> json) =>
+OrderItemModel _$OrderItemModelFromJson(Map<String, dynamic> json) =>
     OrderItemModel(
       id: json['id'] as int?,
       transdate: DateTime.parse(json['transdate'] as String),
@@ -31,7 +31,7 @@ OrderItemModel _$OrderModelFromJson(Map<String, dynamic> json) =>
           .toList(),
     );
 
-Map<String, dynamic> _$OrderModelToJson(OrderItemModel instance) =>
+Map<String, dynamic> _$OrderItemModelToJson(OrderItemModel instance) =>
     <String, dynamic>{
       'id': instance.id,
       'transdate': instance.transdate.toIso8601String(),

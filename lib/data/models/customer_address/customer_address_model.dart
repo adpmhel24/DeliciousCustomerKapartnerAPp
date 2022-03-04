@@ -8,6 +8,9 @@ class CustomerAddressModel {
   @JsonKey(toJson: toNull, includeIfNull: false)
   String? uid;
 
+  @JsonKey(toJson: toNull, includeIfNull: false)
+  int? id;
+
   @JsonKey(name: "street_address")
   String? streetAddress;
 
@@ -19,16 +22,17 @@ class CustomerAddressModel {
   @JsonKey(name: "other_details")
   String? otherDetails;
 
-  @JsonKey(name: "is_default")
+  @JsonKey(name: "is_default", includeIfNull: false)
   bool? isDefault;
 
   CustomerAddressModel({
+    this.id,
     this.uid = '',
     this.streetAddress,
     this.cityMunicipality,
     this.brgy,
     this.otherDetails,
-    this.isDefault,
+    this.isDefault = false,
   });
 
   factory CustomerAddressModel.fromJson(Map<String, dynamic> json) =>
