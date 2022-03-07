@@ -32,7 +32,10 @@ class CustomDialog {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Icon(Icons.warning),
+          title: const Align(
+            alignment: Alignment.centerLeft,
+            child: Icon(Icons.warning),
+          ),
           content: Text(message),
           actions: [
             TextButton(
@@ -82,8 +85,8 @@ class CustomDialog {
   }
 
   // Success Dialog Modal
-  static success({
-    required BuildContext context,
+  static success(
+    BuildContext context, {
     required String message,
     void Function()? onPositiveClick,
   }) {

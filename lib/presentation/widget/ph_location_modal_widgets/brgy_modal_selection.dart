@@ -60,8 +60,9 @@ class SelectBaranggayModal extends StatelessWidget {
             builder: (_, state) {
               if (state is BrgyLoadedState) {
                 return SafeArea(
-                  child: SizedBox(
-                    height: (SizeConfig.screenHeight * .75).h,
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                        bottom: MediaQuery.of(context).viewInsets.bottom),
                     child: Column(
                       children: [
                         Container(

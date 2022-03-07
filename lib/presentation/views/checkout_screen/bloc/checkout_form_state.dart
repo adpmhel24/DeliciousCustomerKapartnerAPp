@@ -4,6 +4,9 @@ import 'package:kapartner_app/presentation/utils/text_field_validator.dart';
 
 class CheckoutFormState extends Equatable {
   final FormzStatus status;
+  final TextFieldModel custCode;
+  final TextFieldModel contactNumber;
+  final TextFieldModel address;
   final TextFieldModel deliveryDate;
   final TextFieldModel deliveryMethod;
   final TextFieldModel paymentMethod;
@@ -11,6 +14,9 @@ class CheckoutFormState extends Equatable {
 
   const CheckoutFormState({
     this.status = FormzStatus.pure,
+    this.custCode = const TextFieldModel.pure(),
+    this.contactNumber = const TextFieldModel.pure(),
+    this.address = const TextFieldModel.pure(),
     this.deliveryDate = const TextFieldModel.pure(),
     this.deliveryMethod = const TextFieldModel.pure(),
     this.paymentMethod = const TextFieldModel.pure(),
@@ -19,6 +25,9 @@ class CheckoutFormState extends Equatable {
 
   CheckoutFormState copyWith({
     FormzStatus? status,
+    TextFieldModel? custCode,
+    TextFieldModel? contactNumber,
+    TextFieldModel? address,
     TextFieldModel? deliveryDate,
     TextFieldModel? deliveryMethod,
     TextFieldModel? paymentMethod,
@@ -26,6 +35,9 @@ class CheckoutFormState extends Equatable {
   }) {
     return CheckoutFormState(
       status: status ?? this.status,
+      custCode: custCode ?? this.custCode,
+      contactNumber: contactNumber ?? this.contactNumber,
+      address: address ?? this.address,
       deliveryDate: deliveryDate ?? this.deliveryDate,
       deliveryMethod: deliveryMethod ?? this.deliveryMethod,
       paymentMethod: paymentMethod ?? this.paymentMethod,
@@ -36,6 +48,9 @@ class CheckoutFormState extends Equatable {
   @override
   List<Object?> get props => [
         status,
+        custCode,
+        contactNumber,
+        address,
         deliveryDate,
         deliveryMethod,
         paymentMethod,

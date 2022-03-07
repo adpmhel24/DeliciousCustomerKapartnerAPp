@@ -7,6 +7,30 @@ abstract class CheckoutFormEvent extends Equatable {
   List<Object?> get props => [];
 }
 
+class CustCodeChanged extends CheckoutFormEvent {
+  final String custCode;
+
+  const CustCodeChanged(this.custCode);
+  @override
+  List<Object?> get props => [custCode];
+}
+
+class ContactNumberChanged extends CheckoutFormEvent {
+  final String contactNumber;
+
+  const ContactNumberChanged(this.contactNumber);
+  @override
+  List<Object?> get props => [contactNumber];
+}
+
+class AddressChanged extends CheckoutFormEvent {
+  final String address;
+
+  const AddressChanged(this.address);
+  @override
+  List<Object?> get props => [address];
+}
+
 class DeliveryDateChanged extends CheckoutFormEvent {
   final String deliveryDate;
   const DeliveryDateChanged(this.deliveryDate);

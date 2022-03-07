@@ -18,6 +18,9 @@ class OrderItemModel {
   @JsonKey(name: "payment_status")
   int? paymentStatus;
 
+  @JsonKey(name: "payment_method")
+  String? paymentMethod;
+
   String? transtype;
   double doctotal;
 
@@ -38,26 +41,28 @@ class OrderItemModel {
 
   List<Map<String, dynamic>>? rows;
 
-  OrderItemModel(
-      {this.id,
-      required this.transdate,
-      this.remarks,
-      this.custCode,
-      this.docstatus,
-      this.orderStatus,
-      this.paymentStatus,
-      this.transtype,
-      required this.doctotal,
-      required this.rowDiscount,
-      this.gross = 0.00,
-      required this.delfee,
-      this.tenderamt = 0.00,
-      required this.deliveryDate,
-      this.address,
-      this.disctype,
-      this.discprcnt = 0.00,
-      this.otherfee = 0.00,
-      required this.rows});
+  OrderItemModel({
+    this.id,
+    required this.transdate,
+    this.remarks,
+    this.custCode,
+    this.docstatus,
+    this.orderStatus,
+    this.paymentStatus,
+    this.paymentMethod,
+    this.transtype,
+    required this.doctotal,
+    required this.rowDiscount,
+    this.gross = 0.00,
+    required this.delfee,
+    this.tenderamt = 0.00,
+    required this.deliveryDate,
+    this.address,
+    this.disctype,
+    this.discprcnt = 0.00,
+    this.otherfee = 0.00,
+    required this.rows,
+  });
 
   String getOrderStatus() {
     if (orderStatus == 0) {
@@ -69,7 +74,7 @@ class OrderItemModel {
   }
 
   factory OrderItemModel.fromJson(Map<String, dynamic> json) =>
-      _$OrderModelFromJson(json);
+      _$OrderItemModelFromJson(json);
 
-  Map<String, dynamic> toJson() => _$OrderModelToJson(this);
+  Map<String, dynamic> toJson() => _$OrderItemModelToJson(this);
 }

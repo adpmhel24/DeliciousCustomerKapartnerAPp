@@ -5,10 +5,52 @@ import 'bloc.dart';
 
 class CheckoutFormBloc extends Bloc<CheckoutFormEvent, CheckoutFormState> {
   CheckoutFormBloc() : super(const CheckoutFormState()) {
+    on<CustCodeChanged>(_onCustCodeChanged);
+    on<ContactNumberChanged>(_onContactNumberChanged);
+    on<AddressChanged>(_onAddressChanged);
     on<DeliveryDateChanged>(_onDeliveryDateChanged);
     on<DeliveryMethodChanged>(_onDeliveryMethodChanged);
     on<PaymentMethodChange>(_onPaymentMethodChange);
     on<NotesChanged>(_onNotesChanged);
+  }
+
+  void _onCustCodeChanged(
+      CustCodeChanged event, Emitter<CheckoutFormState> emit) {
+    final custCode = TextFieldModel.dirty(event.custCode);
+    emit(
+      state.copyWith(
+        custCode: custCode,
+        status: Formz.validate(
+          [state.deliveryDate, state.deliveryMethod, state.paymentMethod],
+        ),
+      ),
+    );
+  }
+
+  void _onContactNumberChanged(
+      ContactNumberChanged event, Emitter<CheckoutFormState> emit) {
+    final contactNumber = TextFieldModel.dirty(event.contactNumber);
+    emit(
+      state.copyWith(
+        contactNumber: contactNumber,
+        status: Formz.validate(
+          [state.deliveryDate, state.deliveryMethod, state.paymentMethod],
+        ),
+      ),
+    );
+  }
+
+  void _onAddressChanged(
+      AddressChanged event, Emitter<CheckoutFormState> emit) {
+    final address = TextFieldModel.dirty(event.address);
+    emit(
+      state.copyWith(
+        address: address,
+        status: Formz.validate(
+          [state.deliveryDate, state.deliveryMethod, state.paymentMethod],
+        ),
+      ),
+    );
   }
 
   void _onDeliveryDateChanged(

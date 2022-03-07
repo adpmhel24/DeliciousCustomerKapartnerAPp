@@ -60,14 +60,12 @@ class _UpdatePasswordFormState extends State<UpdatePasswordForm> {
                 current is PasswordUpdatingFailure,
             listener: (context, state) {
               if (state is PasswordUpdatedSuccessfully) {
-                CustomDialog.success(
-                    context: context,
-                    message: state.message,
+                CustomDialog.success(context, message: state.message,
                     onPositiveClick: () {
-                      Navigator.of(context)
-                        ..pop()
-                        ..pop();
-                    });
+                  Navigator.of(context)
+                    ..pop()
+                    ..pop();
+                });
               } else if (state is PasswordUpdatingFailure) {
                 CustomDialog.error(context, message: state.message);
               } else {

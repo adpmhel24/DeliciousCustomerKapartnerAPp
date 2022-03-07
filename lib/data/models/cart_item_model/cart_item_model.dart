@@ -16,6 +16,15 @@ class CartItemModel extends ProductModel {
     required this.total,
   }) : super(id: id, itemCode: itemCode, itemName: itemName);
 
+  Map<String, dynamic> checkOutData() => <String, dynamic>{
+        'item_code': itemCode,
+        'unit_price': price,
+        'quantity': quantity,
+        'uom': uom,
+        'disc_amount': 0.00,
+        'discprcnt': 0.00
+      };
+
   factory CartItemModel.fromJson(Map<String, dynamic> json) =>
       _$CartItemModelFromJson(json);
 

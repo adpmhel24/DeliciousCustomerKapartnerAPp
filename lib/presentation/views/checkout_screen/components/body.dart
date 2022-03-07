@@ -6,10 +6,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:kapartner_app/data/repositories/app_repo.dart';
 import 'package:kapartner_app/data/repositories/customer_info_repo.dart';
+import 'package:kapartner_app/presentation/widget/oval_button.dart';
 import 'package:kapartner_app/router/router.gr.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
-import '../../../../data/models/models.dart';
 import '../../../../global_bloc/blocs.dart';
 import '../../../utils/currency_formater.dart';
 
@@ -29,12 +29,24 @@ class _BodyState extends State<Body> {
   final TextEditingController _notesController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
   final DateFormat dateFormat = DateFormat("MM/dd/yyyy");
+  final CustomerInfoRepo _custInfoRepo = AppRepo.customerInfoRepo;
+  late String address = "";
 
   late String _deliveryMethodSelected = "";
   late String _paymentMethodSelected = "";
 
   @override
   void initState() {
+    address = "${_custInfoRepo.defautShippingAddress()?.streetAddress ?? ''} "
+        "${_custInfoRepo.defautShippingAddress()?.brgy ?? ''} "
+        "${_custInfoRepo.defautShippingAddress()?.cityMunicipality ?? ''}";
+    context
+        .read<CheckoutFormBloc>()
+        .add(CustCodeChanged(_custInfoRepo.customer.code));
+    context
+        .read<CheckoutFormBloc>()
+        .add(ContactNumberChanged(_custInfoRepo.customer.contactNumber ?? ""));
+    context.read<CheckoutFormBloc>().add(AddressChanged(address));
     super.initState();
   }
 
@@ -60,8 +72,6 @@ class _BodyState extends State<Body> {
 
   @override
   Widget build(BuildContext context) {
-    CustomerInfoRepo _custInfoRepo = AppRepo.customerInfoRepo;
-    CustomerAddressModel? _custAddress = _custInfoRepo.defautShippingAddress();
     return Scrollbar(
       isAlwaysShown: true,
       controller: _scrollController,
@@ -79,76 +89,38 @@ class _BodyState extends State<Body> {
                   elevation: 3,
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Flexible(
-                          flex: 3,
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "Customer Information: ",
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .subtitle2!
-                                    .copyWith(fontWeight: FontWeight.bold),
-                              ),
-                              SizedBox(
-                                height: 5.h,
-                              ),
-                              Text(
-                                "Full Name:  ${_custInfoRepo.customer.name}",
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                              SizedBox(
-                                height: 5.h,
-                              ),
-                              Text(
-                                "Contact #:  ${_custInfoRepo.customer.contactNumber ?? ''}",
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                              SizedBox(
-                                height: 5.h,
-                              ),
-                              Text(
-                                "Email:  ${_custInfoRepo.customer.email ?? ''}",
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ],
-                          ),
+                        Text(
+                          "Customer Information: ",
+                          style: Theme.of(context)
+                              .textTheme
+                              .subtitle2!
+                              .copyWith(fontWeight: FontWeight.bold),
                         ),
-                        Flexible(
-                          child: ElevatedButton(
-                            style: Theme.of(context)
-                                .elevatedButtonTheme
-                                .style!
-                                .copyWith(
-                                  padding: MaterialStateProperty.all(
-                                      const EdgeInsets.all(10)),
-                                  backgroundColor: MaterialStateProperty.all(
-                                      const Color(0xFFCEAB93)),
-                                  shape: MaterialStateProperty.all<
-                                      RoundedRectangleBorder>(
-                                    RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(18.0),
-                                      side: const BorderSide(
-                                        color:
-                                            Color.fromARGB(255, 180, 154, 153),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                            onPressed: () {
-                              AutoRouter.of(context).push(
-                                const HomeScreenRoute(
-                                    children: [ProfileScreenRoute()]),
-                              );
-                            },
-                            child: const Text("Change"),
-                          ),
-                        )
+                        SizedBox(
+                          height: 5.h,
+                        ),
+                        Text(
+                          "Full Name:  ${_custInfoRepo.customer.name}",
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        SizedBox(
+                          height: 5.h,
+                        ),
+                        Text(
+                          "Contact #:  ${_custInfoRepo.customer.contactNumber ?? ''}",
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        SizedBox(
+                          height: 5.h,
+                        ),
+                        Text(
+                          "Email:  ${_custInfoRepo.customer.email ?? ''}",
+                          overflow: TextOverflow.ellipsis,
+                        ),
                       ],
                     ),
                   ),
@@ -169,48 +141,35 @@ class _BodyState extends State<Body> {
                             mainAxisSize: MainAxisSize.min,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                "Shipping Address: ",
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .subtitle2!
-                                    .copyWith(fontWeight: FontWeight.bold),
+                              RichText(
+                                text: TextSpan(
+                                  text: "Shipping Address: ",
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .subtitle2!
+                                      .copyWith(fontWeight: FontWeight.bold),
+                                  children: const [
+                                    TextSpan(
+                                        text: '*',
+                                        style: TextStyle(color: Colors.red))
+                                  ],
+                                ),
                               ),
                               SizedBox(
                                 height: 5.h,
                               ),
-                              Text(
-                                "${_custAddress!.streetAddress!} ${_custAddress.brgy!} ${_custAddress.cityMunicipality!}",
-                                // overflow: TextOverflow.ellipsis,
-                              )
+                              Text(address)
                             ],
                           ),
                         ),
-                        Flexible(
-                          child: ElevatedButton(
-                            style: Theme.of(context)
-                                .elevatedButtonTheme
-                                .style!
-                                .copyWith(
-                                  padding: MaterialStateProperty.all(
-                                      const EdgeInsets.all(10)),
-                                  backgroundColor: MaterialStateProperty.all(
-                                      const Color(0xFFCEAB93)),
-                                  shape: MaterialStateProperty.all<
-                                      RoundedRectangleBorder>(
-                                    RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(18.0),
-                                      side: const BorderSide(
-                                        color:
-                                            Color.fromARGB(255, 180, 154, 153),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                            onPressed: () {},
-                            child: const Text("Change"),
-                          ),
-                        )
+                        OvalButton(
+                          onPressed: () {
+                            AutoRouter.of(context).popAndPush(
+                                const HomeScreenRoute(
+                                    children: [ProfileScreenRoute()]));
+                          },
+                          child: const Text('Change'),
+                        ),
                       ],
                     ),
                   ),
@@ -231,6 +190,11 @@ class _BodyState extends State<Body> {
                 controller: _notesController,
                 minLines: 3,
                 maxLines: 5,
+                onChanged: (_) {
+                  context
+                      .read<CheckoutFormBloc>()
+                      .add(NotesChanged(_notesController.text));
+                },
               ),
               SizedBox(height: 15.h),
               Text(
@@ -317,12 +281,18 @@ class _BodyState extends State<Body> {
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      "Payment: ",
-                      style: Theme.of(context)
-                          .textTheme
-                          .subtitle2!
-                          .copyWith(fontWeight: FontWeight.bold),
+                    RichText(
+                      text: TextSpan(
+                        text: "Payment: ",
+                        style: Theme.of(context)
+                            .textTheme
+                            .subtitle2!
+                            .copyWith(fontWeight: FontWeight.bold),
+                        children: const [
+                          TextSpan(
+                              text: '*', style: TextStyle(color: Colors.red))
+                        ],
+                      ),
                     ),
                     SizedBox(
                       height: 5.h,
@@ -341,22 +311,8 @@ class _BodyState extends State<Body> {
                 ),
               ),
               Flexible(
-                child: ElevatedButton(
-                  style: Theme.of(context).elevatedButtonTheme.style!.copyWith(
-                        padding:
-                            MaterialStateProperty.all(const EdgeInsets.all(10)),
-                        backgroundColor:
-                            MaterialStateProperty.all(const Color(0xFFCEAB93)),
-                        shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(18.0),
-                            side: const BorderSide(
-                              color: Color.fromARGB(255, 180, 154, 153),
-                            ),
-                          ),
-                        ),
-                      ),
+                child: OvalButton(
+                  child: const Text("Select"),
                   onPressed: () {
                     showMaterialModalBottomSheet(
                       context: context,
@@ -370,7 +326,6 @@ class _BodyState extends State<Body> {
                       builder: (_) {
                         return SafeArea(
                           child: SizedBox(
-                            // height: (SizeConfig.screenHeight * .75).h,
                             child: ListView.separated(
                               shrinkWrap: true,
                               itemCount: paymentMethods.length,
@@ -405,7 +360,6 @@ class _BodyState extends State<Body> {
                       },
                     );
                   },
-                  child: const Text("Change"),
                 ),
               )
             ],
@@ -431,12 +385,18 @@ class _BodyState extends State<Body> {
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      "Pickup / Delivery: ",
-                      style: Theme.of(context)
-                          .textTheme
-                          .subtitle2!
-                          .copyWith(fontWeight: FontWeight.bold),
+                    RichText(
+                      text: TextSpan(
+                        text: "Pickup / Delivery: ",
+                        style: Theme.of(context)
+                            .textTheme
+                            .subtitle2!
+                            .copyWith(fontWeight: FontWeight.bold),
+                        children: const [
+                          TextSpan(
+                              text: '*', style: TextStyle(color: Colors.red))
+                        ],
+                      ),
                     ),
                     SizedBox(
                       height: 5.h,
@@ -455,73 +415,57 @@ class _BodyState extends State<Body> {
                 ),
               ),
               Flexible(
-                child: ElevatedButton(
-                  style: Theme.of(context).elevatedButtonTheme.style!.copyWith(
-                        padding:
-                            MaterialStateProperty.all(const EdgeInsets.all(10)),
-                        backgroundColor:
-                            MaterialStateProperty.all(const Color(0xFFCEAB93)),
-                        shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(18.0),
-                            side: const BorderSide(
-                              color: Color.fromARGB(255, 180, 154, 153),
-                            ),
-                          ),
-                        ),
+                  child: OvalButton(
+                child: const Text("Select"),
+                onPressed: () {
+                  showMaterialModalBottomSheet(
+                    context: context,
+                    enableDrag: false,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(10.r),
+                        topRight: Radius.circular(10.r),
                       ),
-                  onPressed: () {
-                    showMaterialModalBottomSheet(
-                      context: context,
-                      enableDrag: false,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(10.r),
-                          topRight: Radius.circular(10.r),
-                        ),
-                      ),
-                      builder: (_) {
-                        return SafeArea(
-                          child: SizedBox(
-                            // height: (SizeConfig.screenHeight * .75).h,
-                            child: ListView.separated(
-                              shrinkWrap: true,
-                              itemCount: deliveryMethods.length,
-                              separatorBuilder: (_, index) {
-                                return const Divider(
-                                  thickness: 1,
-                                  color: Color(0xFFBDBDBD),
-                                );
-                              },
-                              itemBuilder: (_, index) {
-                                return ListTile(
-                                  title: Text(
+                    ),
+                    builder: (_) {
+                      return SafeArea(
+                        child: SizedBox(
+                          // height: (SizeConfig.screenHeight * .75).h,
+                          child: ListView.separated(
+                            shrinkWrap: true,
+                            itemCount: deliveryMethods.length,
+                            separatorBuilder: (_, index) {
+                              return const Divider(
+                                thickness: 1,
+                                color: Color(0xFFBDBDBD),
+                              );
+                            },
+                            itemBuilder: (_, index) {
+                              return ListTile(
+                                title: Text(
+                                  deliveryMethods[index]["name"],
+                                ),
+                                selected: _deliveryMethodSelected ==
                                     deliveryMethods[index]["name"],
-                                  ),
-                                  selected: _deliveryMethodSelected ==
-                                      deliveryMethods[index]["name"],
-                                  selectedColor: Constant.onSelectedColor,
-                                  onTap: () {
-                                    _deliveryMethodSelected =
-                                        deliveryMethods[index]["name"];
-                                    context.read<CheckoutFormBloc>().add(
-                                          DeliveryMethodChanged(
-                                              deliveryMethods[index]["name"]),
-                                        );
-                                    Navigator.of(context).pop();
-                                  },
-                                );
-                              },
-                            ),
+                                selectedColor: Constant.onSelectedColor,
+                                onTap: () {
+                                  _deliveryMethodSelected =
+                                      deliveryMethods[index]["name"];
+                                  context.read<CheckoutFormBloc>().add(
+                                        DeliveryMethodChanged(
+                                            deliveryMethods[index]["name"]),
+                                      );
+                                  Navigator.of(context).pop();
+                                },
+                              );
+                            },
                           ),
-                        );
-                      },
-                    );
-                  },
-                  child: const Text("Change"),
-                ),
-              )
+                        ),
+                      );
+                    },
+                  );
+                },
+              ))
             ],
           ),
         ),
@@ -562,7 +506,7 @@ class DeliveryDateField extends StatelessWidget {
             _controller.text = _dateFormat.format(date);
             context
                 .read<CheckoutFormBloc>()
-                .add(DeliveryDateChanged(_controller.text));
+                .add(DeliveryDateChanged(date.toIso8601String()));
           },
           currentTime: DateTime.now(),
           locale: LocaleType.en,

@@ -1,13 +1,16 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:kapartner_app/presentation/views/default_page/default_screen.dart';
+import 'package:kapartner_app/presentation/views/home_page/default_screen.dart';
 import 'package:kapartner_app/presentation/views/registration_screen/customer_registration/customer_reg_screen.dart';
 
 import '../presentation/views/checkout_screen/checkout_screen.dart';
-import '../presentation/views/default_page/screens/cart_screen/cart_screen.dart';
-import '../presentation/views/default_page/screens/products_screen/components/prod_details.dart';
-import '../presentation/views/default_page/screens/products_screen/products_screen.dart';
-import '../presentation/views/default_page/screens/profile_screen/profile_screen.dart';
+import '../presentation/views/home_page/screens/cart_screen/cart_screen.dart';
+import '../presentation/views/home_page/screens/orders_screen/components.dart/order_details.dart';
+import '../presentation/views/home_page/screens/orders_screen/orders_screen.dart';
+import '../presentation/views/home_page/screens/products_screen/components/prod_details.dart';
+import '../presentation/views/home_page/screens/products_screen/products_screen.dart';
+import '../presentation/views/home_page/screens/profile_screen/profile_screen.dart';
 import '../presentation/views/login_screen/login_screen.dart';
+import '../presentation/views/order_success_screen/order_success_screen.dart';
 import '../presentation/views/registration_screen/ka_partner_registration/ka_partner_reg.dart';
 import '../presentation/views/registration_screen/registration_screen.dart';
 import 'router_guard.dart';
@@ -26,6 +29,7 @@ import 'router_guard.dart';
           page: CartScreen,
         ),
         AutoRoute(path: 'profile', page: ProfileScreen),
+        AutoRoute(path: 'orders', page: OrdersScreen),
       ],
     ),
     AutoRoute(
@@ -36,6 +40,16 @@ import 'router_guard.dart';
     AutoRoute(
       page: CheckOutScreen,
       path: '/checkout',
+      guards: [RouteGuard],
+    ),
+    AutoRoute(
+      page: OrderDetailsScreen,
+      path: '/orderDetails',
+      guards: [RouteGuard],
+    ),
+    AutoRoute(
+      page: OrderSuccessScreen,
+      path: '/orderSuccess',
       guards: [RouteGuard],
     ),
     AutoRoute(

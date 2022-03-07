@@ -66,6 +66,19 @@ class PhLocationRepo {
   //   return _provinces;
   // }
 
+  Future<void> getCityMunicipalityCodeByKeyword(String keyword) async {
+    if (keyword.isNotEmpty) {
+      if (_citiesMunicipalities.isEmpty) {
+        await fetchCitiesMunicipalities();
+      } else {
+        String cityMunicipalityCode = _citiesMunicipalities
+            .firstWhere((e) => e.name.toLowerCase() == keyword.toLowerCase())
+            .code;
+        selectedCityMunicipalityCode = cityMunicipalityCode;
+      }
+    }
+  }
+
   Future<void> fetchCitiesMunicipalities() async {
     String path;
     if (selectedProvinceCode.isNotEmpty) {

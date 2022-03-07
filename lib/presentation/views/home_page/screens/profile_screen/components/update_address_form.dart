@@ -10,17 +10,17 @@ import '../../../../../utils/size_config.dart';
 import '../../../../../widget/ph_location_modal_widgets/brgy_modal_selection.dart';
 import '../../../../../widget/ph_location_modal_widgets/city_municipality_modal_selection.dart';
 
-class AddressForm extends StatefulWidget {
-  const AddressForm({Key? key, required this.bloc, this.addressModel})
+class UpdateAddressForm extends StatefulWidget {
+  const UpdateAddressForm({Key? key, required this.bloc, this.addressModel})
       : super(key: key);
   final CustomerAddressModel? addressModel;
   final CustomerInfoBloc bloc;
 
   @override
-  _AddressFormState createState() => _AddressFormState();
+  _UpdateAddressFormState createState() => _UpdateAddressFormState();
 }
 
-class _AddressFormState extends State<AddressForm> {
+class _UpdateAddressFormState extends State<UpdateAddressForm> {
   final TextEditingController _streetAddressController =
       TextEditingController();
   final TextEditingController _brgyControllerController =
@@ -61,7 +61,7 @@ class _AddressFormState extends State<AddressForm> {
       padding:
           EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
       child: SizedBox(
-        height: (SizeConfig.screenHeight * .7).h,
+        height: (SizeConfig.screenHeight * .6).h,
         child: SingleChildScrollView(
           child: Padding(
             padding: EdgeInsets.only(
@@ -75,7 +75,10 @@ class _AddressFormState extends State<AddressForm> {
                 children: [
                   Text(
                     "Update Address",
-                    style: Theme.of(context).textTheme.subtitle1,
+                    style: Theme.of(context)
+                        .textTheme
+                        .subtitle1!
+                        .copyWith(fontWeight: FontWeight.bold),
                   ),
                   SizedBox(height: 20.h),
                   CityMunicipalityModal(
@@ -97,6 +100,7 @@ class _AddressFormState extends State<AddressForm> {
                   SizedBox(height: 10.h),
                   FormBuilderCheckbox(
                     name: 'isDefault',
+                    initialValue: _isDefault,
                     title: const Text("Default Address"),
                     onChanged: (isDefault) {
                       _isDefault = isDefault;
@@ -107,6 +111,15 @@ class _AddressFormState extends State<AddressForm> {
                     child: ElevatedButton(
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
+                          CustomerAddressModel _address = widget.addressModel!;
+                          _address.streetAddress =
+                              _streetAddressController.text;
+                          _address.brgy = _brgyControllerController.text;
+                          _address.cityMunicipality =
+                              _citymunicipalityController.text;
+                          _address.isDefault = _isDefault;
+                          widget.bloc.add(UpdateCustomerDetail(_address));
+
                           Navigator.of(context).pop();
                         }
                       },

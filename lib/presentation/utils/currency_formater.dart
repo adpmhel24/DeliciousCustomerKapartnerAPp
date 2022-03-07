@@ -1,6 +1,6 @@
 import 'package:intl/intl.dart';
 
-String formatStringToDecimal(var amount, {bool hasCurrency = false}) {
+String formatStringToDecimal(String amount, {bool hasCurrency = false}) {
   String currency = '₱';
   var newValue = '';
   final f =

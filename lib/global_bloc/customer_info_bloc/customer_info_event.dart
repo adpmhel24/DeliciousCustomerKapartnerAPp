@@ -26,18 +26,24 @@ class EmailAddressUpdated extends CustomerInfoEvent {
   List<Object?> get props => [email];
 }
 
-// class PasswordUpdated extends CustomerInfoEvent {
-//   final String password;
-//   const PasswordUpdated(this.password);
-
-//   @override
-//   List<Object?> get props => [password];
-// }
-
 class UpdateCustomerDetail extends CustomerInfoEvent {
-  final int orderDetailId;
   final CustomerAddressModel addressModel;
-  const UpdateCustomerDetail(this.orderDetailId, this.addressModel);
+  const UpdateCustomerDetail(this.addressModel);
   @override
-  List<Object?> get props => [orderDetailId, addressModel];
+  List<Object?> get props => [addressModel];
+}
+
+class AddNewCustomerDetail extends CustomerInfoEvent {
+  final CustomerAddressModel addressModel;
+  final int customerId;
+  const AddNewCustomerDetail(this.customerId, this.addressModel);
+  @override
+  List<Object?> get props => [customerId, addressModel];
+}
+
+class DeleteCustomerAddressDetail extends CustomerInfoEvent {
+  final int customerDetailId;
+  const DeleteCustomerAddressDetail(this.customerDetailId);
+  @override
+  List<Object?> get props => [customerDetailId];
 }

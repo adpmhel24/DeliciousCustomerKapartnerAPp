@@ -39,6 +39,7 @@ class CityMunicipalityModal extends StatelessWidget {
       labelText: labelText ?? 'City / Municipality',
       onChanged: onChanged,
       onTap: () {
+        phLocationRepo.selectedCityMunicipalityCode = "";
         context
             .read<CityMunicipalityBloc>()
             .add(FetchCityMunicipalityFromLocal());
@@ -61,76 +62,72 @@ class CityMunicipalityModal extends StatelessWidget {
             builder: (_, state) {
               if (state is CityMunicipalityLoadedState) {
                 return SafeArea(
-                  child: SizedBox(
-                    height: (heightSized * .75).h,
-                    child: Column(
-                      children: [
-                        Container(
-                          margin: EdgeInsets.symmetric(
-                            horizontal: 10.w,
-                          ),
-                          child: Card(
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8.r)),
-                            child: CustomTextField(
-                              labelText: 'Search by keyword',
-                              onChanged: (value) {
-                                context.read<CityMunicipalityBloc>().add(
-                                      SearchCityMunicipalityByKeyword(value),
-                                    );
-                              },
-                            ),
-                          ),
+                  child: Column(
+                    children: [
+                      Container(
+                        margin: EdgeInsets.symmetric(
+                          horizontal: 10.w,
                         ),
-                        SizedBox(
-                          height: 10.h,
-                        ),
-                        Expanded(
-                          child: RefreshIndicator(
-                            onRefresh: () async {
-                              await Future.delayed(
-                                  const Duration(milliseconds: 200));
-                              context
-                                  .read<CityMunicipalityBloc>()
-                                  .add(FetchCityMunicipalityFromApi());
+                        child: Card(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8.r)),
+                          child: CustomTextField(
+                            labelText: 'Search by keyword',
+                            onChanged: (value) {
+                              context.read<CityMunicipalityBloc>().add(
+                                    SearchCityMunicipalityByKeyword(value),
+                                  );
                             },
-                            child: ListView.separated(
-                              shrinkWrap: true,
-                              itemCount: state.citiesMunicipalities.length,
-                              itemBuilder: (_, index) {
-                                return ListTile(
-                                  title: Text(
-                                      state.citiesMunicipalities[index].name),
-                                  selectedColor: Constant.onSelectedColor,
-                                  selected: controller.text ==
-                                      state.citiesMunicipalities[index].name,
-                                  onTap: () {
-                                    controller.text =
-                                        state.citiesMunicipalities[index].name;
-
-                                    phLocationRepo
-                                            .selectedCityMunicipalityCode =
-                                        state.citiesMunicipalities[index].code;
-
-                                    if (onChanged != null) {
-                                      onChanged!(controller.text);
-                                    }
-
-                                    Navigator.of(context).pop();
-                                  },
-                                );
-                              },
-                              separatorBuilder: (_, index) {
-                                return const Divider(
-                                  thickness: 1,
-                                  color: Color(0xFFBDBDBD),
-                                );
-                              },
-                            ),
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                      SizedBox(
+                        height: 10.h,
+                      ),
+                      Expanded(
+                        child: RefreshIndicator(
+                          onRefresh: () async {
+                            await Future.delayed(
+                                const Duration(milliseconds: 200));
+                            context
+                                .read<CityMunicipalityBloc>()
+                                .add(FetchCityMunicipalityFromApi());
+                          },
+                          child: ListView.separated(
+                            shrinkWrap: true,
+                            itemCount: state.citiesMunicipalities.length,
+                            itemBuilder: (_, index) {
+                              return ListTile(
+                                title: Text(
+                                    state.citiesMunicipalities[index].name),
+                                selectedColor: Constant.onSelectedColor,
+                                selected: controller.text ==
+                                    state.citiesMunicipalities[index].name,
+                                onTap: () {
+                                  controller.text =
+                                      state.citiesMunicipalities[index].name;
+
+                                  phLocationRepo.selectedCityMunicipalityCode =
+                                      state.citiesMunicipalities[index].code;
+
+                                  if (onChanged != null) {
+                                    onChanged!(controller.text);
+                                  }
+
+                                  Navigator.of(context).pop();
+                                },
+                              );
+                            },
+                            separatorBuilder: (_, index) {
+                              return const Divider(
+                                thickness: 1,
+                                color: Color(0xFFBDBDBD),
+                              );
+                            },
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 );
               } else if (state is CityMunicipalityLoadingState) {

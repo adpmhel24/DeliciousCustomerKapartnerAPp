@@ -7,6 +7,8 @@ class GlobalBloc {
   static final authBloc = AuthBloc();
   static final cartBloc = CartBloc();
   static final customerInfoBloc = CustomerInfoBloc();
+  static final productBloc = ProductsBloc();
+  static final orderBloc = OrderBloc();
   // static final productsBloc = ProductsBloc();
   // static final customerBloc = CustomerBloc();
   // static final salesTypeBloc = SalesTypeBloc();
@@ -23,6 +25,10 @@ class GlobalBloc {
     BlocProvider<CityMunicipalityBloc>(
         create: (context) => cityMunicipalityBloc),
     BlocProvider<BrgyBloc>(create: (context) => brgyBloc),
+    BlocProvider<ProductsBloc>(create: (context) => productBloc),
+    BlocProvider<ProductsBloc>(create: (context) => productBloc),
+    BlocProvider<OrderBloc>(create: (context) => orderBloc),
+
     // BlocProvider<ProductsBloc>(create: (context) => productsBloc),
     // BlocProvider<CustomerBloc>(create: (context) => customerBloc),
     // BlocProvider<SalesTypeBloc>(create: (context) => salesTypeBloc),
@@ -35,6 +41,8 @@ class GlobalBloc {
     authBloc.close();
     cartBloc.close();
     customerInfoBloc.close();
+    productBloc.close();
+    orderBloc.close();
     // productsBloc.close();
     // cartBloc.close();
     // customerBloc.close();

@@ -34,8 +34,8 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     emit(CartItemsLoaded(_cartItemsRepo.cartItems));
   }
 
-  void _onClearCart(ClearCart event, Emitter<CartState> emit) {
-    _cartItemsRepo.clearCart();
+  void _onClearCart(ClearCart event, Emitter<CartState> emit) async {
+    await _cartItemsRepo.clearCart();
     emit(CartItemsLoaded(_cartItemsRepo.cartItems));
   }
 }

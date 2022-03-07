@@ -80,9 +80,57 @@ class CustomerInfoRepo {
     return message;
   }
 
+  Future<String> addNewCustomerDetails({
+    required int customerId,
+    required Map<String, dynamic> data,
+  }) async {
+    Response response;
+    String message = 'Updating Customer Details: Unknown Error!';
+
+    try {
+      response = await _customerAPI.addNewCustomerDetails(
+          _authRepository.currentUser.token,
+          customerId: customerId.toString(),
+          data: data);
+      if (response.statusCode == 201 || response.statusCode == 200) {
+        //  Update Customer in local
+        _customer = CustomerModel.fromJson(response.data['data']);
+        message = response.data['message'];
+      }
+    } on HttpException catch (e) {
+      throw HttpException(e.message);
+    }
+    return message;
+  }
+
+  Future<String> deleteCustomerAddressDetail({
+    required int customerDetailsID,
+  }) async {
+    Response response;
+    String message = 'Updating Customer Details: Unknown Error!';
+
+    try {
+      response = await _customerAPI.deleteCustomerDetails(
+        _authRepository.currentUser.token,
+        customerDetailsID: customerDetailsID,
+      );
+      if (response.statusCode == 201 || response.statusCode == 200) {
+        //  Update Customer in local
+        _customer = CustomerModel.fromJson(response.data['data']);
+        message = response.data['message'];
+      }
+    } on HttpException catch (e) {
+      throw HttpException(e.message);
+    }
+    return message;
+  }
+
   CustomerAddressModel? defautShippingAddress() {
     int index =
         _customer.details.indexWhere((element) => element!.isDefault! == true);
-    return _customer.details[index];
+    if (_customer.details.isNotEmpty) {
+      return _customer.details[index];
+    }
+    return null;
   }
 }

@@ -4,13 +4,15 @@ part 'product_model.g.dart';
 
 @JsonSerializable()
 class ProductModel {
-  late int id;
+  static toNull(_) => null;
+
+  int id;
 
   @JsonKey(name: "item_code")
-  late String itemCode;
+  String itemCode;
 
   @JsonKey(name: "item_name")
-  late String itemName;
+  String itemName;
   String? uom;
 
   @JsonKey(name: "item_group")

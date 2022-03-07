@@ -80,24 +80,4 @@ class ProductCard extends StatelessWidget {
       ),
     );
   }
-
-  // _showButtonSheet(BuildContext context) {
-  //   return showMaterialModalBottomSheet(
-  //     shape: RoundedRectangleBorder(
-  //       borderRadius: BorderRadius.only(
-  //         topLeft: Radius.circular(10.r),
-  //         topRight: Radius.circular(10.r),
-  //       ),
-  //     ),
-  //     context: context,
-  //     builder: (_) => SingleChildScrollView(
-  //       controller: ModalScrollController.of(context),
-  //       child: BlocProvider.value(
-  //         value: BlocProvider.of<ProductSelectionBloc>(context),
-  //         child: SelectItemForm(
-  //             product: product, selectionProductionContext: context),
-  //       ),
-  //     ),
-  //   );
-  // }
 }
