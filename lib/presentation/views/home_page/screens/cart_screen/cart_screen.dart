@@ -2,12 +2,14 @@ import 'package:auto_route/auto_route.dart';
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kapartner_app/presentation/utils/currency_formater.dart';
 import 'package:kapartner_app/data/repositories/cart_items_repo.dart';
 import 'package:kapartner_app/presentation/widget/custom_dialog.dart';
 import 'package:kapartner_app/router/router.gr.dart';
 
 import '../../../../../global_bloc/blocs.dart';
+import '../../../../widget/constant.dart';
 import 'components/body.dart';
 
 class CartScreen extends StatelessWidget {
@@ -58,8 +60,23 @@ class CartScreen extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Text(
-                      "Total: ${formatStringToDecimal(_cartItemRepo.totalCart.toString(), hasCurrency: true)}"),
+                  Wrap(
+                    children: [
+                      const Text(
+                        "Total:",
+                        style: TextStyle(color: Constant.inlineLabelColor),
+                      ),
+                      SizedBox(
+                        width: 5.w,
+                      ),
+                      Text(
+                        formatStringToDecimal(
+                            _cartItemRepo.totalCart.toString(),
+                            hasCurrency: true),
+                        style: Theme.of(context).textTheme.bodyText2,
+                      ),
+                    ],
+                  ),
                   ElevatedButton(
                     onPressed: (_cartItemRepo.cartItems.isNotEmpty)
                         ? () {

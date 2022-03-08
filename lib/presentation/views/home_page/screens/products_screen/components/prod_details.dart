@@ -84,7 +84,10 @@ class _ProductDetailsState extends State<ProductDetails> {
                   const SizedBox(height: 50),
                   Text(
                     widget.loadedProduct.itemName,
-                    style: Theme.of(context).textTheme.titleLarge,
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleLarge!
+                        .copyWith(fontWeight: FontWeight.bold),
                   ),
                   SizedBox(height: 10.h),
                   Row(

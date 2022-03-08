@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:kapartner_app/data/models/models.dart';
 import 'package:kapartner_app/presentation/utils/currency_formater.dart';
-import 'package:collection/collection.dart';
 
 import '../../../../../widget/constant.dart';
 
@@ -202,29 +201,49 @@ class OrderDetailsScreen extends StatelessWidget {
                 "${order.rows?[indx]['quantity'].toString()} ${order.rows?[indx]['uom']}"),
             title: Text(
               order.rows?[indx]["item_code"] ?? "",
-              style: const TextStyle(fontWeight: FontWeight.bold),
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14.sp),
             ),
-            subtitle:
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Wrap(
-                children: [
-                  const Text(
-                    "Unit Price:",
-                    style: TextStyle(color: Constant.inlineLabelColor),
-                  ),
-                  SizedBox(
-                    width: 5.w,
-                  ),
-                  Text(
-                    order.rows?[indx]["unit_price"].toString() ?? "",
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
+            subtitle: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Wrap(
+                  children: [
+                    const Text(
+                      "Unit Price:",
+                      style: TextStyle(color: Constant.inlineLabelColor),
                     ),
-                  ),
-                ],
-              ),
-              Text(order.rows?[indx]["unit_price"].toString() ?? ""),
-            ]),
+                    SizedBox(
+                      width: 5.w,
+                    ),
+                    Text(
+                      formatStringToDecimal(
+                          order.rows![indx]["unit_price"].toString(),
+                          hasCurrency: true),
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+                Wrap(
+                  children: [
+                    const Text(
+                      "Discount %:",
+                      style: TextStyle(color: Constant.inlineLabelColor),
+                    ),
+                    SizedBox(
+                      width: 5.w,
+                    ),
+                    Text(
+                      order.rows?[indx]["discprcnt"].toString() ?? "",
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
             trailing: Text(formatStringToDecimal(
               order.rows?[indx]["subtotal"].toString() ?? "",
               hasCurrency: true,

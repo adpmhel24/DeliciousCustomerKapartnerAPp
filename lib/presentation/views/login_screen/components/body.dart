@@ -1,10 +1,8 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:formz/formz.dart';
 
-import '../../../../router/router.gr.dart';
 import '../bloc/bloc.dart';
 import 'form.dart';
 
@@ -39,12 +37,12 @@ class LoginBody extends StatelessWidget {
               ),
               SizedBox(height: 18.h),
               const LoginForm(),
-              SizedBox(height: 5.h),
-              TextButton(
-                onPressed: () {},
-                child: const Text('Forgot Password'),
-              ),
-              SizedBox(height: 5.h),
+              // SizedBox(height: 5.h),
+              // TextButton(
+              //   onPressed: () {},
+              //   child: const Text('Forgot Password'),
+              // ),
+              SizedBox(height: 20.h),
               SizedBox(
                 width: double.infinity,
                 height: 50.h,
@@ -66,23 +64,23 @@ class LoginBody extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(height: 18.h),
-              Wrap(
-                crossAxisAlignment: WrapCrossAlignment.center,
-                children: [
-                  const Text("Does not have an account? "),
-                  TextButton(
-                    onPressed: () {
-                      AutoRouter.of(context)
-                          .push(const RegistrationScreenRoute());
-                    },
-                    child: const Text(
-                      'Sign In',
-                      style: TextStyle(fontStyle: FontStyle.italic),
-                    ),
-                  )
-                ],
-              )
+              // SizedBox(height: 18.h),
+              // Wrap(
+              //   crossAxisAlignment: WrapCrossAlignment.center,
+              //   children: [
+              //     const Text("Does not have an account? "),
+              //     TextButton(
+              //       onPressed: () {
+              //         AutoRouter.of(context)
+              //             .push(const RegistrationScreenRoute());
+              //       },
+              //       child: const Text(
+              //         'Sign In',
+              //         style: TextStyle(fontStyle: FontStyle.italic),
+              //       ),
+              //     )
+              //   ],
+              // ),
             ],
           ),
         ),

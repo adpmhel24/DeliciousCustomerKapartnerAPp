@@ -103,23 +103,59 @@ class _BodyState extends State<Body> {
                         SizedBox(
                           height: 5.h,
                         ),
-                        Text(
-                          "Full Name:  ${_custInfoRepo.customer.name}",
-                          overflow: TextOverflow.ellipsis,
+                        Wrap(
+                          children: [
+                            const Text(
+                              "Full Name:",
+                              style:
+                                  TextStyle(color: Constant.inlineLabelColor),
+                            ),
+                            SizedBox(
+                              width: 5.w,
+                            ),
+                            Text(
+                              _custInfoRepo.customer.name,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ],
                         ),
                         SizedBox(
                           height: 5.h,
                         ),
-                        Text(
-                          "Contact #:  ${_custInfoRepo.customer.contactNumber ?? ''}",
-                          overflow: TextOverflow.ellipsis,
+                        Wrap(
+                          children: [
+                            const Text(
+                              "Contact #:",
+                              style:
+                                  TextStyle(color: Constant.inlineLabelColor),
+                            ),
+                            SizedBox(
+                              width: 5.w,
+                            ),
+                            Text(
+                              _custInfoRepo.customer.contactNumber ?? '',
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ],
                         ),
                         SizedBox(
                           height: 5.h,
                         ),
-                        Text(
-                          "Email:  ${_custInfoRepo.customer.email ?? ''}",
-                          overflow: TextOverflow.ellipsis,
+                        Wrap(
+                          children: [
+                            const Text(
+                              "Email:",
+                              style:
+                                  TextStyle(color: Constant.inlineLabelColor),
+                            ),
+                            SizedBox(
+                              width: 5.w,
+                            ),
+                            Text(
+                              _custInfoRepo.customer.email ?? '',
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ],
                         ),
                       ],
                     ),

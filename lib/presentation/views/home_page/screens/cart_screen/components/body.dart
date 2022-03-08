@@ -60,23 +60,65 @@ class Body extends StatelessWidget {
                             SizedBox(
                               height: 10.h,
                             ),
-                            Text(
-                              "Quantity: ${formatStringToDecimal(state.cartItems[index].quantity.toString())}",
-                              style: Theme.of(context).textTheme.bodyText2,
+                            Wrap(
+                              children: [
+                                const Text(
+                                  "Quantity:",
+                                  style: TextStyle(
+                                      color: Constant.inlineLabelColor),
+                                ),
+                                SizedBox(
+                                  width: 5.w,
+                                ),
+                                Text(
+                                  formatStringToDecimal(state
+                                      .cartItems[index].quantity
+                                      .toString()),
+                                  style: Theme.of(context).textTheme.bodyText2,
+                                ),
+                              ],
                             ),
                             SizedBox(
                               height: 3.h,
                             ),
-                            Text(
-                              "Price: ${formatStringToDecimal(state.cartItems[index].price.toString(), hasCurrency: true)}",
-                              style: Theme.of(context).textTheme.bodyText2,
+                            Wrap(
+                              children: [
+                                const Text(
+                                  "Price:",
+                                  style: TextStyle(
+                                      color: Constant.inlineLabelColor),
+                                ),
+                                SizedBox(
+                                  width: 5.w,
+                                ),
+                                Text(
+                                  formatStringToDecimal(
+                                      state.cartItems[index].price.toString(),
+                                      hasCurrency: true),
+                                  style: Theme.of(context).textTheme.bodyText2,
+                                ),
+                              ],
                             ),
                             SizedBox(
                               height: 3.h,
                             ),
-                            Text(
-                              "Total: ${formatStringToDecimal(state.cartItems[index].total.toString(), hasCurrency: true)}",
-                              style: Theme.of(context).textTheme.bodyText2,
+                            Wrap(
+                              children: [
+                                const Text(
+                                  "Total:",
+                                  style: TextStyle(
+                                      color: Constant.inlineLabelColor),
+                                ),
+                                SizedBox(
+                                  width: 5.w,
+                                ),
+                                Text(
+                                  formatStringToDecimal(
+                                      state.cartItems[index].total.toString(),
+                                      hasCurrency: true),
+                                  style: Theme.of(context).textTheme.bodyText2,
+                                ),
+                              ],
                             ),
                           ]),
                       trailing: IconButton(

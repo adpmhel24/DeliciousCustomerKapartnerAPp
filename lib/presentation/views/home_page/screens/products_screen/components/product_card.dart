@@ -65,7 +65,11 @@ class ProductCard extends StatelessWidget {
                       ),
                 Text(
                   product.itemName,
-                  style: Theme.of(context).textTheme.titleSmall,
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleSmall!
+                      .copyWith(fontWeight: FontWeight.bold, fontSize: 14.sp),
+                  overflow: TextOverflow.ellipsis,
                 ),
                 Text(
                   "${formatStringToDecimal(
