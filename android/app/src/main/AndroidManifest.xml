@@ -2,7 +2,7 @@
     package="com.example.kapartner_app">
     <uses-permission android:name="android.permission.INTERNET"/>
    <application
-        android:label="Delicious"
+        android:label="Ka-Delicious App"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
         <activity
