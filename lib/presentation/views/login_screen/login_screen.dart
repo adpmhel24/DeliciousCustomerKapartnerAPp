@@ -50,8 +50,7 @@ class LoginFormScreen extends StatelessWidget {
                     NewUpdate.displayAlert(
                       context,
                       appName: state.devicePackageInfo.appName,
-                      message: const Text(
-                          "A version of Delicious Ordering App is available! "),
+                      message: const Text("New version is available! "),
                       appUrl:
                           "https://github.com/adpmhel24/DeliciousCustomerKapartnerAPp/releases/download/v1.0.${state.availableVersion.buildNumber}/kadelicious_app.apk",
                       releaseNotes: state.availableVersion.releaseNotes,
