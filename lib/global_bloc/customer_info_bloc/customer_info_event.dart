@@ -26,6 +26,15 @@ class EmailAddressUpdated extends CustomerInfoEvent {
   List<Object?> get props => [email];
 }
 
+class UpdateToDefaultAddress extends CustomerInfoEvent {
+  final int customerDetailId;
+  final bool isDefault;
+
+  const UpdateToDefaultAddress(this.customerDetailId, this.isDefault);
+  @override
+  List<Object?> get props => [customerDetailId, isDefault];
+}
+
 class UpdateCustomerDetail extends CustomerInfoEvent {
   final CustomerAddressModel addressModel;
   const UpdateCustomerDetail(this.addressModel);

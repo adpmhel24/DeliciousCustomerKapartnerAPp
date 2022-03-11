@@ -200,9 +200,10 @@ class _BodyState extends State<Body> {
                         ),
                         OvalButton(
                           onPressed: () {
-                            AutoRouter.of(context).popAndPush(
-                                const HomeScreenRoute(
-                                    children: [ProfileScreenRoute()]));
+                            final router = context.innerRouterOf<TabsRouter>(
+                                HomeScreenRoute.name);
+                            router?.pop();
+                            router?.navigate(const ProfileScreenRoute());
                           },
                           child: const Text('Change'),
                         ),

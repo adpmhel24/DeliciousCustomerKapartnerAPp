@@ -20,168 +20,173 @@ class OrderDetailsScreen extends StatelessWidget {
         ),
       ),
       body: Padding(
-        padding: EdgeInsets.symmetric(vertical: 20.h, horizontal: 20.w),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  "Order No ${order.id}",
-                  style: Theme.of(context).textTheme.subtitle1!.copyWith(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20.sp,
-                      ),
+        padding: EdgeInsets.only(top: 10.h, left: 20.w, right: 20.w),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Order No ${order.id}",
+                    style: Theme.of(context).textTheme.subtitle1!.copyWith(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20.sp,
+                        ),
+                  ),
+                  Text(
+                    order.orderStatus == 0 && order.docstatus != 'N'
+                        ? "Pending"
+                        : order.orderStatus == 1 && order.docstatus != 'N'
+                            ? "To Deliver"
+                            : "Delivered",
+                    style: const TextStyle(
+                      color: Constant.inlineLabelColor,
+                    ),
+                  )
+                ],
+              ),
+              Text(
+                DateFormat('MM/dd/yyy').format(order.transdate),
+                style: const TextStyle(
+                  color: Constant.inlineLabelColor,
                 ),
-                Text(
-                  order.orderStatus == 0 && order.docstatus != 'N'
-                      ? "Pending"
-                      : order.orderStatus == 1 && order.docstatus != 'N'
-                          ? "To Deliver"
-                          : "Delivered",
-                  style: const TextStyle(
-                    color: Constant.inlineLabelColor,
-                  ),
-                )
-              ],
-            ),
-            Text(
-              DateFormat('MM/dd/yyy').format(order.transdate),
-              style: const TextStyle(
-                color: Constant.inlineLabelColor,
               ),
-            ),
-            SizedBox(
-              height: 10.h,
-            ),
-            ColumnLabelInfo(
-              label: "Delivery date",
-              child: Text(
-                DateFormat('MM/dd/yyy').format(order.deliveryDate),
-                style: Theme.of(context)
-                    .textTheme
-                    .subtitle1!
-                    .copyWith(fontWeight: FontWeight.bold),
+              SizedBox(
+                height: 10.h,
               ),
-            ),
-            SizedBox(
-              height: 10.h,
-            ),
-            ColumnLabelInfo(
-              label: "Ship to",
-              child: Text(
-                order.address ?? "",
-                style: Theme.of(context)
-                    .textTheme
-                    .subtitle1!
-                    .copyWith(fontWeight: FontWeight.bold),
-              ),
-            ),
-            SizedBox(
-              height: 10.h,
-            ),
-            ColumnLabelInfo(
-              label: "Payment method",
-              child: Text(
-                order.paymentMethod ?? "",
-                style: Theme.of(context)
-                    .textTheme
-                    .subtitle1!
-                    .copyWith(fontWeight: FontWeight.bold),
-              ),
-            ),
-            SizedBox(
-              height: 10.h,
-            ),
-            const Divider(
-              color: Constant.dividerColor,
-              thickness: 1,
-            ),
-            itemDetails(),
-            const Divider(
-              color: Constant.dividerColor,
-              thickness: 1,
-            ),
-            SizedBox(
-              height: 10.h,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text("Item Total"),
-                Text(
-                  formatStringToDecimal(
-                    order.rows!
-                        .map((e) => e['subtotal'])
-                        .toList()
-                        .reduce((a, b) => a + b)
-                        .toString(),
-                    hasCurrency: true,
-                  ),
-                  style: const TextStyle(fontWeight: FontWeight.bold),
-                )
-              ],
-            ),
-            SizedBox(
-              height: 5.h,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text("Delivery Fee"),
-                Text(
-                  formatStringToDecimal(
-                    order.delfee.toString(),
-                    hasCurrency: true,
-                  ),
-                  style: const TextStyle(fontWeight: FontWeight.bold),
-                )
-              ],
-            ),
-            SizedBox(
-              height: 5.h,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text("Other Fee"),
-                Text(
-                  formatStringToDecimal(
-                    order.otherfee.toString(),
-                    hasCurrency: true,
-                  ),
-                  style: const TextStyle(fontWeight: FontWeight.bold),
-                )
-              ],
-            ),
-            SizedBox(
-              height: 5.h,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  "Grand Total",
+              ColumnLabelInfo(
+                label: "Delivery date",
+                child: Text(
+                  DateFormat('MM/dd/yyy').format(order.deliveryDate),
                   style: Theme.of(context)
                       .textTheme
                       .subtitle1!
                       .copyWith(fontWeight: FontWeight.bold),
                 ),
-                Text(
-                  formatStringToDecimal(
-                    order.doctotal.toString(),
-                    hasCurrency: true,
-                  ),
+              ),
+              SizedBox(
+                height: 10.h,
+              ),
+              ColumnLabelInfo(
+                label: "Ship to",
+                child: Text(
+                  order.address ?? "",
                   style: Theme.of(context)
                       .textTheme
                       .subtitle1!
                       .copyWith(fontWeight: FontWeight.bold),
-                )
-              ],
-            ),
-          ],
+                ),
+              ),
+              SizedBox(
+                height: 10.h,
+              ),
+              ColumnLabelInfo(
+                label: "Payment method",
+                child: Text(
+                  order.paymentMethod ?? "",
+                  style: Theme.of(context)
+                      .textTheme
+                      .subtitle1!
+                      .copyWith(fontWeight: FontWeight.bold),
+                ),
+              ),
+              SizedBox(
+                height: 10.h,
+              ),
+              const Divider(
+                color: Constant.dividerColor,
+                thickness: 1,
+              ),
+              itemDetails(),
+            ],
+          ),
         ),
+      ),
+      bottomNavigationBar: Container(
+        color: const Color(0xFFF7ECDE),
+        padding: const EdgeInsets.all(10),
+        child: Column(mainAxisSize: MainAxisSize.min, children: [
+          SizedBox(
+            height: 10.h,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Text("Item Total"),
+              Text(
+                formatStringToDecimal(
+                  order.rows!
+                      .map((e) => e['subtotal'])
+                      .toList()
+                      .reduce((a, b) => a + b)
+                      .toString(),
+                  hasCurrency: true,
+                ),
+                style: const TextStyle(fontWeight: FontWeight.bold),
+              )
+            ],
+          ),
+          SizedBox(
+            height: 5.h,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Text("Delivery Fee"),
+              Text(
+                formatStringToDecimal(
+                  order.delfee.toString(),
+                  hasCurrency: true,
+                ),
+                style: const TextStyle(fontWeight: FontWeight.bold),
+              )
+            ],
+          ),
+          SizedBox(
+            height: 5.h,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Text("Other Fee"),
+              Text(
+                formatStringToDecimal(
+                  order.otherfee.toString(),
+                  hasCurrency: true,
+                ),
+                style: const TextStyle(fontWeight: FontWeight.bold),
+              )
+            ],
+          ),
+          SizedBox(
+            height: 5.h,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                "Grand Total",
+                style: Theme.of(context)
+                    .textTheme
+                    .subtitle1!
+                    .copyWith(fontWeight: FontWeight.bold),
+              ),
+              Text(
+                formatStringToDecimal(
+                  order.doctotal.toString(),
+                  hasCurrency: true,
+                ),
+                style: Theme.of(context)
+                    .textTheme
+                    .subtitle1!
+                    .copyWith(fontWeight: FontWeight.bold),
+              )
+            ],
+          ),
+        ]),
       ),
     );
   }

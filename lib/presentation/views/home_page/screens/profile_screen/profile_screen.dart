@@ -27,7 +27,6 @@ class ProfileScreen extends StatelessWidget {
       value: context.read<CustomerInfoBloc>()..add(GetCustomerInfo()),
       child: Scaffold(
         body: BlocConsumer<CustomerInfoBloc, CustomerInfoState>(
-          buildWhen: (previous, current) => previous != current,
           listener: (context, state) {
             if (state.status == CustomerInfoStateStatus.loading) {
               CustomDialog.loading(context);
@@ -212,17 +211,10 @@ class ProfileScreen extends StatelessWidget {
                       : state.customerInfo!.details
                           .map(
                             (e) => Badge(
-                              badgeColor:
+                              badgeContent:
                                   (e!.isDefault == null || e.isDefault != true)
-                                      ? Colors.transparent
-                                      : Colors.lightGreen,
-                              padding: EdgeInsets.zero,
-                              badgeContent: IconButton(
-                                padding: EdgeInsets.zero,
-                                icon: const Icon(Icons.check),
-                                onPressed: () {},
-                                splashRadius: Constant.splashRadius,
-                              ),
+                                      ? null
+                                      : const Icon(Icons.check),
                               child: Card(
                                 child: SizedBox(
                                   width: 300,
@@ -279,50 +271,78 @@ class ProfileScreen extends StatelessWidget {
 
   Row bottomButton(BuildContext context, CustomerAddressModel e) {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        IconButton(
-          onPressed: () {
-            showMaterialModalBottomSheet(
-              context: context,
-              enableDrag: false,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(10.r),
-                  topRight: Radius.circular(10.r),
-                ),
-              ),
-              builder: (_) {
-                return UpdateAddressForm(
-                  bloc: context.read<CustomerInfoBloc>(),
-                  addressModel: e,
+        Wrap(
+          children: [
+            IconButton(
+              onPressed: () {
+                showMaterialModalBottomSheet(
+                  context: context,
+                  enableDrag: false,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(10.r),
+                      topRight: Radius.circular(10.r),
+                    ),
+                  ),
+                  builder: (_) {
+                    return UpdateAddressForm(
+                      bloc: context.read<CustomerInfoBloc>(),
+                      addressModel: e,
+                    );
+                  },
                 );
               },
-            );
-          },
-          icon: const Icon(Icons.edit),
-        ),
-        SizedBox(
-          width: 20.h,
-        ),
-        IconButton(
-          onPressed: () {
-            CustomDialog.warning(
-              context,
-              message: "Are you sure you want to delete?",
-              onNegativeClick: () {
-                Navigator.of(context).pop();
+              icon: const Icon(Icons.edit),
+            ),
+            const SizedBox(
+              width: 10,
+            ),
+            IconButton(
+              onPressed: () {
+                CustomDialog.warning(
+                  context,
+                  message: "Are you sure you want to delete?",
+                  onNegativeClick: () {
+                    Navigator.of(context).pop();
+                  },
+                  onPositiveClick: () {
+                    context.read<CustomerInfoBloc>().add(
+                          DeleteCustomerAddressDetail(e.id!),
+                        );
+                    Navigator.of(context).pop();
+                  },
+                );
               },
-              onPositiveClick: () {
-                context.read<CustomerInfoBloc>().add(
-                      DeleteCustomerAddressDetail(e.id!),
-                    );
-                Navigator.of(context).pop();
-              },
-            );
-          },
-          icon: const Icon(
-            Icons.delete,
-            color: Colors.red,
+              icon: const Icon(
+                Icons.delete,
+                color: Colors.red,
+              ),
+            ),
+          ],
+        ),
+        Flexible(
+          flex: 3,
+          child: TextButton(
+            onPressed: (e.isDefault != null && e.isDefault!)
+                ? null
+                : () {
+                    CustomDialog.warning(context,
+                        message:
+                            "You want to set this as default shipping address?",
+                        onNegativeClick: () {
+                      Navigator.of(context).pop();
+                    }, onPositiveClick: () {
+                      context.read<CustomerInfoBloc>().add(
+                            UpdateToDefaultAddress(e.id!, true),
+                          );
+                      Navigator.of(context).pop();
+                    });
+                  },
+            child: Text((e.isDefault != null && e.isDefault!)
+                ? "Default Address"
+                : "Set as Default"),
           ),
         )
       ],

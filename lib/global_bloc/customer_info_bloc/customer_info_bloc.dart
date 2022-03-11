@@ -13,6 +13,7 @@ class CustomerInfoBloc extends Bloc<CustomerInfoEvent, CustomerInfoState> {
     on<ContactNumberUpdated>(_onContactNumberUpdated);
     on<EmailAddressUpdated>(_onEmailAddressUpdated);
     on<UpdateCustomerDetail>(_onUpdateCustomerDetail);
+    on<UpdateToDefaultAddress>(_onUpdateToDefaultAddress);
     on<AddNewCustomerDetail>(_onAddNewCustomerDetail);
     on<DeleteCustomerAddressDetail>(_onDeleteCustomerAddressDetail);
   }
@@ -78,6 +79,25 @@ class CustomerInfoBloc extends Bloc<CustomerInfoEvent, CustomerInfoState> {
       await _customerInfoRepo.updateCustomerDetail(
           customerDetailId: event.addressModel.id!,
           data: event.addressModel.toJson());
+
+      emit(state.copyWith(
+        customerInfo: _customerInfoRepo.customer,
+        status: CustomerInfoStateStatus.fetched,
+      ));
+    } on HttpException catch (e) {
+      emit(state.copyWith(
+          message: e.message, status: CustomerInfoStateStatus.error));
+    }
+  }
+
+  void _onUpdateToDefaultAddress(
+      UpdateToDefaultAddress event, Emitter<CustomerInfoState> emit) async {
+    emit(state.copyWith(status: CustomerInfoStateStatus.loading));
+
+    try {
+      await _customerInfoRepo.updateCustomerDetail(
+          customerDetailId: event.customerDetailId,
+          data: {'is_default': event.isDefault});
 
       emit(state.copyWith(
         customerInfo: _customerInfoRepo.customer,

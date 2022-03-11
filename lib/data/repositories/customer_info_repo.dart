@@ -63,7 +63,6 @@ class CustomerInfoRepo {
   }) async {
     Response response;
     String message = 'Updating Customer Detail: Unknown Error!';
-
     try {
       response = await _customerAPI.updateCustomerDetails(
           _authRepository.currentUser.token,
