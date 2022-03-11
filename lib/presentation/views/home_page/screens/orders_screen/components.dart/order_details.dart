@@ -247,6 +247,26 @@ class OrderDetailsScreen extends StatelessWidget {
                     ),
                   ],
                 ),
+                Wrap(
+                  children: [
+                    const Text(
+                      "Discount Amnt:",
+                      style: TextStyle(color: Constant.inlineLabelColor),
+                    ),
+                    SizedBox(
+                      width: 5.w,
+                    ),
+                    Text(
+                      formatStringToDecimal(
+                        order.rows?[indx]["disc_amount"].toString() ?? "0.00",
+                        hasCurrency: true,
+                      ),
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
               ],
             ),
             trailing: Text(formatStringToDecimal(
