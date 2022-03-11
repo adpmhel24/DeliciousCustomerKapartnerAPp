@@ -7,3 +7,5 @@ abstract class AppInitEvent extends Equatable {
 }
 
 class OpeningApp extends AppInitEvent {}
+
+class AutoLogin extends AppInitEvent {}

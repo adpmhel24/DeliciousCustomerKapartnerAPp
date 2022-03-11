@@ -27,90 +27,92 @@ class _LoginFormState extends State<LoginForm> {
   Widget build(BuildContext context) {
     return BlocBuilder<LoginFormBloc, LoginFormState>(
       builder: (context, state) {
-        return Column(
-          children: [
-            TextFormField(
-              autovalidateMode: AutovalidateMode.always,
-              controller: _usernameController,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8.r),
-                  borderSide:
-                      const BorderSide(color: Colors.transparent, width: 0),
+        return AutofillGroup(
+          child: Column(
+            children: [
+              TextFormField(
+                autovalidateMode: AutovalidateMode.always,
+                controller: _usernameController,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8.r),
+                    borderSide:
+                        const BorderSide(color: Colors.transparent, width: 0),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8.r),
+                    borderSide:
+                        const BorderSide(color: Colors.transparent, width: 0),
+                  ),
+                  filled: true,
+                  fillColor: const Color(0xFFeeeee4),
+                  labelText: "Username",
+                  labelStyle: TextStyle(
+                    fontSize: 14.sp,
+                    fontWeight: FontWeight.w400,
+                  ),
+                  contentPadding:
+                      EdgeInsets.symmetric(horizontal: 14.h, vertical: 16.w),
                 ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8.r),
-                  borderSide:
-                      const BorderSide(color: Colors.transparent, width: 0),
-                ),
-                filled: true,
-                fillColor: const Color(0xFFeeeee4),
-                labelText: "Username",
-                labelStyle: TextStyle(
-                  fontSize: 14.sp,
-                  fontWeight: FontWeight.w400,
-                ),
-                contentPadding:
-                    EdgeInsets.symmetric(horizontal: 14.h, vertical: 16.w),
+                onChanged: (_) {
+                  context
+                      .read<LoginFormBloc>()
+                      .add(UsernameChanged(_usernameController));
+                },
+                validator: (_) {
+                  return (state.username.invalid) ? "Required Field" : null;
+                },
               ),
-              onChanged: (_) {
-                context
-                    .read<LoginFormBloc>()
-                    .add(UsernameChanged(_usernameController));
-              },
-              validator: (_) {
-                return (state.username.invalid) ? "Required Field" : null;
-              },
-            ),
-            SizedBox(
-              height: 14.h,
-            ),
-            TextFormField(
-              controller: _passwordController,
-              autovalidateMode: AutovalidateMode.always,
-              obscureText: _isPasswordHidden,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8.r),
-                  borderSide:
-                      const BorderSide(color: Colors.transparent, width: 0),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8.r),
-                  borderSide:
-                      const BorderSide(color: Colors.transparent, width: 0),
-                ),
-                filled: true,
-                fillColor: const Color(0xFFeeeee4),
-                labelText: "Password",
-                labelStyle: TextStyle(
-                  fontSize: 14.sp,
-                  fontWeight: FontWeight.w400,
-                ),
-                suffixIcon: IconButton(
-                  splashRadius: Constant.splashRadius,
-                  icon: _isPasswordHidden
-                      ? const Icon(Icons.visibility_off)
-                      : const Icon(Icons.visibility),
-                  onPressed: () {
-                    setState(() {
-                      _isPasswordHidden = !_isPasswordHidden;
-                    });
-                  },
-                ),
-                contentPadding:
-                    EdgeInsets.symmetric(horizontal: 14.h, vertical: 16.w),
+              SizedBox(
+                height: 14.h,
               ),
-              onChanged: (value) {
-                context
-                    .read<LoginFormBloc>()
-                    .add(PasswordChanged(_passwordController));
-              },
-              validator: (_) {
-                return (state.password.invalid) ? "Required Field" : null;
-              },
-            ),
-          ],
+              TextFormField(
+                controller: _passwordController,
+                autovalidateMode: AutovalidateMode.always,
+                obscureText: _isPasswordHidden,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8.r),
+                    borderSide:
+                        const BorderSide(color: Colors.transparent, width: 0),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8.r),
+                    borderSide:
+                        const BorderSide(color: Colors.transparent, width: 0),
+                  ),
+                  filled: true,
+                  fillColor: const Color(0xFFeeeee4),
+                  labelText: "Password",
+                  labelStyle: TextStyle(
+                    fontSize: 14.sp,
+                    fontWeight: FontWeight.w400,
+                  ),
+                  suffixIcon: IconButton(
+                    splashRadius: Constant.splashRadius,
+                    icon: _isPasswordHidden
+                        ? const Icon(Icons.visibility_off)
+                        : const Icon(Icons.visibility),
+                    onPressed: () {
+                      setState(() {
+                        _isPasswordHidden = !_isPasswordHidden;
+                      });
+                    },
+                  ),
+                  contentPadding:
+                      EdgeInsets.symmetric(horizontal: 14.h, vertical: 16.w),
+                ),
+                onChanged: (value) {
+                  context
+                      .read<LoginFormBloc>()
+                      .add(PasswordChanged(_passwordController));
+                },
+                validator: (_) {
+                  return (state.password.invalid) ? "Required Field" : null;
+                },
+              ),
+            ],
+          ),
         );
       },
     );

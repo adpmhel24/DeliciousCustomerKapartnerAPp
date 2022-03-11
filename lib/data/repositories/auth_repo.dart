@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:dio/dio.dart';
 
+import '../../exceptions/auth_expire_exception.dart';
 import '../api_services/auth_api.dart';
 import '../models/auth_user/auth_user_model.dart';
 import 'app_repo.dart';
@@ -61,6 +62,34 @@ class AuthRepository extends ChangeNotifier {
   }
 
   bool isLoggedIn() => _currentUser != null;
+
+  Future<bool> tryToLogin() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? userData = prefs.getString("userData");
+    if (userData != null) {
+      Map<String, dynamic> userDecoded = jsonDecode(userData);
+      String token = userDecoded['token'];
+      try {
+        Response response = await _authAPI.verifyToken(token);
+        {
+          if (response.statusCode == 200) {
+            _currentUser = AuthUserModel.fromJson(userDecoded);
+            // Load or resources after autheticate
+            await AppRepo().init();
+            _authenticated = true;
+            notifyListeners();
+            return true;
+          }
+        }
+      } on AuthExpireException catch (_) {
+        await logout();
+      } on HttpException catch (e) {
+        await logout();
+        throw HttpException(e.message);
+      }
+    }
+    return false;
+  }
 
   Future<void> logout() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();

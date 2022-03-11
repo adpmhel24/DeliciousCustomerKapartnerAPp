@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 
+import '../../exceptions/auth_expire_exception.dart';
 import 'dio_settings.dart';
 
 class AuthAPI {
@@ -65,6 +66,34 @@ class AuthAPI {
         } else {
           throw HttpException(
               "Error Code ${e.response!.statusCode}: ${e.response!.statusMessage}");
+        }
+      } else if (e.type == DioErrorType.connectTimeout) {
+        throw const HttpException("Connection timed out");
+      } else {
+        throw HttpException(e.message);
+      }
+    }
+    return response;
+  }
+
+  Future<Response> verifyToken(String token) async {
+    Response response;
+    try {
+      response = await dio.post('/api/verify/token',
+          options: Options(headers: {
+            "Authorization": "Bearer " + token,
+          }));
+    } on DioError catch (e) {
+      if (e.response != null) {
+        if (e.response!.data.runtimeType != String) {
+          throw HttpException(e.response!.data['message']);
+        } else {
+          if (e.response!.statusCode == 501) {
+            throw AuthExpireException(e.response!.data['message']);
+          } else {
+            throw HttpException(
+                "Error Code ${e.response!.statusCode}: ${e.response!.statusMessage}");
+          }
         }
       } else if (e.type == DioErrorType.connectTimeout) {
         throw const HttpException("Connection timed out");

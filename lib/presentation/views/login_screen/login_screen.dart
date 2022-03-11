@@ -21,7 +21,9 @@ class LoginFormScreen extends StatelessWidget {
           create: (_) => LoginFormBloc(),
         ),
         BlocProvider(
-          create: (context) => AppInitBloc()..add(OpeningApp()),
+          create: (context) => AppInitBloc()
+            ..add(OpeningApp())
+            ..add(AutoLogin()),
         ),
       ],
       child: Builder(
@@ -41,7 +43,7 @@ class LoginFormScreen extends StatelessWidget {
               ),
               BlocListener<AppInitBloc, AppInitState>(
                 listener: (_, state) {
-                  if (state is CheckingUpdate) {
+                  if (state is AppInitLoading) {
                     CustomDialog.loading(context);
                   } else if (state is NewUpdateAvailable) {
                     Navigator.of(context).pop();
@@ -51,7 +53,7 @@ class LoginFormScreen extends StatelessWidget {
                       message: const Text(
                           "A version of Delicious Ordering App is available! "),
                       appUrl:
-                          "https://github.com/adpmhel24/delicious_order_app/releases/download/v1.0.${state.availableVersion.buildNumber}/app-release.apk",
+                          "https://github.com/adpmhel24/DeliciousCustomerKapartnerAPp/releases/download/v1.0.${state.availableVersion.buildNumber}/kadelicious_app.apk",
                       releaseNotes: state.availableVersion.releaseNotes,
                     );
                   } else if (state is Error) {
@@ -65,6 +67,8 @@ class LoginFormScreen extends StatelessWidget {
                     );
                   } else if (state is NoUpdateAvailable) {
                     Navigator.of(context).pop();
+                  } else if (state is AutoLoginSuccessful) {
+                    onLoginCallback?.call(true);
                   }
                 },
               ),

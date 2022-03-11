@@ -11,7 +11,7 @@ class OrderAPI {
       {required String token, Map<String, dynamic>? params}) async {
     Response response;
     try {
-      response = await dio.get('/api/ordering/get_by_user',
+      response = await dio.get('/api/ordering/get_by_customer_user',
           queryParameters: params,
           options: Options(headers: {
             "Authorization": "Bearer " + token,

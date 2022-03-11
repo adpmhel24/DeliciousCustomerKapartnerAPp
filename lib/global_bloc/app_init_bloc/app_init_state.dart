@@ -20,7 +20,9 @@ class NewUpdateAvailable extends AppInitState {
   List<Object> get props => [availableVersion, devicePackageInfo];
 }
 
-class CheckingUpdate extends AppInitState {}
+class AppInitLoading extends AppInitState {}
+
+class AutoLoginSuccessful extends AppInitState {}
 
 class Error extends AppInitState {
   final String message;
