@@ -16,6 +16,7 @@ CustomerAddressModel _$CustomerAddressModelFromJson(
       brgy: json['brgy'] as String?,
       otherDetails: json['other_details'] as String?,
       isDefault: json['is_default'] as bool? ?? false,
+      deliveryFee: (json['delivery_fee'] as num?)?.toDouble() ?? 0.00,
     );
 
 Map<String, dynamic> _$CustomerAddressModelToJson(
@@ -35,5 +36,7 @@ Map<String, dynamic> _$CustomerAddressModelToJson(
   val['brgy'] = instance.brgy;
   val['other_details'] = instance.otherDetails;
   writeNotNull('is_default', instance.isDefault);
+  writeNotNull(
+      'delivery_fee', CustomerAddressModel.toNull(instance.deliveryFee));
   return val;
 }

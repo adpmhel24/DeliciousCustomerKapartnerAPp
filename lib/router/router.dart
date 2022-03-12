@@ -1,8 +1,9 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:kapartner_app/presentation/views/home_page/default_screen.dart';
+import 'package:kapartner_app/presentation/views/home_page/home_screen.dart';
 import 'package:kapartner_app/presentation/views/registration_screen/customer_registration/customer_reg_screen.dart';
 
 import '../presentation/views/checkout_screen/checkout_screen.dart';
+import '../presentation/views/checkout_screen/components/address_selection.dart';
 import '../presentation/views/home_page/screens/cart_screen/cart_screen.dart';
 import '../presentation/views/home_page/screens/orders_screen/components.dart/order_details.dart';
 import '../presentation/views/home_page/screens/orders_screen/orders_screen.dart';
@@ -45,6 +46,11 @@ import 'router_guard.dart';
     AutoRoute(
       page: OrderDetailsScreen,
       path: '/orderDetails',
+      guards: [RouteGuard],
+    ),
+    AutoRoute(
+      page: AddressSelectionScreen,
+      path: '/addressSelection',
       guards: [RouteGuard],
     ),
     AutoRoute(

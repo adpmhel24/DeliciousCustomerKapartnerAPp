@@ -13,6 +13,7 @@ class CartItemsRepo {
       _cartItems.add(cartItem);
     } else {
       _cartItems[index].quantity += cartItem.quantity;
+      _cartItems[index].discAmount += cartItem.discAmount;
       _cartItems[index].total += cartItem.total;
     }
   }

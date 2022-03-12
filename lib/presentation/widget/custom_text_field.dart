@@ -99,7 +99,10 @@ class CustomTextField extends StatelessWidget {
             ),
         prefixIcon: _prefixIcon,
         suffixIcon: _suffixIcon,
-        contentPadding: EdgeInsets.symmetric(horizontal: 14.h, vertical: 16.w),
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: 10,
+          vertical: 10,
+        ),
       ),
       validator: _validator,
       onChanged: _onChanged,

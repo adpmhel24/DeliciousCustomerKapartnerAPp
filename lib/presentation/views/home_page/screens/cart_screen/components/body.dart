@@ -57,69 +57,14 @@ class Body extends StatelessWidget {
                       subtitle: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            SizedBox(
-                              height: 10.h,
-                            ),
-                            Wrap(
-                              children: [
-                                const Text(
-                                  "Quantity:",
-                                  style: TextStyle(
-                                      color: Constant.inlineLabelColor),
-                                ),
-                                SizedBox(
-                                  width: 5.w,
-                                ),
-                                Text(
-                                  formatStringToDecimal(state
-                                      .cartItems[index].quantity
-                                      .toString()),
-                                  style: Theme.of(context).textTheme.bodyText2,
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 3.h,
-                            ),
-                            Wrap(
-                              children: [
-                                const Text(
-                                  "Price:",
-                                  style: TextStyle(
-                                      color: Constant.inlineLabelColor),
-                                ),
-                                SizedBox(
-                                  width: 5.w,
-                                ),
-                                Text(
-                                  formatStringToDecimal(
-                                      state.cartItems[index].price.toString(),
-                                      hasCurrency: true),
-                                  style: Theme.of(context).textTheme.bodyText2,
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 3.h,
-                            ),
-                            Wrap(
-                              children: [
-                                const Text(
-                                  "Total:",
-                                  style: TextStyle(
-                                      color: Constant.inlineLabelColor),
-                                ),
-                                SizedBox(
-                                  width: 5.w,
-                                ),
-                                Text(
-                                  formatStringToDecimal(
-                                      state.cartItems[index].total.toString(),
-                                      hasCurrency: true),
-                                  style: Theme.of(context).textTheme.bodyText2,
-                                ),
-                              ],
-                            ),
+                            Constant.columnMaxHeightSpacer,
+                            quantity(state, index, context),
+                            Constant.columnMinHeightSpacer,
+                            price(state, index, context),
+                            Constant.columnMinHeightSpacer,
+                            discount(state, index, context),
+                            Constant.columnMinHeightSpacer,
+                            itemTotal(state, index, context),
                           ]),
                       trailing: IconButton(
                         splashRadius: Constant.splashRadius,
@@ -145,6 +90,81 @@ class Body extends StatelessWidget {
           return Container();
         },
       ),
+    );
+  }
+
+  Wrap price(CartItemsLoaded state, int index, BuildContext context) {
+    return Wrap(
+      children: [
+        const Text(
+          "Price:",
+          style: TextStyle(color: Constant.inlineLabelColor),
+        ),
+        SizedBox(
+          width: 5.w,
+        ),
+        Text(
+          formatStringToDecimal(state.cartItems[index].price.toString(),
+              hasCurrency: true),
+          style: Theme.of(context).textTheme.bodyText2,
+        ),
+      ],
+    );
+  }
+
+  Wrap quantity(CartItemsLoaded state, int index, BuildContext context) {
+    return Wrap(
+      children: [
+        const Text(
+          "Quantity:",
+          style: TextStyle(color: Constant.inlineLabelColor),
+        ),
+        SizedBox(
+          width: 5.w,
+        ),
+        Text(
+          formatStringToDecimal(state.cartItems[index].quantity.toString()),
+          style: Theme.of(context).textTheme.bodyText2,
+        ),
+      ],
+    );
+  }
+
+  Wrap discount(CartItemsLoaded state, int index, BuildContext context) {
+    return Wrap(
+      children: [
+        const Text(
+          "Disc Amnt:",
+          style: TextStyle(color: Constant.inlineLabelColor),
+        ),
+        SizedBox(
+          width: 5.w,
+        ),
+        Text(
+          formatStringToDecimal(state.cartItems[index].discAmount.toString(),
+              hasCurrency: true),
+          style: Theme.of(context).textTheme.bodyText2,
+        ),
+      ],
+    );
+  }
+
+  Wrap itemTotal(CartItemsLoaded state, int index, BuildContext context) {
+    return Wrap(
+      children: [
+        const Text(
+          "Total:",
+          style: TextStyle(color: Constant.inlineLabelColor),
+        ),
+        SizedBox(
+          width: 5.w,
+        ),
+        Text(
+          formatStringToDecimal(state.cartItems[index].total.toString(),
+              hasCurrency: true),
+          style: Theme.of(context).textTheme.bodyText2,
+        ),
+      ],
     );
   }
 }

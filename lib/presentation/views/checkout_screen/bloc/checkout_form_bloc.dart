@@ -43,9 +43,11 @@ class CheckoutFormBloc extends Bloc<CheckoutFormEvent, CheckoutFormState> {
   void _onAddressChanged(
       AddressChanged event, Emitter<CheckoutFormState> emit) {
     final address = TextFieldModel.dirty(event.address);
+    final delfee = TextFieldModel.dirty(event.delfee.toString());
     emit(
       state.copyWith(
         address: address,
+        delfee: delfee,
         status: Formz.validate(
           [state.deliveryDate, state.deliveryMethod, state.paymentMethod],
         ),

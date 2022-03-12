@@ -51,6 +51,9 @@ class CustomerModel {
 
   String? email;
 
+  @JsonKey(name: "allowed_disc")
+  double? allowedDisc;
+
   @JsonKey(fromJson: customerAddressFromJson)
   List<CustomerAddressModel?> details;
 
@@ -71,6 +74,7 @@ class CustomerModel {
     this.isConfidential,
     this.isActive,
     this.contactNumber,
+    this.allowedDisc = 0.00,
     required this.details,
   });
 

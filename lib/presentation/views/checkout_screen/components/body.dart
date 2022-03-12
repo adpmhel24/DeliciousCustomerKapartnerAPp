@@ -46,7 +46,8 @@ class _BodyState extends State<Body> {
     context
         .read<CheckoutFormBloc>()
         .add(ContactNumberChanged(_custInfoRepo.customer.contactNumber ?? ""));
-    context.read<CheckoutFormBloc>().add(AddressChanged(address));
+    context.read<CheckoutFormBloc>().add(AddressChanged(
+        address, _custInfoRepo.defautShippingAddress()?.deliveryFee ?? 0.00));
     super.initState();
   }
 
@@ -194,16 +195,27 @@ class _BodyState extends State<Body> {
                               SizedBox(
                                 height: 5.h,
                               ),
-                              Text(address)
+                              Text(
+                                context
+                                    .watch<CheckoutFormBloc>()
+                                    .state
+                                    .address
+                                    .value,
+                              )
                             ],
                           ),
                         ),
                         OvalButton(
                           onPressed: () {
-                            final router = context.innerRouterOf<TabsRouter>(
-                                HomeScreenRoute.name);
-                            router?.pop();
-                            router?.navigate(const ProfileScreenRoute());
+                            // final router = context.innerRouterOf<TabsRouter>(
+                            //     HomeScreenRoute.name);
+                            // router?.pop();
+                            // router?.navigate(const ProfileScreenRoute());
+                            AutoRouter.of(context).push(
+                              AddressSelectionScreenRoute(
+                                checkoutBloc: context.read<CheckoutFormBloc>(),
+                              ),
+                            );
                           },
                           child: const Text('Change'),
                         ),

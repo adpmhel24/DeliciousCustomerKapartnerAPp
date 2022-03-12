@@ -25,10 +25,11 @@ class ContactNumberChanged extends CheckoutFormEvent {
 
 class AddressChanged extends CheckoutFormEvent {
   final String address;
+  final double delfee;
 
-  const AddressChanged(this.address);
+  const AddressChanged(this.address, this.delfee);
   @override
-  List<Object?> get props => [address];
+  List<Object?> get props => [address, delfee];
 }
 
 class DeliveryDateChanged extends CheckoutFormEvent {

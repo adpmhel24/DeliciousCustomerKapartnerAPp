@@ -25,6 +25,9 @@ class CustomerAddressModel {
   @JsonKey(name: "is_default", includeIfNull: false)
   bool? isDefault;
 
+  @JsonKey(name: "delivery_fee", toJson: toNull, includeIfNull: false)
+  double? deliveryFee;
+
   CustomerAddressModel({
     this.id,
     this.uid = '',
@@ -33,6 +36,7 @@ class CustomerAddressModel {
     this.brgy,
     this.otherDetails,
     this.isDefault = false,
+    this.deliveryFee = 0.00,
   });
 
   factory CustomerAddressModel.fromJson(Map<String, dynamic> json) =>

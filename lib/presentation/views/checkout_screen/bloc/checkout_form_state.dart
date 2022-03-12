@@ -7,6 +7,7 @@ class CheckoutFormState extends Equatable {
   final TextFieldModel custCode;
   final TextFieldModel contactNumber;
   final TextFieldModel address;
+  final TextFieldModel delfee;
   final TextFieldModel deliveryDate;
   final TextFieldModel deliveryMethod;
   final TextFieldModel paymentMethod;
@@ -17,6 +18,7 @@ class CheckoutFormState extends Equatable {
     this.custCode = const TextFieldModel.pure(),
     this.contactNumber = const TextFieldModel.pure(),
     this.address = const TextFieldModel.pure(),
+    this.delfee = const TextFieldModel.dirty("0.00"),
     this.deliveryDate = const TextFieldModel.pure(),
     this.deliveryMethod = const TextFieldModel.pure(),
     this.paymentMethod = const TextFieldModel.pure(),
@@ -28,6 +30,7 @@ class CheckoutFormState extends Equatable {
     TextFieldModel? custCode,
     TextFieldModel? contactNumber,
     TextFieldModel? address,
+    TextFieldModel? delfee,
     TextFieldModel? deliveryDate,
     TextFieldModel? deliveryMethod,
     TextFieldModel? paymentMethod,
@@ -38,6 +41,7 @@ class CheckoutFormState extends Equatable {
       custCode: custCode ?? this.custCode,
       contactNumber: contactNumber ?? this.contactNumber,
       address: address ?? this.address,
+      delfee: delfee ?? this.delfee,
       deliveryDate: deliveryDate ?? this.deliveryDate,
       deliveryMethod: deliveryMethod ?? this.deliveryMethod,
       paymentMethod: paymentMethod ?? this.paymentMethod,
@@ -51,6 +55,7 @@ class CheckoutFormState extends Equatable {
         custCode,
         contactNumber,
         address,
+        delfee,
         deliveryDate,
         deliveryMethod,
         paymentMethod,

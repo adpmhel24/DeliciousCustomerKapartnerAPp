@@ -16,7 +16,7 @@ class OrderDetailsScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Order Details'),
         iconTheme: const IconThemeData(
-          color: Colors.black, //change your color here
+          color: Colors.red, //change your color here
         ),
       ),
       body: Padding(
@@ -240,7 +240,7 @@ class OrderDetailsScreen extends StatelessWidget {
                       width: 5.w,
                     ),
                     Text(
-                      order.rows?[indx]["discprcnt"].toString() ?? "",
+                      "${formatStringToDecimal((order.rows?[indx]["discprcnt"] ?? 0.00).toString())}%",
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
                       ),

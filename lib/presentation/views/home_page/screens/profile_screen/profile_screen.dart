@@ -7,7 +7,6 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import '../../../../../global_bloc/blocs.dart';
 import '../../../../widget/custom_horizontal_sliver_list.dart';
 import '../../../../widget/custom_label_info.dart';
-import 'components/add_new_address_form.dart';
 import 'components/update_address_form.dart';
 import 'components/update_mobile_form.dart';
 import 'components/update_password_form.dart';
@@ -178,29 +177,29 @@ class ProfileScreen extends StatelessWidget {
                           ],
                         ),
                         SizedBox(height: 15.h),
-                        TextButton(
-                          onPressed: state.customerInfo == null
-                              ? null
-                              : () {
-                                  showMaterialModalBottomSheet(
-                                    context: context,
-                                    enableDrag: false,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(10.r),
-                                        topRight: Radius.circular(10.r),
-                                      ),
-                                    ),
-                                    builder: (_) {
-                                      return AddNewAddressForm(
-                                        customerId: state.customerInfo!.id!,
-                                        bloc: context.read<CustomerInfoBloc>(),
-                                      );
-                                    },
-                                  );
-                                },
-                          child: const Text("Add New Address"),
-                        )
+                        // TextButton(
+                        //   onPressed: state.customerInfo == null
+                        //       ? null
+                        //       : () {
+                        //           showMaterialModalBottomSheet(
+                        //             context: context,
+                        //             enableDrag: false,
+                        //             shape: RoundedRectangleBorder(
+                        //               borderRadius: BorderRadius.only(
+                        //                 topLeft: Radius.circular(10.r),
+                        //                 topRight: Radius.circular(10.r),
+                        //               ),
+                        //             ),
+                        //             builder: (_) {
+                        //               return AddNewAddressForm(
+                        //                 customerId: state.customerInfo!.id!,
+                        //                 bloc: context.read<CustomerInfoBloc>(),
+                        //               );
+                        //             },
+                        //           );
+                        //         },
+                        //   child: const Text("Add New Address"),
+                        // )
                       ],
                     ),
                   ),
@@ -239,7 +238,7 @@ class ProfileScreen extends StatelessWidget {
                                           child: Text(e.cityMunicipality ?? ""),
                                         ),
                                         SizedBox(height: 7.h),
-                                        bottomButton(context, e),
+                                        // bottomButton(context, e),
                                       ],
                                     ),
                                   ),

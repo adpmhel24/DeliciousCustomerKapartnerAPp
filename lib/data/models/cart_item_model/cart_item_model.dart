@@ -6,6 +6,10 @@ part 'cart_item_model.g.dart';
 @JsonSerializable()
 class CartItemModel extends ProductModel {
   double quantity;
+  double discprcnt;
+
+  @JsonKey(name: "disc_amount")
+  double discAmount;
   double total;
 
   CartItemModel({
@@ -13,6 +17,8 @@ class CartItemModel extends ProductModel {
     required itemCode,
     required itemName,
     required this.quantity,
+    this.discprcnt = 0.00,
+    this.discAmount = 0.00,
     required this.total,
   }) : super(id: id, itemCode: itemCode, itemName: itemName);
 
@@ -21,8 +27,8 @@ class CartItemModel extends ProductModel {
         'unit_price': price,
         'quantity': quantity,
         'uom': uom,
-        'disc_amount': 0.00,
-        'discprcnt': 0.00
+        'disc_amount': discAmount,
+        'discprcnt': discprcnt
       };
 
   factory CartItemModel.fromJson(Map<String, dynamic> json) =>

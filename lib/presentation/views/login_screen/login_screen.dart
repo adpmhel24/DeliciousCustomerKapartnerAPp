@@ -20,11 +20,7 @@ class LoginFormScreen extends StatelessWidget {
         BlocProvider(
           create: (_) => LoginFormBloc(),
         ),
-        BlocProvider(
-          create: (context) => AppInitBloc()
-            ..add(OpeningApp())
-            ..add(AutoLogin()),
-        ),
+        BlocProvider(create: (context) => AppInitBloc()..add(OpeningApp())),
       ],
       child: Builder(
         builder: (context) {
@@ -66,6 +62,7 @@ class LoginFormScreen extends StatelessWidget {
                     );
                   } else if (state is NoUpdateAvailable) {
                     Navigator.of(context).pop();
+                    context.read<AppInitBloc>().add(AutoLogin());
                   } else if (state is AutoLoginSuccessful) {
                     onLoginCallback?.call(true);
                   }

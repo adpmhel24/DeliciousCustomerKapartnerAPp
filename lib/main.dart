@@ -71,7 +71,7 @@ class _MyAppState extends State<MyApp> {
                       fontWeight: FontWeight.bold,
                       color: const Color(0xFFB3541E),
                       fontStyle: FontStyle.italic,
-                      fontFamily: GoogleFonts.merriweather().fontFamily,
+                      fontFamily: GoogleFonts.openSans().fontFamily,
                       letterSpacing: 1.0,
                     ),
                   ),
@@ -108,68 +108,68 @@ elevatedButtonTheme() {
 }
 
 textTheme() {
-  return GoogleFonts.merriweatherTextTheme().copyWith(
+  return GoogleFonts.openSansTextTheme().copyWith(
     headline1: TextStyle(
       fontSize: 90.sp,
-      fontFamily: GoogleFonts.merriweather().fontFamily,
+      fontFamily: GoogleFonts.openSans().fontFamily,
     ),
     headline2: TextStyle(
       fontSize: 60.sp,
-      fontFamily: GoogleFonts.merriweather().fontFamily,
+      fontFamily: GoogleFonts.openSans().fontFamily,
     ),
     headline3: TextStyle(
       fontSize: 48.sp,
-      fontFamily: GoogleFonts.merriweather().fontFamily,
+      fontFamily: GoogleFonts.openSans().fontFamily,
       color: const Color(0xff323232),
     ),
     headline4: TextStyle(
       fontSize: 34.sp,
-      fontFamily: GoogleFonts.merriweather().fontFamily,
+      fontFamily: GoogleFonts.openSans().fontFamily,
       color: const Color(0xff323232),
     ),
     headline5: TextStyle(
       fontSize: 25.sp,
-      fontFamily: GoogleFonts.merriweather().fontFamily,
+      fontFamily: GoogleFonts.openSans().fontFamily,
       color: const Color(0xff323232),
     ),
     headline6: TextStyle(
       fontSize: 20.sp,
-      fontFamily: GoogleFonts.merriweather().fontFamily,
+      fontFamily: GoogleFonts.openSans().fontFamily,
       color: const Color(0xff323232),
     ),
     subtitle1: TextStyle(
       fontSize: 16.sp,
-      fontFamily: GoogleFonts.merriweather().fontFamily,
+      fontFamily: GoogleFonts.openSans().fontFamily,
       color: const Color(0xff323232),
     ),
     subtitle2: TextStyle(
       fontSize: 14.sp,
-      fontFamily: GoogleFonts.merriweather().fontFamily,
+      fontFamily: GoogleFonts.openSans().fontFamily,
       color: const Color(0xff323232),
     ),
     bodyText1: TextStyle(
       fontSize: 16.sp,
-      fontFamily: GoogleFonts.merriweather().fontFamily,
+      fontFamily: GoogleFonts.openSans().fontFamily,
       color: const Color(0xff323232),
     ),
     bodyText2: TextStyle(
       fontSize: 14.sp,
-      fontFamily: GoogleFonts.merriweather().fontFamily,
+      fontFamily: GoogleFonts.openSans().fontFamily,
       color: const Color(0xff323232),
     ),
     button: TextStyle(
       fontSize: 14.sp,
-      fontFamily: GoogleFonts.merriweather().fontFamily,
+      fontFamily: GoogleFonts.openSans().fontFamily,
       color: const Color(0xff323232),
     ),
     caption: TextStyle(
       fontSize: 12.sp,
-      fontFamily: GoogleFonts.merriweather().fontFamily,
+      fontFamily: GoogleFonts.openSans().fontFamily,
       color: const Color(0xff323232),
     ),
     overline: TextStyle(
       fontSize: 10.sp,
-      fontFamily: GoogleFonts.merriweather().fontFamily,
+      fontFamily: GoogleFonts.openSans().fontFamily,
       color: const Color(0xff323232),
     ),
   );

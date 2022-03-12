@@ -5,4 +5,6 @@ class Constant {
   static const splashRadius = Material.defaultSplashRadius / 2;
   static const inlineLabelColor = Color(0xFF219F94);
   static const dividerColor = Color(0xFFFFBCD1);
+  static const columnMaxHeightSpacer = SizedBox(height: 10);
+  static const columnMinHeightSpacer = SizedBox(height: 3);
 }
