@@ -62,7 +62,6 @@ class CustomDialog {
       {required String message,
       void Function()? onPositiveClick,
       bool? barrierDismissible}) {
-    // Navigator.of(context).pop();
     context.loaderOverlay.hide();
     return showAnimatedDialog(
       barrierDismissible: barrierDismissible ?? true,
