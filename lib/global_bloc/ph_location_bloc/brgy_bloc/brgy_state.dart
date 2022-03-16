@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 
 import '../../../data/models/models.dart';
 
-class BrgyState extends Equatable {
+abstract class BrgyState extends Equatable {
   const BrgyState();
   @override
   List<Object?> get props => [];

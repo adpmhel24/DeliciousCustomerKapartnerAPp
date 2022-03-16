@@ -1,4 +1,6 @@
 import 'package:equatable/equatable.dart';
+import 'package:kapartner_app/data/models/cart_item_model/cart_item_model.dart';
+import 'package:kapartner_app/data/models/customer_address/customer_address_model.dart';
 
 abstract class CheckoutFormEvent extends Equatable {
   const CheckoutFormEvent();
@@ -24,12 +26,13 @@ class ContactNumberChanged extends CheckoutFormEvent {
 }
 
 class AddressChanged extends CheckoutFormEvent {
-  final String address;
-  final double delfee;
+  final CustomerAddressModel? selectedAddress;
+  // final String address;
+  // final double delfee;
 
-  const AddressChanged(this.address, this.delfee);
+  const AddressChanged(this.selectedAddress);
   @override
-  List<Object?> get props => [address, delfee];
+  List<Object?> get props => [selectedAddress];
 }
 
 class DeliveryDateChanged extends CheckoutFormEvent {
@@ -51,6 +54,22 @@ class PaymentMethodChange extends CheckoutFormEvent {
   const PaymentMethodChange(this.paymentMethod);
   @override
   List<Object?> get props => [paymentMethod];
+}
+
+class PickupAddressChanged extends CheckoutFormEvent {
+  final String pickupAddress;
+
+  const PickupAddressChanged(this.pickupAddress);
+
+  @override
+  List<Object?> get props => [pickupAddress];
+}
+
+class AddCartItemsInCheckOutState extends CheckoutFormEvent {
+  final List<CartItemModel> items;
+  const AddCartItemsInCheckOutState(this.items);
+  @override
+  List<Object?> get props => [items];
 }
 
 class NotesChanged extends CheckoutFormEvent {

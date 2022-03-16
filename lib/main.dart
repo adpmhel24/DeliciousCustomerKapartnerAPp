@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:loader_overlay/loader_overlay.dart';
 
 import 'global_bloc/global_bloc.dart';
 
@@ -51,35 +52,38 @@ class _MyAppState extends State<MyApp> {
               designSize: const Size(360, 690),
               minTextAdapt: true,
               splitScreenMode: true,
-              builder: () => MaterialApp.router(
-                debugShowCheckedModeBanner: false,
-                builder: (context, child) {
-                  ScreenUtil.setContext(context);
-                  return MediaQuery(
-                    data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
-                    child: child!,
-                  );
-                },
-                routeInformationParser: _appRouter.defaultRouteParser(),
-                routerDelegate: _appRouter.delegate(),
-                theme: ThemeData(
-                  visualDensity: VisualDensity.adaptivePlatformDensity,
-                  appBarTheme: const AppBarTheme().copyWith(
-                    backgroundColor: const Color(0xFFFDEFF4),
-                    titleTextStyle: TextStyle(
-                      fontSize: 15.sp,
-                      fontWeight: FontWeight.bold,
-                      color: const Color(0xFFB3541E),
-                      fontStyle: FontStyle.italic,
-                      fontFamily: GoogleFonts.openSans().fontFamily,
-                      letterSpacing: 1.0,
+              builder: () => GlobalLoaderOverlay(
+                child: MaterialApp.router(
+                  debugShowCheckedModeBanner: true,
+                  builder: (context, child) {
+                    ScreenUtil.setContext(context);
+                    return MediaQuery(
+                      data:
+                          MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+                      child: child!,
+                    );
+                  },
+                  routeInformationParser: _appRouter.defaultRouteParser(),
+                  routerDelegate: _appRouter.delegate(),
+                  theme: ThemeData(
+                    visualDensity: VisualDensity.adaptivePlatformDensity,
+                    appBarTheme: const AppBarTheme().copyWith(
+                      backgroundColor: const Color(0xFFFDEFF4),
+                      titleTextStyle: TextStyle(
+                        fontSize: 15.sp,
+                        fontWeight: FontWeight.bold,
+                        color: const Color(0xFFB3541E),
+                        fontStyle: FontStyle.italic,
+                        fontFamily: GoogleFonts.openSans().fontFamily,
+                        letterSpacing: 1.0,
+                      ),
                     ),
+                    iconTheme: const IconThemeData().copyWith(
+                      size: 20.h,
+                    ),
+                    elevatedButtonTheme: elevatedButtonTheme(),
+                    textTheme: textTheme(),
                   ),
-                  iconTheme: const IconThemeData().copyWith(
-                    size: 20.h,
-                  ),
-                  elevatedButtonTheme: elevatedButtonTheme(),
-                  textTheme: textTheme(),
                 ),
               ),
             );

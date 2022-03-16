@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:loader_overlay/loader_overlay.dart';
 
 class CustomDialog {
   //  Loading
@@ -61,7 +62,8 @@ class CustomDialog {
       {required String message,
       void Function()? onPositiveClick,
       bool? barrierDismissible}) {
-    Navigator.of(context).pop();
+    // Navigator.of(context).pop();
+    context.loaderOverlay.hide();
     return showAnimatedDialog(
       barrierDismissible: barrierDismissible ?? true,
       context: context,
@@ -90,7 +92,7 @@ class CustomDialog {
     required String message,
     void Function()? onPositiveClick,
   }) {
-    Navigator.of(context).pop();
+    context.loaderOverlay.hide();
     return showAnimatedDialog(
       context: context,
       builder: (BuildContext context) {

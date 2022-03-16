@@ -7,3 +7,4 @@ export 'cart_item_model/cart_item_model.dart';
 export 'order/order_model.dart';
 export 'ph_location/brgy/brgy_model.dart';
 export 'ph_location/city_municipality/city_municipality_model.dart';
+export 'hub/hub_model.dart';

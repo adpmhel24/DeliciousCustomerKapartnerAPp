@@ -54,6 +54,9 @@ class CustomerModel {
   @JsonKey(name: "allowed_disc")
   double? allowedDisc;
 
+  @JsonKey(name: "pickup_disc")
+  double? pickupDisc;
+
   @JsonKey(fromJson: customerAddressFromJson)
   List<CustomerAddressModel?> details;
 
@@ -75,6 +78,7 @@ class CustomerModel {
     this.isActive,
     this.contactNumber,
     this.allowedDisc = 0.00,
+    this.pickupDisc = 0.00,
     required this.details,
   });
 

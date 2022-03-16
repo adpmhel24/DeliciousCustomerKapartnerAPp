@@ -7,6 +7,7 @@ class AppRepo {
   static final cartRepo = CartItemsRepo();
   static final orderRepository = OrderRepo();
   static final phLocationRepository = PhLocationRepo();
+  static final hubRepository = HubRepo();
   // static final customerRepository = CustomerRepo();
   // static final salesTypeRepository = SalesTypeRepo();
   // static final discTypeRepository = DiscountTypeRepo();
@@ -16,6 +17,7 @@ class AppRepo {
   Future<void> init() async {
     await productsRepository.fetchProducts();
     await customerInfoRepo.getCustomerInfo();
+    await hubRepository.fetchAllHub();
     // await customerRepository.fetchCustomerFromAPI();
     // await salesTypeRepository.fetchFromAPI();
     // await discTypeRepository.fetchDiscType();

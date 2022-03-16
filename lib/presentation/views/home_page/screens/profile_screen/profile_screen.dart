@@ -2,6 +2,7 @@ import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:loader_overlay/loader_overlay.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 import '../../../../../global_bloc/blocs.dart';
@@ -28,9 +29,9 @@ class ProfileScreen extends StatelessWidget {
         body: BlocConsumer<CustomerInfoBloc, CustomerInfoState>(
           listener: (context, state) {
             if (state.status == CustomerInfoStateStatus.loading) {
-              CustomDialog.loading(context);
+              context.loaderOverlay.show();
             } else if (state.status == CustomerInfoStateStatus.fetched) {
-              Navigator.of(context).pop();
+              context.loaderOverlay.hide();
             } else if (state.status == CustomerInfoStateStatus.error) {
               CustomDialog.error(context, message: state.message ?? "");
             }
@@ -45,7 +46,7 @@ class ProfileScreen extends StatelessWidget {
                       bottomRight: Radius.circular(60),
                     ),
                   ),
-                  backgroundColor: const Color(0xFFF76E11),
+                  backgroundColor: Colors.red,
                   expandedHeight: 150,
                   pinned: true,
                   flexibleSpace: FlexibleSpaceBar(
@@ -86,7 +87,10 @@ class ProfileScreen extends StatelessWidget {
                             ),
                             IconButton(
                               splashRadius: Constant.splashRadius,
-                              icon: const Icon(Icons.edit),
+                              icon: const Icon(
+                                Icons.edit,
+                                color: Colors.red,
+                              ),
                               onPressed: () {
                                 showMaterialModalBottomSheet(
                                   context: context,
@@ -121,7 +125,10 @@ class ProfileScreen extends StatelessWidget {
                             ),
                             IconButton(
                               splashRadius: Constant.splashRadius,
-                              icon: const Icon(Icons.edit),
+                              icon: const Icon(
+                                Icons.edit,
+                                color: Colors.red,
+                              ),
                               onPressed: () {
                                 showMaterialModalBottomSheet(
                                   context: context,
@@ -155,7 +162,10 @@ class ProfileScreen extends StatelessWidget {
                             ),
                             IconButton(
                               splashRadius: Constant.splashRadius,
-                              icon: const Icon(Icons.edit),
+                              icon: const Icon(
+                                Icons.edit,
+                                color: Colors.red,
+                              ),
                               onPressed: () {
                                 showMaterialModalBottomSheet(
                                   context: context,
@@ -293,7 +303,10 @@ class ProfileScreen extends StatelessWidget {
                   },
                 );
               },
-              icon: const Icon(Icons.edit),
+              icon: const Icon(
+                Icons.edit,
+                color: Colors.red,
+              ),
             ),
             const SizedBox(
               width: 10,

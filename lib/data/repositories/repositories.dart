@@ -6,3 +6,4 @@ export 'customer_info_repo.dart';
 export 'cart_items_repo.dart';
 export 'order_repo.dart';
 export 'ph_location_repo.dart';
+export 'hub_repo.dart';

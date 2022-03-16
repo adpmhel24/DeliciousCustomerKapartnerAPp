@@ -1,4 +1,4 @@
-package com.example.kapartner_app
+package com.artisan.deliciousShoppingApp
 
 import io.flutter.embedding.android.FlutterActivity
 

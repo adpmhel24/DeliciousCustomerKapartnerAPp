@@ -86,7 +86,10 @@ class AppRouter extends _i15.RootStackRouter {
       return _i15.MaterialPageX<dynamic>(
           routeData: routeData,
           child: _i6.AddressSelectionScreen(
-              key: args.key, checkoutBloc: args.checkoutBloc));
+              key: args.key,
+              checkoutBloc: args.checkoutBloc,
+              onSelected: args.onSelected,
+              deliveryMethod: args.deliveryMethod));
     },
     OrderSuccessScreenRoute.name: (routeData) {
       final args = routeData.argsAs<OrderSuccessScreenRouteArgs>();
@@ -263,25 +266,39 @@ class OrderDetailsScreenRouteArgs {
 class AddressSelectionScreenRoute
     extends _i15.PageRouteInfo<AddressSelectionScreenRouteArgs> {
   AddressSelectionScreenRoute(
-      {_i16.Key? key, required _i19.CheckoutFormBloc checkoutBloc})
+      {_i16.Key? key,
+      required _i19.CheckoutFormBloc checkoutBloc,
+      required void Function(_i18.CustomerAddressModel?) onSelected,
+      required String deliveryMethod})
       : super(AddressSelectionScreenRoute.name,
             path: '/addressSelection',
             args: AddressSelectionScreenRouteArgs(
-                key: key, checkoutBloc: checkoutBloc));
+                key: key,
+                checkoutBloc: checkoutBloc,
+                onSelected: onSelected,
+                deliveryMethod: deliveryMethod));
 
   static const String name = 'AddressSelectionScreenRoute';
 }
 
 class AddressSelectionScreenRouteArgs {
-  const AddressSelectionScreenRouteArgs({this.key, required this.checkoutBloc});
+  const AddressSelectionScreenRouteArgs(
+      {this.key,
+      required this.checkoutBloc,
+      required this.onSelected,
+      required this.deliveryMethod});
 
   final _i16.Key? key;
 
   final _i19.CheckoutFormBloc checkoutBloc;
 
+  final void Function(_i18.CustomerAddressModel?) onSelected;
+
+  final String deliveryMethod;
+
   @override
   String toString() {
-    return 'AddressSelectionScreenRouteArgs{key: $key, checkoutBloc: $checkoutBloc}';
+    return 'AddressSelectionScreenRouteArgs{key: $key, checkoutBloc: $checkoutBloc, onSelected: $onSelected, deliveryMethod: $deliveryMethod}';
   }
 }
 

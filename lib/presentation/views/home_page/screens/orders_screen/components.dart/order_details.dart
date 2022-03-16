@@ -40,7 +40,7 @@ class OrderDetailsScreen extends StatelessWidget {
                     order.orderStatus == 0 && order.docstatus != 'N'
                         ? "Pending"
                         : order.orderStatus == 1 && order.docstatus != 'N'
-                            ? "To Deliver"
+                            ? "For Dispatch"
                             : "Delivered",
                     style: const TextStyle(
                       color: Constant.inlineLabelColor,
@@ -54,9 +54,7 @@ class OrderDetailsScreen extends StatelessWidget {
                   color: Constant.inlineLabelColor,
                 ),
               ),
-              SizedBox(
-                height: 10.h,
-              ),
+              Constant.columnMaxHeightSpacer,
               ColumnLabelInfo(
                 label: "Delivery date",
                 child: Text(
@@ -67,11 +65,9 @@ class OrderDetailsScreen extends StatelessWidget {
                       .copyWith(fontWeight: FontWeight.bold),
                 ),
               ),
-              SizedBox(
-                height: 10.h,
-              ),
+              Constant.columnMaxHeightSpacer,
               ColumnLabelInfo(
-                label: "Ship to",
+                label: "Pickup / Shipping Address",
                 child: Text(
                   order.address ?? "",
                   style: Theme.of(context)
@@ -80,9 +76,7 @@ class OrderDetailsScreen extends StatelessWidget {
                       .copyWith(fontWeight: FontWeight.bold),
                 ),
               ),
-              SizedBox(
-                height: 10.h,
-              ),
+              Constant.columnMaxHeightSpacer,
               ColumnLabelInfo(
                 label: "Payment method",
                 child: Text(
@@ -93,9 +87,18 @@ class OrderDetailsScreen extends StatelessWidget {
                       .copyWith(fontWeight: FontWeight.bold),
                 ),
               ),
-              SizedBox(
-                height: 10.h,
+              Constant.columnMaxHeightSpacer,
+              ColumnLabelInfo(
+                label: "Notes",
+                child: Text(
+                  order.customerNotes ?? "",
+                  style: Theme.of(context)
+                      .textTheme
+                      .subtitle1!
+                      .copyWith(fontWeight: FontWeight.bold),
+                ),
               ),
+              Constant.columnMaxHeightSpacer,
               const Divider(
                 color: Constant.dividerColor,
                 thickness: 1,

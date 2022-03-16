@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.kapartner_app">
+    package="com.artisan.deliciousShoppingApp">
     <uses-permission android:name="android.permission.INTERNET"/>
    <application
         android:label="Ka-Delicious App"

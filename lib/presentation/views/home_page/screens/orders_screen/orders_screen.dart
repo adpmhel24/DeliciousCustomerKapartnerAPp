@@ -45,7 +45,12 @@ class OrdersScreen extends StatelessWidget {
                     ),
                     child: const Align(
                       alignment: Alignment.center,
-                      child: Text("To Deliver"),
+                      child: FittedBox(
+                        fit: BoxFit.fill,
+                        child: Text(
+                          "For Dispatch",
+                        ),
+                      ),
                     ),
                   ),
                 ),
@@ -56,7 +61,7 @@ class OrdersScreen extends StatelessWidget {
                         border: Border.all(color: Colors.redAccent, width: 1)),
                     child: const Align(
                       alignment: Alignment.center,
-                      child: Text("Delivered"),
+                      child: Text("Completed"),
                     ),
                   ),
                 ),

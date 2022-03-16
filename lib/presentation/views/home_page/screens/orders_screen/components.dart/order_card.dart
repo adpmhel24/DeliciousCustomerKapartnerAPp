@@ -130,8 +130,8 @@ class OrderCard extends StatelessWidget {
                     order.orderStatus == 0 && order.docstatus != 'N'
                         ? "Pending"
                         : order.orderStatus == 1 && order.docstatus != 'N'
-                            ? "To Deliver"
-                            : "Delivered",
+                            ? "For Dispatch"
+                            : "Completed",
                     style: const TextStyle(
                         fontWeight: FontWeight.bold, color: Color(0xFFF76E11)),
                   )

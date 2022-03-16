@@ -8,6 +8,7 @@ import 'package:kapartner_app/global_bloc/order_bloc/bloc.dart';
 import 'package:kapartner_app/presentation/widget/constant.dart';
 import 'package:kapartner_app/presentation/widget/custom_dialog.dart';
 import 'package:kapartner_app/router/router.gr.dart';
+import 'package:loader_overlay/loader_overlay.dart';
 
 import '../../utils/currency_formater.dart';
 import 'bloc/bloc.dart';
@@ -24,7 +25,7 @@ class CheckOutScreen extends StatelessWidget {
       child: BlocListener<OrderBloc, OrderState>(
         listener: (context, state) {
           if (state is PlaceNewOrderInProgress) {
-            CustomDialog.loading(context);
+            context.loaderOverlay.show();
           } else if (state is PlaceNewOrderFailure) {
             CustomDialog.error(context, message: state.message);
           } else if (state is PlaceNewOrderSucess) {
@@ -88,7 +89,10 @@ class CheckOutScreen extends StatelessWidget {
                                               .state
                                               .delfee
                                               .value) +
-                                          _cartItemRepo.totalCart)
+                                          context
+                                              .read<CheckoutFormBloc>()
+                                              .state
+                                              .total)
                                       .toString(),
                                   hasCurrency: true),
                               style: const TextStyle(fontSize: 18),
@@ -124,7 +128,7 @@ class CheckOutScreen extends StatelessWidget {
                                   "payment_method":
                                       checkoutBlocState.paymentMethod.value,
                                   "remarks": checkoutBlocState.notes.value,
-                                  "rows": _cartItemRepo.cartItems
+                                  "rows": checkoutBlocState.items
                                       .map((e) => e.checkOutData())
                                       .toList(),
                                 };
@@ -132,10 +136,10 @@ class CheckOutScreen extends StatelessWidget {
                                     CheckOutModel.fromJson(data);
                                 context.read<OrderBloc>().add(
                                       PlaceNewOrder(
-                                          checkoutModel: checkoutModel,
-                                          cartItemRepo: _cartItemRepo),
+                                        checkoutModel: checkoutModel,
+                                        cartItemRepo: _cartItemRepo,
+                                      ),
                                     );
-
                                 Navigator.of(context).pop();
                               });
                             }

@@ -8,6 +8,7 @@ import 'package:kapartner_app/presentation/widget/constant.dart';
 import 'package:kapartner_app/presentation/widget/custom_dialog.dart';
 import 'package:kapartner_app/presentation/widget/custom_text_field.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:loader_overlay/loader_overlay.dart';
 
 import '../../../../../utils/size_config.dart';
 
@@ -69,7 +70,7 @@ class _UpdatePasswordFormState extends State<UpdatePasswordForm> {
               } else if (state is PasswordUpdatingFailure) {
                 CustomDialog.error(context, message: state.message);
               } else {
-                CustomDialog.loading(context);
+                context.loaderOverlay.show();
               }
             },
             child: Form(

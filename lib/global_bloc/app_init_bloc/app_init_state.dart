@@ -1,7 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:package_info_plus/package_info_plus.dart';
-
-import '../../data/models/models.dart';
+import 'package:in_app_update/in_app_update.dart';
 
 abstract class AppInitState extends Equatable {
   const AppInitState();
@@ -11,18 +9,29 @@ abstract class AppInitState extends Equatable {
 
 class OpeningAppState extends AppInitState {}
 
-class NewUpdateAvailable extends AppInitState {
-  final VersionModel availableVersion;
-  final PackageInfo devicePackageInfo;
+// class NewUpdateAvailable extends AppInitState {
+//   final VersionModel availableVersion;
+//   final PackageInfo devicePackageInfo;
 
-  const NewUpdateAvailable(this.availableVersion, this.devicePackageInfo);
+//   const NewUpdateAvailable(this.availableVersion, this.devicePackageInfo);
+//   @override
+//   List<Object> get props => [availableVersion, devicePackageInfo];
+// }
+class NewUpdateAvailable extends AppInitState {
+  final AppUpdateInfo updateInfo;
+
+  const NewUpdateAvailable(this.updateInfo);
   @override
-  List<Object> get props => [availableVersion, devicePackageInfo];
+  List<Object> get props => [updateInfo];
 }
 
 class AppInitLoading extends AppInitState {}
 
+class TryingToLogin extends AppInitState {}
+
 class AutoLoginSuccessful extends AppInitState {}
+
+class AutoLoginFailed extends AppInitState {}
 
 class Error extends AppInitState {
   final String message;

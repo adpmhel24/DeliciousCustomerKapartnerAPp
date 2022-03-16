@@ -1,7 +1,11 @@
+import 'dart:io';
+
 import 'package:intl/intl.dart';
 
 String formatStringToDecimal(String amount, {bool hasCurrency = false}) {
-  String currency = '₱';
+  var format =
+      NumberFormat.simpleCurrency(locale: Platform.localeName, name: "PHP");
+  String currency = format.currencySymbol;
   var newValue = '';
   final f =
       NumberFormat.currency(locale: 'en_US', decimalDigits: 2, symbol: '');

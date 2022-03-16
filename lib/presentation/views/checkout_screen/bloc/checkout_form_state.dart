@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:formz/formz.dart';
+import 'package:kapartner_app/data/models/models.dart';
 import 'package:kapartner_app/presentation/utils/text_field_validator.dart';
 
 class CheckoutFormState extends Equatable {
@@ -12,6 +13,7 @@ class CheckoutFormState extends Equatable {
   final TextFieldModel deliveryMethod;
   final TextFieldModel paymentMethod;
   final TextFieldModel notes;
+  final List<CartItemModel> items;
 
   const CheckoutFormState({
     this.status = FormzStatus.pure,
@@ -23,6 +25,7 @@ class CheckoutFormState extends Equatable {
     this.deliveryMethod = const TextFieldModel.pure(),
     this.paymentMethod = const TextFieldModel.pure(),
     this.notes = const TextFieldModel.pure(),
+    this.items = const [],
   });
 
   CheckoutFormState copyWith({
@@ -35,6 +38,7 @@ class CheckoutFormState extends Equatable {
     TextFieldModel? deliveryMethod,
     TextFieldModel? paymentMethod,
     TextFieldModel? notes,
+    List<CartItemModel>? items,
   }) {
     return CheckoutFormState(
       status: status ?? this.status,
@@ -46,7 +50,16 @@ class CheckoutFormState extends Equatable {
       deliveryMethod: deliveryMethod ?? this.deliveryMethod,
       paymentMethod: paymentMethod ?? this.paymentMethod,
       notes: notes ?? this.notes,
+      items: items ?? this.items,
     );
+  }
+
+  double get total {
+    double totalAmount = 0;
+    for (var e in items) {
+      totalAmount += e.total;
+    }
+    return totalAmount;
   }
 
   @override
@@ -60,5 +73,6 @@ class CheckoutFormState extends Equatable {
         deliveryMethod,
         paymentMethod,
         notes,
+        items
       ];
 }

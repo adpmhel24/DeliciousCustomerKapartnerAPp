@@ -62,6 +62,8 @@ class Body extends StatelessWidget {
                             Constant.columnMinHeightSpacer,
                             price(state, index, context),
                             Constant.columnMinHeightSpacer,
+                            discountPercent(state, index, context),
+                            Constant.columnMinHeightSpacer,
                             discount(state, index, context),
                             Constant.columnMinHeightSpacer,
                             itemTotal(state, index, context),
@@ -143,6 +145,24 @@ class Body extends StatelessWidget {
         Text(
           formatStringToDecimal(state.cartItems[index].discAmount.toString(),
               hasCurrency: true),
+          style: Theme.of(context).textTheme.bodyText2,
+        ),
+      ],
+    );
+  }
+
+  Wrap discountPercent(CartItemsLoaded state, int index, BuildContext context) {
+    return Wrap(
+      children: [
+        const Text(
+          "Discount %:",
+          style: TextStyle(color: Constant.inlineLabelColor),
+        ),
+        SizedBox(
+          width: 5.w,
+        ),
+        Text(
+          "${formatStringToDecimal(state.cartItems[index].discprcnt.toString())}%",
           style: Theme.of(context).textTheme.bodyText2,
         ),
       ],

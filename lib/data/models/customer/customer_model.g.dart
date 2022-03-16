@@ -25,6 +25,7 @@ CustomerModel _$CustomerModelFromJson(Map<String, dynamic> json) =>
       isActive: json['is_active'] as bool?,
       contactNumber: json['contact_number'] as String?,
       allowedDisc: (json['allowed_disc'] as num?)?.toDouble() ?? 0.00,
+      pickupDisc: (json['pickup_disc'] as num?)?.toDouble() ?? 0.00,
       details: CustomerModel.customerAddressFromJson(json['details'] as List),
     );
 
@@ -47,5 +48,6 @@ Map<String, dynamic> _$CustomerModelToJson(CustomerModel instance) =>
       'contact_number': instance.contactNumber,
       'email': instance.email,
       'allowed_disc': instance.allowedDisc,
+      'pickup_disc': instance.pickupDisc,
       'details': instance.details,
     };

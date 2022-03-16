@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kapartner_app/presentation/widget/custom_dialog.dart';
+import 'package:loader_overlay/loader_overlay.dart';
 
 import '../components.dart/order_card.dart';
 import 'bloc/bloc.dart';
@@ -24,11 +25,11 @@ class PendingOrdersScreen extends StatelessWidget {
             return BlocConsumer<PendingOrderBloc, PendingOrderState>(
               listener: (_, state) {
                 if (state.status == PendingOrderStateStatus.loading) {
-                  CustomDialog.loading(context);
+                  context.loaderOverlay.show();
                 } else if (state.status == PendingOrderStateStatus.error) {
                   CustomDialog.error(context, message: state.message);
                 } else if (state.status == PendingOrderStateStatus.success) {
-                  Navigator.of(context).pop();
+                  context.loaderOverlay.hide();
                 }
               },
               builder: (_, state) {

@@ -8,6 +8,9 @@ class OrderItemModel {
   DateTime transdate;
   String? remarks;
 
+  @JsonKey(name: "customer_notes")
+  String? customerNotes;
+
   @JsonKey(name: "cust_code")
   String? custCode;
   String? docstatus;
@@ -45,6 +48,7 @@ class OrderItemModel {
     this.id,
     required this.transdate,
     this.remarks,
+    this.customerNotes,
     this.custCode,
     this.docstatus,
     this.orderStatus,
