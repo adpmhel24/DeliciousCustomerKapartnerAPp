@@ -29,6 +29,7 @@ class CheckOutScreen extends StatelessWidget {
           } else if (state is PlaceNewOrderFailure) {
             CustomDialog.error(context, message: state.message);
           } else if (state is PlaceNewOrderSucess) {
+            context.loaderOverlay.hide();
             AutoRouter.of(context).replaceAll(
               [OrderSuccessScreenRoute(message: state.message)],
             );

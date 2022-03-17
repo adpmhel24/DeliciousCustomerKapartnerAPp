@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:loader_overlay/loader_overlay.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'global_bloc/global_bloc.dart';
 
@@ -63,6 +64,15 @@ class _MyAppState extends State<MyApp> {
                       child: child!,
                     );
                   },
+                  localizationsDelegates: const [
+                    GlobalMaterialLocalizations.delegate,
+                    GlobalWidgetsLocalizations.delegate,
+                    GlobalCupertinoLocalizations.delegate,
+                  ],
+                  supportedLocales: const [
+                    Locale('en', ''), // English, no country code
+                    Locale('es', ''), // Spanish, no country code
+                  ],
                   routeInformationParser: _appRouter.defaultRouteParser(),
                   routerDelegate: _appRouter.delegate(),
                   theme: ThemeData(

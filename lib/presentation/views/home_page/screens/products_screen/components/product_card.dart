@@ -73,7 +73,7 @@ class ProductCard extends StatelessWidget {
                 ),
                 Text(
                   "${formatStringToDecimal(
-                    '${product.price}',
+                    product.price.toString(),
                     hasCurrency: true,
                   )} / pc",
                 ),

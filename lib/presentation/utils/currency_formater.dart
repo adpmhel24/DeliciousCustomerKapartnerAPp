@@ -1,11 +1,11 @@
-import 'dart:io';
+// import 'dart:io';
 
 import 'package:intl/intl.dart';
 
 String formatStringToDecimal(String amount, {bool hasCurrency = false}) {
-  var format =
-      NumberFormat.simpleCurrency(locale: Platform.localeName, name: "PHP");
-  String currency = format.currencySymbol;
+  // var format = NumberFormat.simpleCurrency(locale: 'en_US', name: "PHP");
+
+  String currency = 'Php ';
   var newValue = '';
   final f =
       NumberFormat.currency(locale: 'en_US', decimalDigits: 2, symbol: '');

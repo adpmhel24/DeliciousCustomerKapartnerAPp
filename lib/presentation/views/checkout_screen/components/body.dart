@@ -87,8 +87,9 @@ class _BodyState extends State<Body> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     customerInfo(context),
-                    SizedBox(height: 10.h),
+                    Constant.columnMaxHeightSpacer,
                     deliveryMethodField(context),
+                    Constant.columnMaxHeightSpacer,
                     SizedBox(
                       width: double.infinity,
                       child: Card(
@@ -153,14 +154,14 @@ class _BodyState extends State<Body> {
                         ),
                       ),
                     ),
-                    SizedBox(height: 10.h),
+                    Constant.columnMaxHeightSpacer,
                     paymentMethodField(context),
-                    SizedBox(height: 10.h),
+                    Constant.columnMaxHeightSpacer,
                     DeliveryDateField(
                       controller: _deliveryDateController,
                       dateFormat: dateFormat,
                     ),
-                    SizedBox(height: 10.h),
+                    Constant.columnMaxHeightSpacer,
                     CustomTextField(
                       labelText: "Notes",
                       controller: _notesController,

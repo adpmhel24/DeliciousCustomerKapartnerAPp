@@ -32,7 +32,7 @@ class CartScreen extends StatelessWidget {
                       ? () {
                           CustomDialog.warning(context,
                               message:
-                                  "Are you sure you want to remove all item?",
+                                  "Are you sure you want to remove all the items?",
                               onNegativeClick: () {
                             Navigator.of(context).pop();
                           }, onPositiveClick: () {
