@@ -28,15 +28,17 @@ class CustomDialog {
     required String message,
     void Function()? onPositiveClick,
     void Function()? onNegativeClick,
+    Widget? title,
   }) {
     return showAnimatedDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Align(
-            alignment: Alignment.centerLeft,
-            child: Icon(Icons.warning),
-          ),
+          title: title ??
+              const Align(
+                alignment: Alignment.centerLeft,
+                child: Icon(Icons.warning),
+              ),
           content: Text(message),
           actions: [
             TextButton(

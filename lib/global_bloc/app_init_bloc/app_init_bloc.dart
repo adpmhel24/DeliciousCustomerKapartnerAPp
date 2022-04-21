@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:in_app_update/in_app_update.dart';
+// import 'package:in_app_update/in_app_update.dart';
 import 'package:kapartner_app/exceptions/auth_expire_exception.dart';
 
 import '../../data/repositories/repositories.dart';
@@ -9,7 +9,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AppInitBloc extends Bloc<AppInitEvent, AppInitState> {
   AppInitBloc() : super(OpeningAppState()) {
-    on<OpeningApp>(onOpeningApp);
+    // on<OpeningApp>(onOpeningApp);
     on<AutoLogin>(onAutoLogin);
   }
 
@@ -29,22 +29,22 @@ class AppInitBloc extends Bloc<AppInitEvent, AppInitState> {
   //     emit(Error(e.message));
   //   }
   // }
-  void onOpeningApp(OpeningApp event, Emitter<AppInitState> emit) async {
-    emit(AppInitLoading());
-    AppUpdateInfo? _updateInfo;
+  // void onOpeningApp(OpeningApp event, Emitter<AppInitState> emit) async {
+  //   emit(AppInitLoading());
+  //   AppUpdateInfo? _updateInfo;
 
-    await InAppUpdate.checkForUpdate().then((info) {
-      _updateInfo = info;
-    }).catchError((e) {
-      emit(Error(e.message));
-    });
+  //   await InAppUpdate.checkForUpdate().then((info) {
+  //     _updateInfo = info;
+  //   }).catchError((e) {
+  //     emit(Error(e.message));
+  //   });
 
-    if (_updateInfo?.updateAvailability == UpdateAvailability.updateAvailable) {
-      emit(NewUpdateAvailable(_updateInfo!));
-    } else {
-      emit(NoUpdateAvailable());
-    }
-  }
+  //   if (_updateInfo?.updateAvailability == UpdateAvailability.updateAvailable) {
+  //     emit(NewUpdateAvailable(_updateInfo!));
+  //   } else {
+  //     emit(NoUpdateAvailable());
+  //   }
+  // }
 
   void onAutoLogin(AutoLogin event, Emitter<AppInitState> emit) async {
     emit(TryingToLogin());

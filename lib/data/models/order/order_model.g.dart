@@ -31,6 +31,9 @@ OrderItemModel _$OrderItemModelFromJson(Map<String, dynamic> json) =>
       rows: (json['rows'] as List<dynamic>?)
           ?.map((e) => e as Map<String, dynamic>)
           .toList(),
+      attachments: (json['attachments'] as List<dynamic>?)
+          ?.map((e) => e as Map<String, dynamic>)
+          .toList(),
     );
 
 Map<String, dynamic> _$OrderItemModelToJson(OrderItemModel instance) =>
@@ -56,4 +59,5 @@ Map<String, dynamic> _$OrderItemModelToJson(OrderItemModel instance) =>
       'disctype': instance.disctype,
       'discprcnt': instance.discprcnt,
       'rows': instance.rows,
+      'attachments': instance.attachments,
     };

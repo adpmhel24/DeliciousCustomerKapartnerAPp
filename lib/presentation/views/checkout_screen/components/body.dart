@@ -1,11 +1,18 @@
+import 'dart:io';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_animated_dialog/flutter_animated_dialog.dart'
+    as animated_dialog;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:kapartner_app/data/models/models.dart';
 import 'package:kapartner_app/data/repositories/repositories.dart';
+import 'package:kapartner_app/presentation/widget/custom_dialog.dart';
 import 'package:kapartner_app/presentation/widget/oval_button.dart';
 import 'package:kapartner_app/router/router.gr.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
@@ -29,17 +36,12 @@ class _BodyState extends State<Body> {
   final ScrollController _scrollController = ScrollController();
   final DateFormat dateFormat = DateFormat("MM/dd/yyyy");
   final CustomerInfoRepo _custInfoRepo = AppRepo.customerInfoRepo;
-  final CartItemsRepo _cartItemsRepo = AppRepo.cartRepo;
   late String _deliveryMethodSelected = "";
   late String _paymentMethodSelected = "";
   late CustomerAddressModel? _selectedAddress;
 
   @override
   void initState() {
-    context.read<CheckoutFormBloc>().add(
-          AddCartItemsInCheckOutState(_cartItemsRepo.cartItems),
-        );
-
     _selectedAddress = _custInfoRepo.defautShippingAddress();
 
     context
@@ -71,6 +73,20 @@ class _BodyState extends State<Body> {
     {"name": "BDO", "value": "BDO"},
   ];
 
+  Future pickImage(source) async {
+    try {
+      final image = await ImagePicker().pickImage(
+        source: source,
+        imageQuality: 70,
+      );
+
+      if (image == null) return;
+      final imageTemp = File(image.path);
+
+      context.read<CheckoutFormBloc>().add(AttachmentFileAdded(imageTemp));
+    } on PlatformException catch (_) {}
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scrollbar(
@@ -90,70 +106,7 @@ class _BodyState extends State<Body> {
                     Constant.columnMaxHeightSpacer,
                     deliveryMethodField(context),
                     Constant.columnMaxHeightSpacer,
-                    SizedBox(
-                      width: double.infinity,
-                      child: Card(
-                        elevation: 3,
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Flexible(
-                                flex: 3,
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    RichText(
-                                      text: TextSpan(
-                                        text: "Shipping / Pickup Address: ",
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .subtitle2!
-                                            .copyWith(
-                                                fontWeight: FontWeight.bold),
-                                        children: const [
-                                          TextSpan(
-                                              text: '*',
-                                              style:
-                                                  TextStyle(color: Colors.red))
-                                        ],
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: 5.h,
-                                    ),
-                                    Text(
-                                      context
-                                          .watch<CheckoutFormBloc>()
-                                          .state
-                                          .address
-                                          .value,
-                                    )
-                                  ],
-                                ),
-                              ),
-                              OvalButton(
-                                onPressed: () {
-                                  AutoRouter.of(context).push(
-                                    AddressSelectionScreenRoute(
-                                      checkoutBloc:
-                                          context.read<CheckoutFormBloc>(),
-                                      onSelected: (customerAddress) {
-                                        _selectedAddress = customerAddress;
-                                      },
-                                      deliveryMethod: _deliveryMethodSelected,
-                                    ),
-                                  );
-                                },
-                                child: const Text('Change'),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
+                    shippingPickupAddress(context),
                     Constant.columnMaxHeightSpacer,
                     paymentMethodField(context),
                     Constant.columnMaxHeightSpacer,
@@ -172,6 +125,121 @@ class _BodyState extends State<Body> {
                             .read<CheckoutFormBloc>()
                             .add(NotesChanged(_notesController.text));
                       },
+                    ),
+                    SizedBox(height: 15.h),
+                    ColumnLabelInfo(
+                      label: "Attachment",
+                      child: Wrap(
+                        spacing: 5,
+                        crossAxisAlignment: WrapCrossAlignment.center,
+                        children: [
+                          if (state.attachments.isNotEmpty)
+                            ...state.attachments
+                                .asMap()
+                                .entries
+                                .map<Widget>(
+                                  (e) => InkWell(
+                                    onLongPress: () {
+                                      CustomDialog.warning(
+                                        context,
+                                        title: const Text("Removing image"),
+                                        message:
+                                            "Are you sure you want to remove this image?",
+                                        onPositiveClick: () {
+                                          context.read<CheckoutFormBloc>().add(
+                                                AttachmentRemoved(e.key),
+                                              );
+                                          Navigator.of(context).pop();
+                                        },
+                                      );
+                                    },
+                                    onTap: () {
+                                      AutoRouter.of(context).push(
+                                        AttachmentViewerRoute(
+                                          imageFile: e.value,
+                                          onDelete: () {
+                                            CustomDialog.warning(
+                                              context,
+                                              title:
+                                                  const Text("Removing image"),
+                                              message:
+                                                  "Are you sure you want to remove this image?",
+                                              onPositiveClick: () {
+                                                context
+                                                    .read<CheckoutFormBloc>()
+                                                    .add(
+                                                      AttachmentRemoved(e.key),
+                                                    );
+                                                Navigator.of(context)
+                                                  ..pop()
+                                                  ..pop();
+                                              },
+                                            );
+                                          },
+                                        ),
+                                      );
+                                    },
+                                    child: Card(
+                                      child: Hero(
+                                        tag: e.value,
+                                        child: Image.file(
+                                          e.value,
+                                          height: 50,
+                                          width: 50,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                )
+                                .toList(),
+                          SizedBox(
+                            height: 50,
+                            width: 50,
+                            child: Card(
+                              elevation: 3,
+                              child: IconButton(
+                                icon: const Icon(
+                                  Icons.add,
+                                  color: Colors.red,
+                                ),
+                                onPressed: () {
+                                  animated_dialog.showAnimatedDialog(
+                                      context: context,
+                                      builder: (_) {
+                                        return AlertDialog(
+                                          title: const Text("Select Source"),
+                                          content: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              TextButton.icon(
+                                                onPressed: () {
+                                                  Navigator.of(context).pop();
+                                                  pickImage(ImageSource.camera);
+                                                },
+                                                icon: const Icon(
+                                                    Icons.camera_alt),
+                                                label: const Text("Camera"),
+                                              ),
+                                              TextButton.icon(
+                                                onPressed: () {
+                                                  Navigator.of(context).pop();
+                                                  pickImage(
+                                                      ImageSource.gallery);
+                                                },
+                                                icon: const Icon(Icons.folder),
+                                                label: const Text("Gallery"),
+                                              ),
+                                            ],
+                                          ),
+                                        );
+                                      });
+                                },
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
                     ),
                     SizedBox(height: 15.h),
                     Text(
@@ -310,6 +378,65 @@ class _BodyState extends State<Body> {
                     ),
                   ]);
             },
+          ),
+        ),
+      ),
+    );
+  }
+
+  SizedBox shippingPickupAddress(BuildContext context) {
+    return SizedBox(
+      width: double.infinity,
+      child: Card(
+        elevation: 3,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Flexible(
+                flex: 3,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    RichText(
+                      text: TextSpan(
+                        text: "Shipping / Pickup Address: ",
+                        style: Theme.of(context)
+                            .textTheme
+                            .subtitle2!
+                            .copyWith(fontWeight: FontWeight.bold),
+                        children: const [
+                          TextSpan(
+                              text: '*', style: TextStyle(color: Colors.red))
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: 5.h,
+                    ),
+                    Text(
+                      context.watch<CheckoutFormBloc>().state.address.value,
+                    )
+                  ],
+                ),
+              ),
+              OvalButton(
+                onPressed: () {
+                  AutoRouter.of(context).push(
+                    AddressSelectionScreenRoute(
+                      checkoutBloc: context.read<CheckoutFormBloc>(),
+                      onSelected: (customerAddress) {
+                        _selectedAddress = customerAddress;
+                      },
+                      deliveryMethod: _deliveryMethodSelected,
+                    ),
+                  );
+                },
+                child: const Text('Change'),
+              ),
+            ],
           ),
         ),
       ),
@@ -639,7 +766,7 @@ class DeliveryDateField extends StatelessWidget {
         DatePicker.showDatePicker(
           context,
           showTitleActions: true,
-          minTime: DateTime(2018, 3, 5),
+          minTime: DateTime.now(),
           maxTime: DateTime(2100, 12, 31),
           onConfirm: (date) {
             _controller.text = _dateFormat.format(date);
@@ -653,6 +780,33 @@ class DeliveryDateField extends StatelessWidget {
       },
       prefixIcon: const Icon(Icons.calendar_today),
       suffixIcon: _suffixIcon,
+    );
+  }
+}
+
+class ColumnLabelInfo extends StatelessWidget {
+  const ColumnLabelInfo({
+    Key? key,
+    required this.label,
+    required this.child,
+  }) : super(key: key);
+
+  final String label;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          label,
+          style: const TextStyle(
+            color: Constant.inlineLabelColor,
+          ),
+        ),
+        child,
+      ],
     );
   }
 }

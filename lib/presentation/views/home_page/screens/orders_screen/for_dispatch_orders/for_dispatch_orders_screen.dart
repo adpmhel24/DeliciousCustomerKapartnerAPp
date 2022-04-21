@@ -12,17 +12,19 @@ class ToDeliverOrdersScreen extends StatelessWidget {
 
   Future<void> _refresh(BuildContext context) async {
     await Future.delayed(const Duration(milliseconds: 200));
-    BlocProvider.of<ToDeliverOrderBloc>(context).add(FetchToDeliverOrders());
+    BlocProvider.of<ForDispatchOrderBloc>(context)
+        .add(FetchForDispatchOrders());
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<ToDeliverOrderBloc>(
-      create: (context) => ToDeliverOrderBloc()..add(FetchToDeliverOrders()),
+    return BlocProvider<ForDispatchOrderBloc>(
+      create: (context) =>
+          ForDispatchOrderBloc()..add(FetchForDispatchOrders()),
       child: Scaffold(
         body: Builder(
           builder: (context) {
-            return BlocConsumer<ToDeliverOrderBloc, ToDeliverOrderState>(
+            return BlocConsumer<ForDispatchOrderBloc, ToDeliverOrderState>(
               listener: (_, state) {
                 if (state.status == ToDeliverOrderStateStatus.loading) {
                   context.loaderOverlay.show();
@@ -43,7 +45,11 @@ class ToDeliverOrdersScreen extends StatelessWidget {
                     child: ListView.builder(
                       itemCount: state.orders.length,
                       itemBuilder: (_, indx) {
-                        return OrderCard(order: state.orders[indx]!);
+                        return OrderCard(
+                          order: state.orders[indx]!,
+                          orderTab: 'For Dispatch',
+                          bloc: BlocProvider.of<ForDispatchOrderBloc>(context),
+                        );
                       },
                     ),
                   ),

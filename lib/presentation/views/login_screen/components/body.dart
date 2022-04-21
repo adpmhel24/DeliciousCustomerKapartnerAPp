@@ -18,12 +18,12 @@ class LoginBody extends StatelessWidget {
           padding: EdgeInsets.only(
             left: 24.h,
             right: 24.h,
-            bottom: MediaQuery.of(context).viewPadding.bottom.h,
+            bottom: MediaQuery.of(context).viewInsets.bottom,
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SizedBox(height: 100.h),
+              SizedBox(height: 150.h),
               AspectRatio(
                 aspectRatio: 4 / 2,
                 child: SizedBox(

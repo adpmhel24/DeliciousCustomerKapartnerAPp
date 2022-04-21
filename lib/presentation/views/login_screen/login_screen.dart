@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
-import 'package:in_app_update/in_app_update.dart';
 import 'package:kapartner_app/presentation/views/login_screen/bloc/bloc.dart';
 import 'package:kapartner_app/presentation/widget/custom_dialog.dart';
 import 'package:loader_overlay/loader_overlay.dart';
+import 'package:upgrader/upgrader.dart';
 
 import '../../../global_bloc/app_init_bloc/bloc.dart';
 import 'components/body.dart';
@@ -22,7 +22,7 @@ class LoginFormScreen extends StatelessWidget {
         BlocProvider(
           create: (_) => LoginFormBloc(),
         ),
-        BlocProvider(create: (context) => AppInitBloc()..add(OpeningApp())),
+        BlocProvider(create: (context) => AppInitBloc()..add(AutoLogin())),
       ],
       child: Builder(
         builder: (context) {
@@ -44,29 +44,6 @@ class LoginFormScreen extends StatelessWidget {
                 listener: (_, state) {
                   if (state is AppInitLoading) {
                     context.loaderOverlay.show();
-                  } else if (state is NewUpdateAvailable) {
-                    // Navigator.of(context).pop();
-                    // NewUpdate.displayAlert(
-                    //   context,
-                    //   appName: state.devicePackageInfo.appName,
-                    //   message: const Text("New version is available! "),
-                    //   appUrl:
-                    //       "https://github.com/adpmhel24/DeliciousCustomerKapartnerAPp/releases/download/v1.0.${state.availableVersion.buildNumber}/kadelicious_app.apk",
-                    //   releaseNotes: state.availableVersion.releaseNotes,
-
-                    context.loaderOverlay.hide(); // );
-                    InAppUpdate.performImmediateUpdate().catchError(
-                      (e) {
-                        ScaffoldMessenger.of(context)
-                          ..hideCurrentSnackBar()
-                          ..showSnackBar(
-                            SnackBar(
-                              content: Text(e.toString()),
-                              duration: const Duration(seconds: 1),
-                            ),
-                          );
-                      },
-                    );
                   } else if (state is Error) {
                     CustomDialog.error(
                       context,
@@ -76,9 +53,6 @@ class LoginFormScreen extends StatelessWidget {
                         SystemNavigator.pop();
                       },
                     );
-                  } else if (state is NoUpdateAvailable) {
-                    context.loaderOverlay.hide();
-                    context.read<AppInitBloc>().add(AutoLogin());
                   } else if (state is TryingToLogin) {
                     context.loaderOverlay.show();
                   } else if (state is AutoLoginSuccessful) {
@@ -90,12 +64,16 @@ class LoginFormScreen extends StatelessWidget {
                 },
               ),
             ],
-            child: const Scaffold(
+            child: Scaffold(
               body: DoubleBackToCloseApp(
-                snackBar: SnackBar(
+                snackBar: const SnackBar(
                   content: Text('Tap back again to leave'),
                 ),
-                child: LoginBody(),
+                child: UpgradeAlert(
+                  showIgnore: false,
+                  showLater: false,
+                  child: const LoginBody(),
+                ),
               ),
             ),
           );

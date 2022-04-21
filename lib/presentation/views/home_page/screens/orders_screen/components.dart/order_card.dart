@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:kapartner_app/presentation/utils/currency_formater.dart';
@@ -13,9 +14,13 @@ class OrderCard extends StatelessWidget {
   const OrderCard({
     Key? key,
     required this.order,
+    required this.orderTab,
+    required this.bloc,
   }) : super(key: key);
 
   final OrderItemModel order;
+  final String orderTab;
+  final Bloc bloc;
 
   @override
   Widget build(BuildContext context) {
@@ -121,7 +126,11 @@ class OrderCard extends StatelessWidget {
                     backgroundColor: const Color(0xFFC1A3A3),
                     onPressed: () {
                       AutoRouter.of(context).push(
-                        OrderDetailsScreenRoute(order: order),
+                        OrderDetailsScreenRoute(
+                          order: order,
+                          orderTab: orderTab,
+                          bloc: bloc,
+                        ),
                       );
                     },
                     child: const Text("Details"),

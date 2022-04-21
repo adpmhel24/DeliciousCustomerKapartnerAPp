@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:equatable/equatable.dart';
 import 'package:kapartner_app/data/models/cart_item_model/cart_item_model.dart';
 import 'package:kapartner_app/data/models/customer_address/customer_address_model.dart';
@@ -70,6 +72,21 @@ class AddCartItemsInCheckOutState extends CheckoutFormEvent {
   const AddCartItemsInCheckOutState(this.items);
   @override
   List<Object?> get props => [items];
+}
+
+class AttachmentFileAdded extends CheckoutFormEvent {
+  final File file;
+  const AttachmentFileAdded(this.file);
+  @override
+  List<Object?> get props => [file];
+}
+
+class AttachmentRemoved extends CheckoutFormEvent {
+  final int index;
+
+  const AttachmentRemoved(this.index);
+  @override
+  List<Object?> get props => [index];
 }
 
 class NotesChanged extends CheckoutFormEvent {

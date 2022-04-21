@@ -2,10 +2,12 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 
+import '../repositories/repositories.dart';
 import 'dio_settings.dart';
 
 class CustomerAPI {
   Dio dio = DioSettings.dio();
+  final AuthRepository _authRepository = AuthRepository();
 
   Future<Response> getCustomerInfoByCustomerUserId(token,
       {required int userId}) async {
@@ -17,6 +19,9 @@ class CustomerAPI {
           }));
     } on DioError catch (e) {
       if (e.response != null) {
+        if (e.response!.statusCode == 401) {
+          _authRepository.logout();
+        }
         if (e.response!.data.runtimeType != String) {
           throw HttpException(e.response!.data['message']);
         } else {
@@ -47,6 +52,9 @@ class CustomerAPI {
           }));
     } on DioError catch (e) {
       if (e.response != null) {
+        if (e.response!.statusCode == 401) {
+          _authRepository.logout();
+        }
         if (e.response!.data.runtimeType != String) {
           throw HttpException(e.response!.data['message']);
         } else {
@@ -62,7 +70,7 @@ class CustomerAPI {
     return response;
   }
 
-  Future<Response> updateCustomerDetails(
+  Future<Response> updateCustomerAddress(
     token, {
     required int customerDetailId,
     required Map<String, dynamic> data,
@@ -78,6 +86,9 @@ class CustomerAPI {
           }));
     } on DioError catch (e) {
       if (e.response != null) {
+        if (e.response!.statusCode == 401) {
+          _authRepository.logout();
+        }
         if (e.response!.data.runtimeType != String) {
           throw HttpException(e.response!.data['message']);
         } else {
@@ -109,6 +120,9 @@ class CustomerAPI {
           }));
     } on DioError catch (e) {
       if (e.response != null) {
+        if (e.response!.statusCode == 401) {
+          _authRepository.logout();
+        }
         if (e.response!.data.runtimeType != String) {
           throw HttpException(e.response!.data['message']);
         } else {
@@ -138,6 +152,9 @@ class CustomerAPI {
           }));
     } on DioError catch (e) {
       if (e.response != null) {
+        if (e.response!.statusCode == 401) {
+          _authRepository.logout();
+        }
         if (e.response!.data.runtimeType != String) {
           throw HttpException(e.response!.data['message']);
         } else {

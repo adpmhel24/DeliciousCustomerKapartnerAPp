@@ -43,6 +43,7 @@ class OrderItemModel {
   double? discprcnt;
 
   List<Map<String, dynamic>>? rows;
+  List<Map<String, dynamic>>? attachments;
 
   OrderItemModel({
     this.id,
@@ -66,6 +67,7 @@ class OrderItemModel {
     this.discprcnt = 0.00,
     this.otherfee = 0.00,
     required this.rows,
+    this.attachments,
   });
 
   String getOrderStatus() {

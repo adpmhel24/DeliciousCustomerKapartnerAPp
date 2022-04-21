@@ -55,7 +55,6 @@ class _MyAppState extends State<MyApp> {
               splitScreenMode: true,
               builder: () => GlobalLoaderOverlay(
                 child: MaterialApp.router(
-                  debugShowCheckedModeBanner: true,
                   builder: (context, child) {
                     ScreenUtil.setContext(context);
                     return MediaQuery(

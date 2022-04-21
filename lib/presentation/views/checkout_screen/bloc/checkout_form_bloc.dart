@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
@@ -19,6 +20,8 @@ class CheckoutFormBloc extends Bloc<CheckoutFormEvent, CheckoutFormState> {
     on<NotesChanged>(_onNotesChanged);
     on<AddCartItemsInCheckOutState>(_onAddCartItemsInCheckOutState);
     on<PickupAddressChanged>(_onPickupAddressChanged);
+    on<AttachmentFileAdded>(_onAttachmentFileAdded);
+    on<AttachmentRemoved>(_onAttachmentRemoved);
   }
 
   final CustomerModel _customer = AppRepo.customerInfoRepo.customer;
@@ -179,6 +182,47 @@ class CheckoutFormBloc extends Bloc<CheckoutFormEvent, CheckoutFormState> {
             state.deliveryDate,
             state.paymentMethod,
             address,
+          ],
+        ),
+      ),
+    );
+  }
+
+  void _onAttachmentFileAdded(
+      AttachmentFileAdded event, Emitter<CheckoutFormState> emit) {
+    List<File> stateAttachment =
+        state.attachments.isEmpty ? [] : state.attachments;
+
+    emit(
+      state.copyWith(
+        attachments: [event.file, ...stateAttachment],
+        status: Formz.validate(
+          [
+            state.paymentMethod,
+            state.deliveryDate,
+            state.deliveryMethod,
+            state.address
+          ],
+        ),
+      ),
+    );
+  }
+
+  void _onAttachmentRemoved(
+      AttachmentRemoved event, Emitter<CheckoutFormState> emit) {
+    List<File> attachments = state.attachments.map((e) => e).toList();
+
+    attachments.removeAt(event.index);
+
+    emit(
+      state.copyWith(
+        attachments: [...attachments],
+        status: Formz.validate(
+          [
+            state.paymentMethod,
+            state.deliveryDate,
+            state.deliveryMethod,
+            state.address
           ],
         ),
       ),

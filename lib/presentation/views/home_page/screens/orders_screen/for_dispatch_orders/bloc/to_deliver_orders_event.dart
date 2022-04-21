@@ -6,4 +6,4 @@ abstract class ToDeliverOrderEvent extends Equatable {
   List<Object?> get props => [];
 }
 
-class FetchToDeliverOrders extends ToDeliverOrderEvent {}
+class FetchForDispatchOrders extends ToDeliverOrderEvent {}

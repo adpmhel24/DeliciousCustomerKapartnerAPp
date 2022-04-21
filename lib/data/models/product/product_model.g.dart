@@ -15,6 +15,7 @@ ProductModel _$ProductModelFromJson(Map<String, dynamic> json) => ProductModel(
       price: (json['price'] as num?)?.toDouble(),
       isSelected: json['isSelected'] as bool? ?? false,
       imageUrl: json['image_url'] as String?,
+      isAvailable: json['is_available'] as bool?,
     );
 
 Map<String, dynamic> _$ProductModelToJson(ProductModel instance) =>
@@ -27,4 +28,5 @@ Map<String, dynamic> _$ProductModelToJson(ProductModel instance) =>
       'price': instance.price,
       'isSelected': instance.isSelected,
       'image_url': instance.imageUrl,
+      'is_available': instance.isAvailable,
     };

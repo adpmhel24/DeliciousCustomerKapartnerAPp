@@ -4,8 +4,9 @@ import 'package:kapartner_app/presentation/views/registration_screen/customer_re
 
 import '../presentation/views/checkout_screen/checkout_screen.dart';
 import '../presentation/views/checkout_screen/components/address_selection.dart';
+import '../presentation/views/checkout_screen/components/attachment_viewer.dart';
 import '../presentation/views/home_page/screens/cart_screen/cart_screen.dart';
-import '../presentation/views/home_page/screens/orders_screen/components.dart/order_details.dart';
+import '../presentation/views/home_page/screens/orders_screen/order_details_screen/order_details_screen.dart';
 import '../presentation/views/home_page/screens/orders_screen/orders_screen.dart';
 import '../presentation/views/home_page/screens/products_screen/components/prod_details.dart';
 import '../presentation/views/home_page/screens/products_screen/products_screen.dart';
@@ -14,6 +15,7 @@ import '../presentation/views/login_screen/login_screen.dart';
 import '../presentation/views/order_success_screen/order_success_screen.dart';
 import '../presentation/views/registration_screen/ka_partner_registration/ka_partner_reg.dart';
 import '../presentation/views/registration_screen/registration_screen.dart';
+import '../presentation/widget/image_viewer.dart';
 import 'router_guard.dart';
 
 @MaterialAutoRouter(
@@ -44,6 +46,11 @@ import 'router_guard.dart';
       guards: [RouteGuard],
     ),
     AutoRoute(
+      page: AttachmentViewer,
+      path: 'attachmentViewer',
+      guards: [RouteGuard],
+    ),
+    AutoRoute(
       page: OrderDetailsScreen,
       path: '/orderDetails',
       guards: [RouteGuard],
@@ -56,6 +63,11 @@ import 'router_guard.dart';
     AutoRoute(
       page: OrderSuccessScreen,
       path: '/orderSuccess',
+      guards: [RouteGuard],
+    ),
+    AutoRoute(
+      page: ImageViewer,
+      path: '/imageViewer',
       guards: [RouteGuard],
     ),
     AutoRoute(

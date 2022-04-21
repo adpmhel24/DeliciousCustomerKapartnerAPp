@@ -1,11 +1,13 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:kapartner_app/data/repositories/repositories.dart';
 
 import 'dio_settings.dart';
 
 class VersionAPI {
   Dio dio = DioSettings.dio();
+  final AuthRepository _authRepository = AuthRepository();
   // Login Request
   Future<Response> getLatestVersion(Map<String, dynamic> params) async {
     Response response;
@@ -24,6 +26,9 @@ class VersionAPI {
       );
     } on DioError catch (e) {
       if (e.response != null) {
+        if (e.response!.statusCode == 401) {
+          _authRepository.logout();
+        }
         if (e.response!.data.runtimeType != String) {
           throw HttpException(e.response!.data['message']);
         } else {

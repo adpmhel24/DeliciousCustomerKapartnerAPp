@@ -43,7 +43,11 @@ class DeliveredOrdersScreen extends StatelessWidget {
                     child: ListView.builder(
                       itemCount: state.orders.length,
                       itemBuilder: (_, indx) {
-                        return OrderCard(order: state.orders[indx]!);
+                        return OrderCard(
+                          order: state.orders[indx]!,
+                          orderTab: 'Completed',
+                          bloc: BlocProvider.of<DeliveredOrdersBloc>(context),
+                        );
                       },
                     ),
                   ),

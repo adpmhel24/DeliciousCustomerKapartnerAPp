@@ -20,7 +20,8 @@ CartItemModel _$CartItemModelFromJson(Map<String, dynamic> json) =>
       ..itemGroup = json['item_group'] as String?
       ..price = (json['price'] as num?)?.toDouble()
       ..isSelected = json['isSelected'] as bool
-      ..imageUrl = json['image_url'] as String?;
+      ..imageUrl = json['image_url'] as String?
+      ..isAvailable = json['is_available'] as bool?;
 
 Map<String, dynamic> _$CartItemModelToJson(CartItemModel instance) =>
     <String, dynamic>{
@@ -32,6 +33,7 @@ Map<String, dynamic> _$CartItemModelToJson(CartItemModel instance) =>
       'price': instance.price,
       'isSelected': instance.isSelected,
       'image_url': instance.imageUrl,
+      'is_available': instance.isAvailable,
       'quantity': instance.quantity,
       'discprcnt': instance.discprcnt,
       'disc_amount': instance.discAmount,

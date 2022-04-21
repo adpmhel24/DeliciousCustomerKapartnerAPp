@@ -14,22 +14,35 @@ class ProductCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        AutoRouter.of(context).push(
-          ProductDetailsRoute(
-            loadedProduct: product,
-          ),
-        );
-      },
+      onTap: (product.isAvailable != null && product.isAvailable!)
+          ? () {
+              AutoRouter.of(context).push(
+                ProductDetailsRoute(
+                  loadedProduct: product,
+                ),
+              );
+            }
+          : null,
       child: ClipRRect(
         borderRadius: BorderRadius.circular(15),
         child: Card(
+          color: (product.isAvailable != null && product.isAvailable!)
+              ? null
+              : const Color(0xFFFAD9E6),
           elevation: 3.0,
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+                if (product.isAvailable != null && !product.isAvailable!)
+                  Text(
+                    "Unavailable",
+                    style: TextStyle(
+                      color: Colors.red[400],
+                      fontSize: 11,
+                    ),
+                  ),
                 (product.imageUrl == null)
                     ? CircleAvatar(
                         radius: 35.r,

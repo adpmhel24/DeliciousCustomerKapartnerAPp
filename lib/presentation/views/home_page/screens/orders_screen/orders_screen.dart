@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import 'delivered_orders/delivered_orders_screen.dart';
+import 'completed_orders/delivered_orders_screen.dart';
 import 'pending_orders/pending_orders_screen.dart';
-import 'to_deliver_orders/to_deliver_orders_screen.dart';
+import 'for_dispatch_orders/for_dispatch_orders_screen.dart';
 
 class OrdersScreen extends StatelessWidget {
   const OrdersScreen({Key? key}) : super(key: key);

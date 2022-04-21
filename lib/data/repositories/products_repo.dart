@@ -17,12 +17,9 @@ class ProductsRepo {
     try {
       response = await _apiProductsAPI.getAllItem(
           token: _authRepository.currentUser.token);
-      if (response.statusCode == 200) {
-        _products = List<ProductModel>.from(
-            response.data['data'].map((i) => ProductModel.fromJson(i)));
-      } else {
-        throw HttpException(response.data['message']);
-      }
+
+      _products = List<ProductModel>.from(
+          response.data['data'].map((i) => ProductModel.fromJson(i)));
     } on HttpException catch (e) {
       throw HttpException(e.message);
     }

@@ -23,6 +23,20 @@ class OrderRepo {
     return response.data['message'];
   }
 
+  Future<OrderItemModel> addOrderAttachment(
+      {required int orderId, required List<File> files}) async {
+    Response response;
+    try {
+      response = await _orderAPI.addOrderAttachment(
+          _authRepository.currentUser.token,
+          orderId: orderId,
+          files: files);
+      return OrderItemModel.fromJson(response.data['data']);
+    } on HttpException catch (e) {
+      throw HttpException(e.message);
+    }
+  }
+
   Future<void> fetchAllOrdersByUser({Map<String, dynamic>? params}) async {
     Response response;
     try {

@@ -17,8 +17,7 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
       PlaceNewOrder event, Emitter<OrderState> emit) async {
     emit(PlaceNewOrderInProgress());
     try {
-      String message =
-          await _orderRepo.postNewOrder(event.checkoutModel.toJson());
+      String message = await _orderRepo.postNewOrder(event.data);
       event.cartItemRepo.clearCart();
       emit(PlaceNewOrderSucess(message));
     } on HttpException catch (e) {

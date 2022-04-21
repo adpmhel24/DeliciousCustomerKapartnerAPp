@@ -10,82 +10,101 @@
 //
 // ignore_for_file: type=lint
 
-import 'package:auto_route/auto_route.dart' as _i15;
-import 'package:flutter/material.dart' as _i16;
+import 'dart:io' as _i21;
 
-import '../data/models/models.dart' as _i18;
-import '../presentation/views/checkout_screen/bloc/bloc.dart' as _i19;
+import 'package:auto_route/auto_route.dart' as _i17;
+import 'package:flutter/material.dart' as _i18;
+import 'package:flutter_bloc/flutter_bloc.dart' as _i22;
+
+import '../data/models/models.dart' as _i20;
+import '../presentation/views/checkout_screen/bloc/bloc.dart' as _i23;
 import '../presentation/views/checkout_screen/checkout_screen.dart' as _i4;
 import '../presentation/views/checkout_screen/components/address_selection.dart'
-    as _i6;
+    as _i7;
+import '../presentation/views/checkout_screen/components/attachment_viewer.dart'
+    as _i5;
 import '../presentation/views/home_page/home_screen.dart' as _i2;
 import '../presentation/views/home_page/screens/cart_screen/cart_screen.dart'
-    as _i10;
-import '../presentation/views/home_page/screens/orders_screen/components.dart/order_details.dart'
-    as _i5;
-import '../presentation/views/home_page/screens/orders_screen/orders_screen.dart'
     as _i12;
+import '../presentation/views/home_page/screens/orders_screen/order_details_screen/order_details_screen.dart'
+    as _i6;
+import '../presentation/views/home_page/screens/orders_screen/orders_screen.dart'
+    as _i14;
 import '../presentation/views/home_page/screens/products_screen/components/prod_details.dart'
     as _i3;
 import '../presentation/views/home_page/screens/products_screen/products_screen.dart'
-    as _i9;
-import '../presentation/views/home_page/screens/profile_screen/profile_screen.dart'
     as _i11;
+import '../presentation/views/home_page/screens/profile_screen/profile_screen.dart'
+    as _i13;
 import '../presentation/views/login_screen/login_screen.dart' as _i1;
 import '../presentation/views/order_success_screen/order_success_screen.dart'
-    as _i7;
-import '../presentation/views/registration_screen/customer_registration/customer_reg_screen.dart'
-    as _i13;
-import '../presentation/views/registration_screen/ka_partner_registration/ka_partner_reg.dart'
-    as _i14;
-import '../presentation/views/registration_screen/registration_screen.dart'
     as _i8;
-import 'router_guard.dart' as _i17;
+import '../presentation/views/registration_screen/customer_registration/customer_reg_screen.dart'
+    as _i15;
+import '../presentation/views/registration_screen/ka_partner_registration/ka_partner_reg.dart'
+    as _i16;
+import '../presentation/views/registration_screen/registration_screen.dart'
+    as _i10;
+import '../presentation/widget/image_viewer.dart' as _i9;
+import 'router_guard.dart' as _i19;
 
-class AppRouter extends _i15.RootStackRouter {
+class AppRouter extends _i17.RootStackRouter {
   AppRouter(
-      {_i16.GlobalKey<_i16.NavigatorState>? navigatorKey,
+      {_i18.GlobalKey<_i18.NavigatorState>? navigatorKey,
       required this.routeGuard})
       : super(navigatorKey);
 
-  final _i17.RouteGuard routeGuard;
+  final _i19.RouteGuard routeGuard;
 
   @override
-  final Map<String, _i15.PageFactory> pagesMap = {
+  final Map<String, _i17.PageFactory> pagesMap = {
     LoginRoute.name: (routeData) {
       final args = routeData.argsAs<LoginRouteArgs>(
           orElse: () => const LoginRouteArgs());
-      return _i15.MaterialPageX<dynamic>(
+      return _i17.MaterialPageX<dynamic>(
           routeData: routeData,
           child: _i1.LoginFormScreen(
               key: args.key, onLoginCallback: args.onLoginCallback));
     },
     HomeScreenRoute.name: (routeData) {
-      return _i15.MaterialPageX<dynamic>(
+      return _i17.MaterialPageX<dynamic>(
           routeData: routeData, child: const _i2.HomeScreen());
     },
     ProductDetailsRoute.name: (routeData) {
       final args = routeData.argsAs<ProductDetailsRouteArgs>();
-      return _i15.MaterialPageX<dynamic>(
+      return _i17.MaterialPageX<dynamic>(
           routeData: routeData,
           child: _i3.ProductDetails(
               key: args.key, loadedProduct: args.loadedProduct));
     },
     CheckOutScreenRoute.name: (routeData) {
-      return _i15.MaterialPageX<dynamic>(
+      return _i17.MaterialPageX<dynamic>(
           routeData: routeData, child: const _i4.CheckOutScreen());
+    },
+    AttachmentViewerRoute.name: (routeData) {
+      final args = routeData.argsAs<AttachmentViewerRouteArgs>();
+      return _i17.MaterialPageX<dynamic>(
+          routeData: routeData,
+          child: _i5.AttachmentViewer(
+              key: args.key,
+              imageFile: args.imageFile,
+              onDelete: args.onDelete));
     },
     OrderDetailsScreenRoute.name: (routeData) {
       final args = routeData.argsAs<OrderDetailsScreenRouteArgs>();
-      return _i15.MaterialPageX<dynamic>(
+      return _i17.MaterialPageX<dynamic>(
           routeData: routeData,
-          child: _i5.OrderDetailsScreen(key: args.key, order: args.order));
+          child: _i6.OrderDetailsScreen(
+              key: args.key,
+              order: args.order,
+              orderTab: args.orderTab,
+              bloc: args.bloc));
     },
     AddressSelectionScreenRoute.name: (routeData) {
       final args = routeData.argsAs<AddressSelectionScreenRouteArgs>();
-      return _i15.MaterialPageX<dynamic>(
+      return _i17.MaterialPageX<dynamic>(
           routeData: routeData,
-          child: _i6.AddressSelectionScreen(
+          child: _i7.AddressSelectionScreen(
               key: args.key,
               checkoutBloc: args.checkoutBloc,
               onSelected: args.onSelected,
@@ -93,77 +112,90 @@ class AppRouter extends _i15.RootStackRouter {
     },
     OrderSuccessScreenRoute.name: (routeData) {
       final args = routeData.argsAs<OrderSuccessScreenRouteArgs>();
-      return _i15.MaterialPageX<dynamic>(
+      return _i17.MaterialPageX<dynamic>(
           routeData: routeData,
-          child: _i7.OrderSuccessScreen(key: args.key, message: args.message));
+          child: _i8.OrderSuccessScreen(key: args.key, message: args.message));
+    },
+    ImageViewerRoute.name: (routeData) {
+      final args = routeData.argsAs<ImageViewerRouteArgs>();
+      return _i17.MaterialPageX<dynamic>(
+          routeData: routeData,
+          child: _i9.ImageViewer(
+              key: args.key,
+              initialIndex: args.initialIndex,
+              attachments: args.attachments));
     },
     RegistrationScreenRoute.name: (routeData) {
-      return _i15.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i8.RegistrationScreen());
+      return _i17.MaterialPageX<dynamic>(
+          routeData: routeData, child: const _i10.RegistrationScreen());
     },
     ProductsScreenRoute.name: (routeData) {
-      return _i15.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i9.ProductsScreen());
+      return _i17.MaterialPageX<dynamic>(
+          routeData: routeData, child: const _i11.ProductsScreen());
     },
     CartScreenRoute.name: (routeData) {
-      return _i15.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i10.CartScreen());
+      return _i17.MaterialPageX<dynamic>(
+          routeData: routeData, child: const _i12.CartScreen());
     },
     ProfileScreenRoute.name: (routeData) {
-      return _i15.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i11.ProfileScreen());
+      return _i17.MaterialPageX<dynamic>(
+          routeData: routeData, child: const _i13.ProfileScreen());
     },
     OrdersScreenRoute.name: (routeData) {
-      return _i15.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i12.OrdersScreen());
+      return _i17.MaterialPageX<dynamic>(
+          routeData: routeData, child: const _i14.OrdersScreen());
     },
     CustomerRegistrationScreenRoute.name: (routeData) {
-      return _i15.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i13.CustomerRegistrationScreen());
+      return _i17.MaterialPageX<dynamic>(
+          routeData: routeData, child: const _i15.CustomerRegistrationScreen());
     },
     KaPartnerRegistrationScreenRoute.name: (routeData) {
-      return _i15.MaterialPageX<dynamic>(
+      return _i17.MaterialPageX<dynamic>(
           routeData: routeData,
-          child: const _i14.KaPartnerRegistrationScreen());
+          child: const _i16.KaPartnerRegistrationScreen());
     }
   };
 
   @override
-  List<_i15.RouteConfig> get routes => [
-        _i15.RouteConfig(LoginRoute.name, path: '/login'),
-        _i15.RouteConfig(HomeScreenRoute.name, path: '/', guards: [
+  List<_i17.RouteConfig> get routes => [
+        _i17.RouteConfig(LoginRoute.name, path: '/login'),
+        _i17.RouteConfig(HomeScreenRoute.name, path: '/', guards: [
           routeGuard
         ], children: [
-          _i15.RouteConfig('#redirect',
+          _i17.RouteConfig('#redirect',
               path: '',
               parent: HomeScreenRoute.name,
               redirectTo: 'products',
               fullMatch: true),
-          _i15.RouteConfig(ProductsScreenRoute.name,
+          _i17.RouteConfig(ProductsScreenRoute.name,
               path: 'products', parent: HomeScreenRoute.name),
-          _i15.RouteConfig(CartScreenRoute.name,
+          _i17.RouteConfig(CartScreenRoute.name,
               path: 'cart', parent: HomeScreenRoute.name),
-          _i15.RouteConfig(ProfileScreenRoute.name,
+          _i17.RouteConfig(ProfileScreenRoute.name,
               path: 'profile', parent: HomeScreenRoute.name),
-          _i15.RouteConfig(OrdersScreenRoute.name,
+          _i17.RouteConfig(OrdersScreenRoute.name,
               path: 'orders', parent: HomeScreenRoute.name)
         ]),
-        _i15.RouteConfig(ProductDetailsRoute.name,
+        _i17.RouteConfig(ProductDetailsRoute.name,
             path: '/productDetails', guards: [routeGuard]),
-        _i15.RouteConfig(CheckOutScreenRoute.name,
+        _i17.RouteConfig(CheckOutScreenRoute.name,
             path: '/checkout', guards: [routeGuard]),
-        _i15.RouteConfig(OrderDetailsScreenRoute.name,
+        _i17.RouteConfig(AttachmentViewerRoute.name,
+            path: 'attachmentViewer', guards: [routeGuard]),
+        _i17.RouteConfig(OrderDetailsScreenRoute.name,
             path: '/orderDetails', guards: [routeGuard]),
-        _i15.RouteConfig(AddressSelectionScreenRoute.name,
+        _i17.RouteConfig(AddressSelectionScreenRoute.name,
             path: '/addressSelection', guards: [routeGuard]),
-        _i15.RouteConfig(OrderSuccessScreenRoute.name,
+        _i17.RouteConfig(OrderSuccessScreenRoute.name,
             path: '/orderSuccess', guards: [routeGuard]),
-        _i15.RouteConfig(RegistrationScreenRoute.name,
+        _i17.RouteConfig(ImageViewerRoute.name,
+            path: '/imageViewer', guards: [routeGuard]),
+        _i17.RouteConfig(RegistrationScreenRoute.name,
             path: '/registration',
             children: [
-              _i15.RouteConfig(CustomerRegistrationScreenRoute.name,
+              _i17.RouteConfig(CustomerRegistrationScreenRoute.name,
                   path: 'customer', parent: RegistrationScreenRoute.name),
-              _i15.RouteConfig(KaPartnerRegistrationScreenRoute.name,
+              _i17.RouteConfig(KaPartnerRegistrationScreenRoute.name,
                   path: 'kapartner', parent: RegistrationScreenRoute.name)
             ])
       ];
@@ -171,8 +203,8 @@ class AppRouter extends _i15.RootStackRouter {
 
 /// generated route for
 /// [_i1.LoginFormScreen]
-class LoginRoute extends _i15.PageRouteInfo<LoginRouteArgs> {
-  LoginRoute({_i16.Key? key, dynamic Function(bool)? onLoginCallback})
+class LoginRoute extends _i17.PageRouteInfo<LoginRouteArgs> {
+  LoginRoute({_i18.Key? key, dynamic Function(bool)? onLoginCallback})
       : super(LoginRoute.name,
             path: '/login',
             args: LoginRouteArgs(key: key, onLoginCallback: onLoginCallback));
@@ -183,7 +215,7 @@ class LoginRoute extends _i15.PageRouteInfo<LoginRouteArgs> {
 class LoginRouteArgs {
   const LoginRouteArgs({this.key, this.onLoginCallback});
 
-  final _i16.Key? key;
+  final _i18.Key? key;
 
   final dynamic Function(bool)? onLoginCallback;
 
@@ -195,8 +227,8 @@ class LoginRouteArgs {
 
 /// generated route for
 /// [_i2.HomeScreen]
-class HomeScreenRoute extends _i15.PageRouteInfo<void> {
-  const HomeScreenRoute({List<_i15.PageRouteInfo>? children})
+class HomeScreenRoute extends _i17.PageRouteInfo<void> {
+  const HomeScreenRoute({List<_i17.PageRouteInfo>? children})
       : super(HomeScreenRoute.name, path: '/', initialChildren: children);
 
   static const String name = 'HomeScreenRoute';
@@ -204,8 +236,8 @@ class HomeScreenRoute extends _i15.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i3.ProductDetails]
-class ProductDetailsRoute extends _i15.PageRouteInfo<ProductDetailsRouteArgs> {
-  ProductDetailsRoute({_i16.Key? key, required _i18.ProductModel loadedProduct})
+class ProductDetailsRoute extends _i17.PageRouteInfo<ProductDetailsRouteArgs> {
+  ProductDetailsRoute({_i18.Key? key, required _i20.ProductModel loadedProduct})
       : super(ProductDetailsRoute.name,
             path: '/productDetails',
             args: ProductDetailsRouteArgs(
@@ -217,9 +249,9 @@ class ProductDetailsRoute extends _i15.PageRouteInfo<ProductDetailsRouteArgs> {
 class ProductDetailsRouteArgs {
   const ProductDetailsRouteArgs({this.key, required this.loadedProduct});
 
-  final _i16.Key? key;
+  final _i18.Key? key;
 
-  final _i18.ProductModel loadedProduct;
+  final _i20.ProductModel loadedProduct;
 
   @override
   String toString() {
@@ -229,7 +261,7 @@ class ProductDetailsRouteArgs {
 
 /// generated route for
 /// [_i4.CheckOutScreen]
-class CheckOutScreenRoute extends _i15.PageRouteInfo<void> {
+class CheckOutScreenRoute extends _i17.PageRouteInfo<void> {
   const CheckOutScreenRoute()
       : super(CheckOutScreenRoute.name, path: '/checkout');
 
@@ -237,38 +269,83 @@ class CheckOutScreenRoute extends _i15.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i5.OrderDetailsScreen]
+/// [_i5.AttachmentViewer]
+class AttachmentViewerRoute
+    extends _i17.PageRouteInfo<AttachmentViewerRouteArgs> {
+  AttachmentViewerRoute(
+      {_i18.Key? key,
+      required _i21.File imageFile,
+      required void Function()? onDelete})
+      : super(AttachmentViewerRoute.name,
+            path: 'attachmentViewer',
+            args: AttachmentViewerRouteArgs(
+                key: key, imageFile: imageFile, onDelete: onDelete));
+
+  static const String name = 'AttachmentViewerRoute';
+}
+
+class AttachmentViewerRouteArgs {
+  const AttachmentViewerRouteArgs(
+      {this.key, required this.imageFile, required this.onDelete});
+
+  final _i18.Key? key;
+
+  final _i21.File imageFile;
+
+  final void Function()? onDelete;
+
+  @override
+  String toString() {
+    return 'AttachmentViewerRouteArgs{key: $key, imageFile: $imageFile, onDelete: $onDelete}';
+  }
+}
+
+/// generated route for
+/// [_i6.OrderDetailsScreen]
 class OrderDetailsScreenRoute
-    extends _i15.PageRouteInfo<OrderDetailsScreenRouteArgs> {
-  OrderDetailsScreenRoute({_i16.Key? key, required _i18.OrderItemModel order})
+    extends _i17.PageRouteInfo<OrderDetailsScreenRouteArgs> {
+  OrderDetailsScreenRoute(
+      {_i18.Key? key,
+      required _i20.OrderItemModel order,
+      required String orderTab,
+      required _i22.Bloc<dynamic, dynamic> bloc})
       : super(OrderDetailsScreenRoute.name,
             path: '/orderDetails',
-            args: OrderDetailsScreenRouteArgs(key: key, order: order));
+            args: OrderDetailsScreenRouteArgs(
+                key: key, order: order, orderTab: orderTab, bloc: bloc));
 
   static const String name = 'OrderDetailsScreenRoute';
 }
 
 class OrderDetailsScreenRouteArgs {
-  const OrderDetailsScreenRouteArgs({this.key, required this.order});
+  const OrderDetailsScreenRouteArgs(
+      {this.key,
+      required this.order,
+      required this.orderTab,
+      required this.bloc});
 
-  final _i16.Key? key;
+  final _i18.Key? key;
 
-  final _i18.OrderItemModel order;
+  final _i20.OrderItemModel order;
+
+  final String orderTab;
+
+  final _i22.Bloc<dynamic, dynamic> bloc;
 
   @override
   String toString() {
-    return 'OrderDetailsScreenRouteArgs{key: $key, order: $order}';
+    return 'OrderDetailsScreenRouteArgs{key: $key, order: $order, orderTab: $orderTab, bloc: $bloc}';
   }
 }
 
 /// generated route for
-/// [_i6.AddressSelectionScreen]
+/// [_i7.AddressSelectionScreen]
 class AddressSelectionScreenRoute
-    extends _i15.PageRouteInfo<AddressSelectionScreenRouteArgs> {
+    extends _i17.PageRouteInfo<AddressSelectionScreenRouteArgs> {
   AddressSelectionScreenRoute(
-      {_i16.Key? key,
-      required _i19.CheckoutFormBloc checkoutBloc,
-      required void Function(_i18.CustomerAddressModel?) onSelected,
+      {_i18.Key? key,
+      required _i23.CheckoutFormBloc checkoutBloc,
+      required void Function(_i20.CustomerAddressModel?) onSelected,
       required String deliveryMethod})
       : super(AddressSelectionScreenRoute.name,
             path: '/addressSelection',
@@ -288,11 +365,11 @@ class AddressSelectionScreenRouteArgs {
       required this.onSelected,
       required this.deliveryMethod});
 
-  final _i16.Key? key;
+  final _i18.Key? key;
 
-  final _i19.CheckoutFormBloc checkoutBloc;
+  final _i23.CheckoutFormBloc checkoutBloc;
 
-  final void Function(_i18.CustomerAddressModel?) onSelected;
+  final void Function(_i20.CustomerAddressModel?) onSelected;
 
   final String deliveryMethod;
 
@@ -303,10 +380,10 @@ class AddressSelectionScreenRouteArgs {
 }
 
 /// generated route for
-/// [_i7.OrderSuccessScreen]
+/// [_i8.OrderSuccessScreen]
 class OrderSuccessScreenRoute
-    extends _i15.PageRouteInfo<OrderSuccessScreenRouteArgs> {
-  OrderSuccessScreenRoute({_i16.Key? key, required String message})
+    extends _i17.PageRouteInfo<OrderSuccessScreenRouteArgs> {
+  OrderSuccessScreenRoute({_i18.Key? key, required String message})
       : super(OrderSuccessScreenRoute.name,
             path: '/orderSuccess',
             args: OrderSuccessScreenRouteArgs(key: key, message: message));
@@ -317,7 +394,7 @@ class OrderSuccessScreenRoute
 class OrderSuccessScreenRouteArgs {
   const OrderSuccessScreenRouteArgs({this.key, required this.message});
 
-  final _i16.Key? key;
+  final _i18.Key? key;
 
   final String message;
 
@@ -328,9 +405,42 @@ class OrderSuccessScreenRouteArgs {
 }
 
 /// generated route for
-/// [_i8.RegistrationScreen]
-class RegistrationScreenRoute extends _i15.PageRouteInfo<void> {
-  const RegistrationScreenRoute({List<_i15.PageRouteInfo>? children})
+/// [_i9.ImageViewer]
+class ImageViewerRoute extends _i17.PageRouteInfo<ImageViewerRouteArgs> {
+  ImageViewerRoute(
+      {_i18.Key? key,
+      required int initialIndex,
+      required List<Map<String, dynamic>> attachments})
+      : super(ImageViewerRoute.name,
+            path: '/imageViewer',
+            args: ImageViewerRouteArgs(
+                key: key,
+                initialIndex: initialIndex,
+                attachments: attachments));
+
+  static const String name = 'ImageViewerRoute';
+}
+
+class ImageViewerRouteArgs {
+  const ImageViewerRouteArgs(
+      {this.key, required this.initialIndex, required this.attachments});
+
+  final _i18.Key? key;
+
+  final int initialIndex;
+
+  final List<Map<String, dynamic>> attachments;
+
+  @override
+  String toString() {
+    return 'ImageViewerRouteArgs{key: $key, initialIndex: $initialIndex, attachments: $attachments}';
+  }
+}
+
+/// generated route for
+/// [_i10.RegistrationScreen]
+class RegistrationScreenRoute extends _i17.PageRouteInfo<void> {
+  const RegistrationScreenRoute({List<_i17.PageRouteInfo>? children})
       : super(RegistrationScreenRoute.name,
             path: '/registration', initialChildren: children);
 
@@ -338,8 +448,8 @@ class RegistrationScreenRoute extends _i15.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i9.ProductsScreen]
-class ProductsScreenRoute extends _i15.PageRouteInfo<void> {
+/// [_i11.ProductsScreen]
+class ProductsScreenRoute extends _i17.PageRouteInfo<void> {
   const ProductsScreenRoute()
       : super(ProductsScreenRoute.name, path: 'products');
 
@@ -347,32 +457,32 @@ class ProductsScreenRoute extends _i15.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i10.CartScreen]
-class CartScreenRoute extends _i15.PageRouteInfo<void> {
+/// [_i12.CartScreen]
+class CartScreenRoute extends _i17.PageRouteInfo<void> {
   const CartScreenRoute() : super(CartScreenRoute.name, path: 'cart');
 
   static const String name = 'CartScreenRoute';
 }
 
 /// generated route for
-/// [_i11.ProfileScreen]
-class ProfileScreenRoute extends _i15.PageRouteInfo<void> {
+/// [_i13.ProfileScreen]
+class ProfileScreenRoute extends _i17.PageRouteInfo<void> {
   const ProfileScreenRoute() : super(ProfileScreenRoute.name, path: 'profile');
 
   static const String name = 'ProfileScreenRoute';
 }
 
 /// generated route for
-/// [_i12.OrdersScreen]
-class OrdersScreenRoute extends _i15.PageRouteInfo<void> {
+/// [_i14.OrdersScreen]
+class OrdersScreenRoute extends _i17.PageRouteInfo<void> {
   const OrdersScreenRoute() : super(OrdersScreenRoute.name, path: 'orders');
 
   static const String name = 'OrdersScreenRoute';
 }
 
 /// generated route for
-/// [_i13.CustomerRegistrationScreen]
-class CustomerRegistrationScreenRoute extends _i15.PageRouteInfo<void> {
+/// [_i15.CustomerRegistrationScreen]
+class CustomerRegistrationScreenRoute extends _i17.PageRouteInfo<void> {
   const CustomerRegistrationScreenRoute()
       : super(CustomerRegistrationScreenRoute.name, path: 'customer');
 
@@ -380,8 +490,8 @@ class CustomerRegistrationScreenRoute extends _i15.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i14.KaPartnerRegistrationScreen]
-class KaPartnerRegistrationScreenRoute extends _i15.PageRouteInfo<void> {
+/// [_i16.KaPartnerRegistrationScreen]
+class KaPartnerRegistrationScreenRoute extends _i17.PageRouteInfo<void> {
   const KaPartnerRegistrationScreenRoute()
       : super(KaPartnerRegistrationScreenRoute.name, path: 'kapartner');
 

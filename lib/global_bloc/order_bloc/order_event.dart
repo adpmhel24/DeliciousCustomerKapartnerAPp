@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:kapartner_app/data/models/checkout/checkout_model.dart';
 import 'package:kapartner_app/data/repositories/cart_items_repo.dart';
 
 abstract class OrderEvent extends Equatable {
@@ -9,11 +8,10 @@ abstract class OrderEvent extends Equatable {
 }
 
 class PlaceNewOrder extends OrderEvent {
-  final CheckOutModel checkoutModel;
+  final Map<String, dynamic> data;
   final CartItemsRepo cartItemRepo;
 
-  const PlaceNewOrder(
-      {required this.checkoutModel, required this.cartItemRepo});
+  const PlaceNewOrder({required this.data, required this.cartItemRepo});
   @override
-  List<Object?> get props => [checkoutModel, cartItemRepo];
+  List<Object?> get props => [data, cartItemRepo];
 }

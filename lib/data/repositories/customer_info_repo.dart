@@ -64,7 +64,7 @@ class CustomerInfoRepo {
     Response response;
     String message = 'Updating Customer Detail: Unknown Error!';
     try {
-      response = await _customerAPI.updateCustomerDetails(
+      response = await _customerAPI.updateCustomerAddress(
           _authRepository.currentUser.token,
           customerDetailId: customerDetailId,
           data: data);
@@ -127,8 +127,10 @@ class CustomerInfoRepo {
   CustomerAddressModel? defautShippingAddress() {
     int index =
         _customer.details.indexWhere((element) => element!.isDefault! == true);
-    if (_customer.details.isNotEmpty) {
+    if (_customer.details.isNotEmpty && index >= 0) {
       return _customer.details[index];
+    } else if (_customer.details.isNotEmpty && index < 0) {
+      return _customer.details[0];
     }
     return null;
   }

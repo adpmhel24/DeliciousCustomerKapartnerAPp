@@ -24,6 +24,9 @@ class ProductModel {
   @JsonKey(name: "image_url")
   String? imageUrl;
 
+  @JsonKey(name: "is_available")
+  bool? isAvailable;
+
   ProductModel({
     required this.id,
     required this.itemCode,
@@ -33,6 +36,7 @@ class ProductModel {
     this.price,
     this.isSelected = false,
     this.imageUrl,
+    this.isAvailable,
   });
 
   factory ProductModel.fromJson(Map<String, dynamic> json) =>

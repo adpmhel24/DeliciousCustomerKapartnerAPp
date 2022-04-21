@@ -1,8 +1,9 @@
+import 'dart:convert';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
-import 'package:kapartner_app/data/models/checkout/checkout_model.dart';
 import 'package:kapartner_app/data/repositories/repositories.dart';
 import 'package:kapartner_app/global_bloc/order_bloc/bloc.dart';
 import 'package:kapartner_app/presentation/widget/constant.dart';
@@ -21,7 +22,8 @@ class CheckOutScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     CartItemsRepo _cartItemRepo = AppRepo.cartRepo;
     return BlocProvider(
-      create: (_) => CheckoutFormBloc(),
+      create: (_) => CheckoutFormBloc()
+        ..add(AddCartItemsInCheckOutState(AppRepo.cartRepo.cartItems)),
       child: BlocListener<OrderBloc, OrderState>(
         listener: (context, state) {
           if (state is PlaceNewOrderInProgress) {
@@ -47,6 +49,8 @@ class CheckOutScreen extends StatelessWidget {
             body: const Body(),
             bottomNavigationBar: Builder(builder: (context) {
               return Container(
+                padding: EdgeInsets.only(
+                    bottom: MediaQuery.of(context).viewInsets.bottom),
                 height: 80,
                 color: const Color(0xFFF7ECDE),
                 child: Row(
@@ -117,11 +121,14 @@ class CheckOutScreen extends StatelessWidget {
 
                                 Map<String, dynamic> data = {
                                   "cust_code": checkoutBlocState.custCode.value,
+                                  "transdate": DateTime.now().toIso8601String(),
                                   "address": checkoutBlocState.address.value,
                                   "contact_number":
                                       checkoutBlocState.contactNumber.value,
                                   "delfee": double.parse(
-                                      checkoutBlocState.delfee.value),
+                                    checkoutBlocState.delfee.value,
+                                  ),
+                                  "otherfee": 0.00,
                                   "delivery_date":
                                       checkoutBlocState.deliveryDate.value,
                                   "delivery_method":
@@ -130,14 +137,13 @@ class CheckOutScreen extends StatelessWidget {
                                       checkoutBlocState.paymentMethod.value,
                                   "remarks": checkoutBlocState.notes.value,
                                   "rows": checkoutBlocState.items
-                                      .map((e) => e.checkOutData())
+                                      .map((e) => json.encode(e.checkOutData()))
                                       .toList(),
+                                  "files": checkoutBlocState.attachments,
                                 };
-                                CheckOutModel checkoutModel =
-                                    CheckOutModel.fromJson(data);
                                 context.read<OrderBloc>().add(
                                       PlaceNewOrder(
-                                        checkoutModel: checkoutModel,
+                                        data: data,
                                         cartItemRepo: _cartItemRepo,
                                       ),
                                     );
