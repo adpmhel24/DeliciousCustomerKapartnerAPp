@@ -12,8 +12,7 @@ import '../../../global_bloc/app_init_bloc/bloc.dart';
 import 'components/body.dart';
 
 class LoginFormScreen extends StatelessWidget {
-  const LoginFormScreen({Key? key, this.onLoginCallback}) : super(key: key);
-  final Function(bool loggedIn)? onLoginCallback;
+  const LoginFormScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +31,6 @@ class LoginFormScreen extends StatelessWidget {
                 listener: (_, state) {
                   if (state.status.isSubmissionSuccess) {
                     context.loaderOverlay.hide();
-                    onLoginCallback?.call(true);
                   } else if (state.status.isSubmissionFailure) {
                     CustomDialog.error(context, message: state.message);
                   } else if (state.status.isSubmissionInProgress) {
@@ -57,7 +55,6 @@ class LoginFormScreen extends StatelessWidget {
                     context.loaderOverlay.show();
                   } else if (state is AutoLoginSuccessful) {
                     context.loaderOverlay.hide();
-                    onLoginCallback?.call(true);
                   } else if (state is AutoLoginFailed) {
                     context.loaderOverlay.hide();
                   }
@@ -70,8 +67,6 @@ class LoginFormScreen extends StatelessWidget {
                   content: Text('Tap back again to leave'),
                 ),
                 child: UpgradeAlert(
-                  showIgnore: false,
-                  showLater: false,
                   child: const LoginBody(),
                 ),
               ),

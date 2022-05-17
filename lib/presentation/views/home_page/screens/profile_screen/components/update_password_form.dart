@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:kapartner_app/global_bloc/auth_bloc/auth_bloc.dart';
-import 'package:kapartner_app/global_bloc/auth_bloc/auth_event.dart';
-import 'package:kapartner_app/global_bloc/auth_bloc/auth_state.dart';
+
 import 'package:kapartner_app/global_bloc/blocs.dart';
 import 'package:kapartner_app/presentation/widget/constant.dart';
 import 'package:kapartner_app/presentation/widget/custom_dialog.dart';

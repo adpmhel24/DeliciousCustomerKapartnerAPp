@@ -47,131 +47,137 @@ class CheckOutScreen extends StatelessWidget {
               centerTitle: true,
             ),
             body: const Body(),
-            bottomNavigationBar: Builder(builder: (context) {
-              return Container(
-                padding: EdgeInsets.only(
-                    bottom: MediaQuery.of(context).viewInsets.bottom),
-                height: 80,
-                color: const Color(0xFFF7ECDE),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Wrap(
-                          spacing: 5,
-                          children: [
-                            const Text(
-                              "Delivery Fee:",
-                              style:
-                                  TextStyle(color: Constant.inlineLabelColor),
-                            ),
-                            Text(formatStringToDecimal(
-                                context
-                                    .read<CheckoutFormBloc>()
-                                    .state
-                                    .delfee
-                                    .value,
-                                hasCurrency: true)),
-                          ],
-                        ),
-                        Constant.columnMaxHeightSpacer,
-                        Wrap(
-                          spacing: 5,
-                          children: [
-                            const Text(
-                              "Order Total:",
-                              style: TextStyle(
-                                  color: Constant.inlineLabelColor,
-                                  fontSize: 18),
-                            ),
-                            Text(
-                              formatStringToDecimal(
-                                  (double.parse(context
-                                              .read<CheckoutFormBloc>()
-                                              .state
-                                              .delfee
-                                              .value) +
-                                          context
-                                              .read<CheckoutFormBloc>()
-                                              .state
-                                              .total)
-                                      .toString(),
-                                  hasCurrency: true),
-                              style: const TextStyle(fontSize: 18),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                    ElevatedButton(
-                      onPressed: (context
-                              .watch<CheckoutFormBloc>()
-                              .state
-                              .status
-                              .isValidated)
-                          ? () {
-                              CustomDialog.warning(context,
-                                  message: "Are you sure you want to proceed?",
-                                  onPositiveClick: () {
-                                var checkoutBlocState =
-                                    context.read<CheckoutFormBloc>().state;
+            bottomNavigationBar: Padding(
+              padding: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).viewInsets.bottom),
+              child: Builder(builder: (context) {
+                return Container(
+                  height: 80,
+                  color: const Color(0xFFF7ECDE),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Wrap(
+                            spacing: 5,
+                            children: [
+                              const Text(
+                                "Delivery Fee:",
+                                style:
+                                    TextStyle(color: Constant.inlineLabelColor),
+                              ),
+                              Text(formatStringToDecimal(
+                                  context
+                                      .read<CheckoutFormBloc>()
+                                      .state
+                                      .delfee
+                                      .value,
+                                  hasCurrency: true)),
+                            ],
+                          ),
+                          Constant.columnMaxHeightSpacer,
+                          Wrap(
+                            spacing: 5,
+                            children: [
+                              const Text(
+                                "Order Total:",
+                                style: TextStyle(
+                                    color: Constant.inlineLabelColor,
+                                    fontSize: 18),
+                              ),
+                              Text(
+                                formatStringToDecimal(
+                                    (double.parse(context
+                                                .read<CheckoutFormBloc>()
+                                                .state
+                                                .delfee
+                                                .value) +
+                                            context
+                                                .read<CheckoutFormBloc>()
+                                                .state
+                                                .total)
+                                        .toString(),
+                                    hasCurrency: true),
+                                style: const TextStyle(fontSize: 18),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                      ElevatedButton(
+                        onPressed: (context
+                                .watch<CheckoutFormBloc>()
+                                .state
+                                .status
+                                .isValidated)
+                            ? () {
+                                CustomDialog.warning(context,
+                                    message:
+                                        "Are you sure you want to proceed?",
+                                    onPositiveClick: () {
+                                  var checkoutBlocState =
+                                      context.read<CheckoutFormBloc>().state;
 
-                                Map<String, dynamic> data = {
-                                  "cust_code": checkoutBlocState.custCode.value,
-                                  "transdate": DateTime.now().toIso8601String(),
-                                  "address": checkoutBlocState.address.value,
-                                  "contact_number":
-                                      checkoutBlocState.contactNumber.value,
-                                  "delfee": double.parse(
-                                    checkoutBlocState.delfee.value,
-                                  ),
-                                  "otherfee": 0.00,
-                                  "delivery_date":
-                                      checkoutBlocState.deliveryDate.value,
-                                  "delivery_method":
-                                      checkoutBlocState.deliveryMethod.value,
-                                  "payment_method":
-                                      checkoutBlocState.paymentMethod.value,
-                                  "remarks": checkoutBlocState.notes.value,
-                                  "rows": checkoutBlocState.items
-                                      .map((e) => json.encode(e.checkOutData()))
-                                      .toList(),
-                                  "files": checkoutBlocState.attachments,
-                                };
-                                context.read<OrderBloc>().add(
-                                      PlaceNewOrder(
-                                        data: data,
-                                        cartItemRepo: _cartItemRepo,
-                                      ),
-                                    );
-                                Navigator.of(context).pop();
-                              });
-                            }
-                          : null,
-                      child: const Text("Place Order"),
-                      style: Theme.of(context)
-                          .elevatedButtonTheme
-                          .style!
-                          .copyWith(
-                            padding: MaterialStateProperty.all(
-                                const EdgeInsets.all(10)),
-                            shape: MaterialStateProperty.all<
-                                RoundedRectangleBorder>(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(18.0),
-                                side:
-                                    const BorderSide(color: Colors.transparent),
+                                  Map<String, dynamic> data = {
+                                    "cust_code":
+                                        checkoutBlocState.custCode.value,
+                                    "transdate":
+                                        DateTime.now().toIso8601String(),
+                                    "address": checkoutBlocState.address.value,
+                                    "contact_number":
+                                        checkoutBlocState.contactNumber.value,
+                                    "delfee": double.parse(
+                                      checkoutBlocState.delfee.value,
+                                    ),
+                                    "otherfee": 0.00,
+                                    "delivery_date":
+                                        checkoutBlocState.deliveryDate.value,
+                                    "delivery_method":
+                                        checkoutBlocState.deliveryMethod.value,
+                                    "payment_method":
+                                        checkoutBlocState.paymentMethod.value,
+                                    "remarks": checkoutBlocState.notes.value,
+                                    "rows": checkoutBlocState.items
+                                        .map((e) =>
+                                            json.encode(e.checkOutData()))
+                                        .toList(),
+                                    "files": checkoutBlocState.attachments,
+                                  };
+                                  context.read<OrderBloc>().add(
+                                        PlaceNewOrder(
+                                          data: data,
+                                          cartItemRepo: _cartItemRepo,
+                                        ),
+                                      );
+                                  Navigator.of(context).pop();
+                                });
+                              }
+                            : null,
+                        child: const Text("Place Order"),
+                        style: Theme.of(context)
+                            .elevatedButtonTheme
+                            .style!
+                            .copyWith(
+                              padding: MaterialStateProperty.all(
+                                  const EdgeInsets.all(10)),
+                              shape: MaterialStateProperty.all<
+                                  RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(18.0),
+                                  side: const BorderSide(
+                                      color: Colors.transparent),
+                                ),
                               ),
                             ),
-                          ),
-                    )
-                  ],
-                ),
-              );
-            }),
+                      )
+                    ],
+                  ),
+                );
+              }),
+            ),
           );
         }),
       ),

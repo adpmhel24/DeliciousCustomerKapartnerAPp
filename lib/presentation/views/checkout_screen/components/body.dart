@@ -90,7 +90,6 @@ class _BodyState extends State<Body> {
   @override
   Widget build(BuildContext context) {
     return Scrollbar(
-      isAlwaysShown: true,
       controller: _scrollController,
       child: SingleChildScrollView(
         controller: _scrollController,

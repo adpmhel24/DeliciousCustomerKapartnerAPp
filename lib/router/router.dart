@@ -16,7 +16,7 @@ import '../presentation/views/order_success_screen/order_success_screen.dart';
 import '../presentation/views/registration_screen/ka_partner_registration/ka_partner_reg.dart';
 import '../presentation/views/registration_screen/registration_screen.dart';
 import '../presentation/widget/image_viewer.dart';
-import 'router_guard.dart';
+// import 'router_guard.dart';
 
 @MaterialAutoRouter(
   routes: <AutoRoute>[
@@ -24,7 +24,7 @@ import 'router_guard.dart';
     AutoRoute(
       path: '/',
       page: HomeScreen,
-      guards: [RouteGuard],
+      // guards: [RouteGuard],
       children: [
         AutoRoute(path: 'products', page: ProductsScreen, initial: true),
         AutoRoute(
@@ -38,37 +38,37 @@ import 'router_guard.dart';
     AutoRoute(
       page: ProductDetails,
       path: '/productDetails',
-      guards: [RouteGuard],
+      // guards: [RouteGuard],
     ),
     AutoRoute(
       page: CheckOutScreen,
       path: '/checkout',
-      guards: [RouteGuard],
+      // guards: [RouteGuard],
     ),
     AutoRoute(
       page: AttachmentViewer,
       path: 'attachmentViewer',
-      guards: [RouteGuard],
+      // guards: [RouteGuard],
     ),
     AutoRoute(
       page: OrderDetailsScreen,
       path: '/orderDetails',
-      guards: [RouteGuard],
+      // guards: [RouteGuard],
     ),
     AutoRoute(
       page: AddressSelectionScreen,
       path: '/addressSelection',
-      guards: [RouteGuard],
+      // guards: [RouteGuard],
     ),
     AutoRoute(
       page: OrderSuccessScreen,
       path: '/orderSuccess',
-      guards: [RouteGuard],
+      // guards: [RouteGuard],
     ),
     AutoRoute(
       page: ImageViewer,
       path: '/imageViewer',
-      guards: [RouteGuard],
+      // guards: [RouteGuard],
     ),
     AutoRoute(
       page: RegistrationScreen,
@@ -81,7 +81,7 @@ import 'router_guard.dart';
     // AutoRoute(
     //   page: CreateOrderScreen,
     //   path: '/',
-    //   guards: [RouteGuard],
+    // guards: [RouteGuard],
     //   children: <AutoRoute>[
     //     AutoRoute(page: CustomerSelectionScreen, path: '', initial: true),
     //     AutoRoute(page: ProductSelectionScreen, path: 'product'),
@@ -92,7 +92,7 @@ import 'router_guard.dart';
     // AutoRoute(
     //   page: OrderScreen,
     //   path: '/orders',
-    //   guards: [RouteGuard],
+    // guards: [RouteGuard],
     //   children: <AutoRoute>[
     //     AutoRoute(page: PendingOrdersScreen, path: 'pending_orders'),
     //     AutoRoute(page: ForPickupDeliverScreen, path: 'for_pickup_deliver'),
@@ -101,11 +101,11 @@ import 'router_guard.dart';
     // ),
     // AutoRoute(
     //     page: CustomerTypeScreen,
-    //     guards: [RouteGuard],
+    // guards: [RouteGuard],
     //     path: '/customer_types'),
     // AutoRoute(
     //     page: CreateCustomerType,
-    //     guards: [RouteGuard],
+    // guards: [RouteGuard],
     //     path: '/create_customer_types'),
   ],
 )

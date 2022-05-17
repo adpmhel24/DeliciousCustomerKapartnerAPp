@@ -10,14 +10,14 @@
 //
 // ignore_for_file: type=lint
 
-import 'dart:io' as _i21;
+import 'dart:io' as _i20;
 
 import 'package:auto_route/auto_route.dart' as _i17;
 import 'package:flutter/material.dart' as _i18;
-import 'package:flutter_bloc/flutter_bloc.dart' as _i22;
+import 'package:flutter_bloc/flutter_bloc.dart' as _i21;
 
-import '../data/models/models.dart' as _i20;
-import '../presentation/views/checkout_screen/bloc/bloc.dart' as _i23;
+import '../data/models/models.dart' as _i19;
+import '../presentation/views/checkout_screen/bloc/bloc.dart' as _i22;
 import '../presentation/views/checkout_screen/checkout_screen.dart' as _i4;
 import '../presentation/views/checkout_screen/components/address_selection.dart'
     as _i7;
@@ -46,25 +46,16 @@ import '../presentation/views/registration_screen/ka_partner_registration/ka_par
 import '../presentation/views/registration_screen/registration_screen.dart'
     as _i10;
 import '../presentation/widget/image_viewer.dart' as _i9;
-import 'router_guard.dart' as _i19;
 
 class AppRouter extends _i17.RootStackRouter {
-  AppRouter(
-      {_i18.GlobalKey<_i18.NavigatorState>? navigatorKey,
-      required this.routeGuard})
+  AppRouter([_i18.GlobalKey<_i18.NavigatorState>? navigatorKey])
       : super(navigatorKey);
-
-  final _i19.RouteGuard routeGuard;
 
   @override
   final Map<String, _i17.PageFactory> pagesMap = {
     LoginRoute.name: (routeData) {
-      final args = routeData.argsAs<LoginRouteArgs>(
-          orElse: () => const LoginRouteArgs());
       return _i17.MaterialPageX<dynamic>(
-          routeData: routeData,
-          child: _i1.LoginFormScreen(
-              key: args.key, onLoginCallback: args.onLoginCallback));
+          routeData: routeData, child: const _i1.LoginFormScreen());
     },
     HomeScreenRoute.name: (routeData) {
       return _i17.MaterialPageX<dynamic>(
@@ -159,9 +150,7 @@ class AppRouter extends _i17.RootStackRouter {
   @override
   List<_i17.RouteConfig> get routes => [
         _i17.RouteConfig(LoginRoute.name, path: '/login'),
-        _i17.RouteConfig(HomeScreenRoute.name, path: '/', guards: [
-          routeGuard
-        ], children: [
+        _i17.RouteConfig(HomeScreenRoute.name, path: '/', children: [
           _i17.RouteConfig('#redirect',
               path: '',
               parent: HomeScreenRoute.name,
@@ -176,20 +165,14 @@ class AppRouter extends _i17.RootStackRouter {
           _i17.RouteConfig(OrdersScreenRoute.name,
               path: 'orders', parent: HomeScreenRoute.name)
         ]),
-        _i17.RouteConfig(ProductDetailsRoute.name,
-            path: '/productDetails', guards: [routeGuard]),
-        _i17.RouteConfig(CheckOutScreenRoute.name,
-            path: '/checkout', guards: [routeGuard]),
-        _i17.RouteConfig(AttachmentViewerRoute.name,
-            path: 'attachmentViewer', guards: [routeGuard]),
-        _i17.RouteConfig(OrderDetailsScreenRoute.name,
-            path: '/orderDetails', guards: [routeGuard]),
+        _i17.RouteConfig(ProductDetailsRoute.name, path: '/productDetails'),
+        _i17.RouteConfig(CheckOutScreenRoute.name, path: '/checkout'),
+        _i17.RouteConfig(AttachmentViewerRoute.name, path: 'attachmentViewer'),
+        _i17.RouteConfig(OrderDetailsScreenRoute.name, path: '/orderDetails'),
         _i17.RouteConfig(AddressSelectionScreenRoute.name,
-            path: '/addressSelection', guards: [routeGuard]),
-        _i17.RouteConfig(OrderSuccessScreenRoute.name,
-            path: '/orderSuccess', guards: [routeGuard]),
-        _i17.RouteConfig(ImageViewerRoute.name,
-            path: '/imageViewer', guards: [routeGuard]),
+            path: '/addressSelection'),
+        _i17.RouteConfig(OrderSuccessScreenRoute.name, path: '/orderSuccess'),
+        _i17.RouteConfig(ImageViewerRoute.name, path: '/imageViewer'),
         _i17.RouteConfig(RegistrationScreenRoute.name,
             path: '/registration',
             children: [
@@ -203,26 +186,10 @@ class AppRouter extends _i17.RootStackRouter {
 
 /// generated route for
 /// [_i1.LoginFormScreen]
-class LoginRoute extends _i17.PageRouteInfo<LoginRouteArgs> {
-  LoginRoute({_i18.Key? key, dynamic Function(bool)? onLoginCallback})
-      : super(LoginRoute.name,
-            path: '/login',
-            args: LoginRouteArgs(key: key, onLoginCallback: onLoginCallback));
+class LoginRoute extends _i17.PageRouteInfo<void> {
+  const LoginRoute() : super(LoginRoute.name, path: '/login');
 
   static const String name = 'LoginRoute';
-}
-
-class LoginRouteArgs {
-  const LoginRouteArgs({this.key, this.onLoginCallback});
-
-  final _i18.Key? key;
-
-  final dynamic Function(bool)? onLoginCallback;
-
-  @override
-  String toString() {
-    return 'LoginRouteArgs{key: $key, onLoginCallback: $onLoginCallback}';
-  }
 }
 
 /// generated route for
@@ -237,7 +204,7 @@ class HomeScreenRoute extends _i17.PageRouteInfo<void> {
 /// generated route for
 /// [_i3.ProductDetails]
 class ProductDetailsRoute extends _i17.PageRouteInfo<ProductDetailsRouteArgs> {
-  ProductDetailsRoute({_i18.Key? key, required _i20.ProductModel loadedProduct})
+  ProductDetailsRoute({_i18.Key? key, required _i19.ProductModel loadedProduct})
       : super(ProductDetailsRoute.name,
             path: '/productDetails',
             args: ProductDetailsRouteArgs(
@@ -251,7 +218,7 @@ class ProductDetailsRouteArgs {
 
   final _i18.Key? key;
 
-  final _i20.ProductModel loadedProduct;
+  final _i19.ProductModel loadedProduct;
 
   @override
   String toString() {
@@ -274,7 +241,7 @@ class AttachmentViewerRoute
     extends _i17.PageRouteInfo<AttachmentViewerRouteArgs> {
   AttachmentViewerRoute(
       {_i18.Key? key,
-      required _i21.File imageFile,
+      required _i20.File imageFile,
       required void Function()? onDelete})
       : super(AttachmentViewerRoute.name,
             path: 'attachmentViewer',
@@ -290,7 +257,7 @@ class AttachmentViewerRouteArgs {
 
   final _i18.Key? key;
 
-  final _i21.File imageFile;
+  final _i20.File imageFile;
 
   final void Function()? onDelete;
 
@@ -306,9 +273,9 @@ class OrderDetailsScreenRoute
     extends _i17.PageRouteInfo<OrderDetailsScreenRouteArgs> {
   OrderDetailsScreenRoute(
       {_i18.Key? key,
-      required _i20.OrderItemModel order,
+      required _i19.OrderItemModel order,
       required String orderTab,
-      required _i22.Bloc<dynamic, dynamic> bloc})
+      required _i21.Bloc<dynamic, dynamic> bloc})
       : super(OrderDetailsScreenRoute.name,
             path: '/orderDetails',
             args: OrderDetailsScreenRouteArgs(
@@ -326,11 +293,11 @@ class OrderDetailsScreenRouteArgs {
 
   final _i18.Key? key;
 
-  final _i20.OrderItemModel order;
+  final _i19.OrderItemModel order;
 
   final String orderTab;
 
-  final _i22.Bloc<dynamic, dynamic> bloc;
+  final _i21.Bloc<dynamic, dynamic> bloc;
 
   @override
   String toString() {
@@ -344,8 +311,8 @@ class AddressSelectionScreenRoute
     extends _i17.PageRouteInfo<AddressSelectionScreenRouteArgs> {
   AddressSelectionScreenRoute(
       {_i18.Key? key,
-      required _i23.CheckoutFormBloc checkoutBloc,
-      required void Function(_i20.CustomerAddressModel?) onSelected,
+      required _i22.CheckoutFormBloc checkoutBloc,
+      required void Function(_i19.CustomerAddressModel?) onSelected,
       required String deliveryMethod})
       : super(AddressSelectionScreenRoute.name,
             path: '/addressSelection',
@@ -367,9 +334,9 @@ class AddressSelectionScreenRouteArgs {
 
   final _i18.Key? key;
 
-  final _i23.CheckoutFormBloc checkoutBloc;
+  final _i22.CheckoutFormBloc checkoutBloc;
 
-  final void Function(_i20.CustomerAddressModel?) onSelected;
+  final void Function(_i19.CustomerAddressModel?) onSelected;
 
   final String deliveryMethod;
 

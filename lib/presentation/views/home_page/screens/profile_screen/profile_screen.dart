@@ -12,8 +12,7 @@ import 'components/update_address_form.dart';
 import 'components/update_mobile_form.dart';
 import 'components/update_password_form.dart';
 import '/data/models/customer_address/customer_address_model.dart';
-import '/global_bloc/auth_bloc/auth_bloc.dart';
-import '/global_bloc/auth_bloc/auth_event.dart';
+
 import '/presentation/views/home_page/screens/profile_screen/components/update_email_form.dart';
 import '/presentation/widget/constant.dart';
 import '/presentation/widget/custom_dialog.dart';

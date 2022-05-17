@@ -1,8 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kapartner_app/global_bloc/blocs.dart';
 
-import 'auth_bloc/auth_bloc.dart';
-
 class GlobalBloc {
   static final authBloc = AuthBloc();
   static final cartBloc = CartBloc();

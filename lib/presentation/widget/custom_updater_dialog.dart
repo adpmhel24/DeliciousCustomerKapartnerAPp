@@ -6,7 +6,7 @@ import 'package:url_launcher/url_launcher.dart';
 class NewUpdate {
   late BuildContext _context;
   late String _appName;
-  late String _appUrl;
+  late Uri _appUrl;
   Text? _message;
   String? _releaseNotes;
 
@@ -17,7 +17,7 @@ class NewUpdate {
   static displayAlert(
     context, {
     required Text? message,
-    required String appUrl,
+    required Uri appUrl,
     required String appName,
     String? releaseNotes,
   }) {
@@ -72,7 +72,7 @@ class NewUpdate {
             actions: [
               ElevatedButton(
                 onPressed: () async {
-                  await launch(_appUrl);
+                  await launchUrl(_appUrl);
                 },
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 8.w),
